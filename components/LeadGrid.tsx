@@ -52,6 +52,7 @@ export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
           </BackgroundImage>
         </Stack>
         <BackgroundImage
+          mih={360}
           src={images.middle}
           w="100%"
           h="100%"

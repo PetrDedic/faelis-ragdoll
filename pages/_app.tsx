@@ -5,6 +5,7 @@ import { theme } from "../theme";
 import { HeaderMenu } from "../components/HeaderMenu";
 import { Roboto, Paytone_One } from "next/font/google";
 import Footer from "../components/Footer";
+import "../styles.css";
 
 // Initialize both fonts
 const roboto = Roboto({
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: any) {
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
         <link rel="shortcut icon" href="/favicon.svg" />
+        <style>body</style>
       </Head>
       <HeaderMenu />
       <Component {...pageProps} />

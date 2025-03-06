@@ -109,7 +109,7 @@ export function HeaderMenu() {
             height={28}
             width={100}
             alt="Faelis logo"
-            style={{}}
+            style={{ paddingBottom: 4 }}
           />
           <Group gap={5} visibleFrom="sm">
             {items}
