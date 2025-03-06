@@ -280,7 +280,7 @@ export default function IndexPage() {
         </Stack>
         <FullscreenBackroundSection>
           <Stack align="center" w="100%" maw={720} py={32}>
-            <Title order={2} size="h1" c="dark">
+            <Title order={2} size="h1" c="dark" ta="center">
               Mám zájem o svou kočičku
             </Title>
             <Text size="lg" c="black" ta="center">

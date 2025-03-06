@@ -26,8 +26,8 @@ export function Form() {
   });
 
   return (
-    <Stack align="center">
-      <Title order={2} size="h1" c="#47a3ee">
+    <Stack align="center" w="100%">
+      <Title order={2} size="h1" c="#47a3ee" ta="center">
         Kontaktujte nás
       </Title>
       <Card
@@ -35,6 +35,8 @@ export function Form() {
         padding="lg"
         radius="lg"
         style={{ border: "#47a3ee 3px solid" }}
+        w="100%"
+        maw={640}
       >
         <form onSubmit={form.onSubmit(() => {})}>
           <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">

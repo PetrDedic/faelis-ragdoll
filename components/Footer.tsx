@@ -28,6 +28,7 @@ const Footer = () => {
           backgroundSize: "cover",
           borderTop: "8px solid #47a3ee",
           borderBottom: "8px solid #47a3ee",
+          backgroundImage: `url("/images/Tlapky-bg-big.svg")`,
         }}
       >
         <Flex

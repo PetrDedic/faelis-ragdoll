@@ -20,7 +20,7 @@ interface HeroButton {
 interface HeroImageBackgroundProps {
   heading: string;
   highlightedText?: string;
-  subtext: string;
+  subtext?: string;
   buttons?: HeroButton[];
   backgroundImage?: string;
 }
@@ -59,6 +59,7 @@ export function HeroImageBackground({
           ta={{ base: "left", sm: "center" }}
           c="white"
           style={{ letterSpacing: 1 }}
+          maw={1024}
         >
           {heading}{" "}
           {highlightedText && (
@@ -68,7 +69,7 @@ export function HeroImageBackground({
           )}
         </Title>
 
-        <Container size={640}>
+        <Container size={560}>
           <Text fz={24} c="gray.0" ta={{ base: "left", sm: "center" }}>
             {subtext}
           </Text>

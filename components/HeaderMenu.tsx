@@ -14,18 +14,19 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 const links = [
   { link: "/", label: "Domů" },
   {
-    link: "/nase-kocky",
+    link: "/cats",
     label: "Naše Kočky",
   },
-  { link: "/planovane-vrhy", label: "Plánované vrhy" },
-  { link: "/o-ragdollu", label: "O Ragdollu" },
-  { link: "/galerie", label: "Galerie" },
-  { link: "/o-nas", label: "O nás" },
-  { link: "/kontakty", label: "Kontakty" },
+  { link: "/litters", label: "Plánované vrhy" },
+  { link: "/ragdoll", label: "O Ragdollu" },
+  { link: "/gallery", label: "Galerie" },
+  { link: "/about", label: "O nás" },
+  { link: "/contact", label: "Kontakty" },
 ];
 
 // Add language configuration
@@ -68,7 +69,6 @@ export function HeaderMenu() {
               component="a"
               href={link.link}
               variant="subtle"
-              onClick={(event) => event.preventDefault()}
               size="sm"
               px="xs"
               radius="sm"
@@ -90,7 +90,6 @@ export function HeaderMenu() {
         component="a"
         href={link.link}
         variant="subtle"
-        onClick={(event) => event.preventDefault()}
         size="sm"
         px="xs"
         radius="sm"
@@ -104,13 +103,15 @@ export function HeaderMenu() {
     <Paper component="nav" shadow="sm" py="xs">
       <Container size="md">
         <Flex justify="space-between" align="center">
-          <Image
-            src="/images/Logo_v2.svg"
-            height={28}
-            width={100}
-            alt="Faelis logo"
-            style={{ paddingBottom: 4 }}
-          />
+          <Link href="/">
+            <Image
+              src="/images/Logo_v2.svg"
+              height={28}
+              width={100}
+              alt="Faelis logo"
+              style={{ paddingBottom: 4 }}
+            />
+          </Link>
           <Group gap={5} visibleFrom="sm">
             {items}
           </Group>
