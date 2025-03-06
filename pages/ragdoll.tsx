@@ -167,11 +167,11 @@ export default function RagdollPage() {
           </Text>
           <Text size="lg" c="black">
             Všechna koťata, která se jí potom narodila, získala podle ní tuto
-            její novou "povahu" a na to kladla Anna Baker důraz při zakládání
-            nového plemene. Samozřejmě vnější vlivy (jako je autonehoda) nemohou
-            ovlivnit povahové vlastnosti potomků Josephiny, ty jsou ovlivněny
-            pouze genetikou a výběrem jedinců do dalšího chovu tak, že byl
-            kladen důraz na povahové vlastnosti vybrané kočky.
+            její novou &quot;povahu&quot; a na to kladla Anna Baker důraz při
+            zakládání nového plemene. Samozřejmě vnější vlivy (jako je
+            autonehoda) nemohou ovlivnit povahové vlastnosti potomků Josephiny,
+            ty jsou ovlivněny pouze genetikou a výběrem jedinců do dalšího chovu
+            tak, že byl kladen důraz na povahové vlastnosti vybrané kočky.
           </Text>
           <Text size="lg" c="black">
             Základ plemene tvořily tři kočky: Daddy Warbucks, Fugiana a
