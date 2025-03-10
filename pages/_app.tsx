@@ -5,6 +5,8 @@ import { theme } from "../theme";
 import { HeaderMenu } from "../components/HeaderMenu";
 import { Roboto, Paytone_One } from "next/font/google";
 import Footer from "../components/Footer";
+import "@mantine/dates/styles.css";
+import "@mantine/notifications/styles.css";
 import "../styles.css";
 
 // Initialize both fonts
