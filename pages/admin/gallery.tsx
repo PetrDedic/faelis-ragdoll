@@ -1162,8 +1162,8 @@ const GalleryManagementPage = () => {
         <Stack>
           <Text>
             Opravdu chcete smazat{" "}
-            {selectedItem?.type === "folder" ? "složku" : "obrázek"} "
-            {selectedItem?.name}"?
+            {selectedItem?.type === "folder" ? "složku" : "obrázek"} &quot;
+            {selectedItem?.name}&quot;?
             {selectedItem?.type === "folder" &&
               " Všechny soubory ve složce budou také smazány."}
           </Text>
