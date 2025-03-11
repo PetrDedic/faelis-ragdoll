@@ -13,7 +13,7 @@ export function FeaturesCards({ cards }: { cards: FeaturesCardsProps[] }) {
       radius="lg"
       padding="xl"
     >
-      <Flex w="100%" gap={16}>
+      <Flex w="100%" gap={16} align="center">
         <Image
           src={card.icon}
           w={48}

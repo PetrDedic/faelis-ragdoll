@@ -1,0 +1,87 @@
+{
+  "colors": {
+    "seal": {
+      "name": "SEAL",
+      "description": "The body is light brown, with the color lightening towards the belly and chest. The points are deep black-brown to black. The nose and paw pads are dark black-brown. Seal is a solid color (in the genetic code it is marked with capital letters BB, it either has no dilution genes - DD, or has a maximum of one - Dd)."
+    },
+    "blue": {
+      "name": "BLUE",
+      "description": "The body is bluish-white in a cool shade of color, with the color lightening towards the belly and chest. The points are deep dark gray with a bluish tinge. The nose and paw pads are slate gray - the intensity of color saturation is individual. Blue is a diluted seal color (in the genetic code it is marked with a capital letter BB and always two dilution genes dd)."
+    },
+    "chocolate": {
+      "name": "CHOCOLATE",
+      "description": "The body is ivory white, with the color lightening towards the belly and chest. The points are in a warm colored tone of milk chocolate, nowhere on the body is there any shade of black or black-brown. The nose and paw pads are cinnamon brown with a pink tinge - the intensity of color saturation is individual. Chocolate is a solid color (in the genetic code it is marked with two lowercase letters bb, it either has no dilution genes - DD, or has a maximum of one - Dd)."
+    },
+    "lilac": {
+      "name": "LILAC (FROST)",
+      "description": "The body is warm white with a pink tinge, with the color lightening towards the belly and chest. The points are in an icy gray color with a pink tinge. The nose and paw pads are lavender - the intensity of color saturation is individual. Lilac is a diluted chocolate color (in the genetic code it is marked with two lowercase letters bb, and always two dilution genes dd)."
+    },
+    "red": {
+      "name": "RED (FLAME)",
+      "description": "The body is pure white, sometimes with a tinge of point color. The points are red in a sharp carrot color - color saturation is preferred. The nose and paw pads are coral red - the intensity of color saturation is individual. Red is a solid color and in the genetic notation it is marked with the letter O."
+    },
+    "cream": {
+      "name": "CREAM",
+      "description": "The body is pure white, sometimes with a tinge of point color. The points are light creamy red - the color is not sharp, color saturation is preferred. The nose and paw pads are light coral red - the intensity of color saturation is individual. Cream is a diluted color (in the genetic code it is marked with the capital letter O)."
+    },
+    "seallynx": {
+      "name": "SEAL LYNX",
+      "description": "The body is light brown, with the color lightening towards the belly and chest. There is a distinct pattern on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are black-brown with a distinctly lighter background. The nose is preferably black-brown, but it can also be pink with black-brown edging. The paw pads are brown. It can happen that due to the pattern, all colors - coat, nose, and paw pads - may appear lighter than the classic black-brown - but be careful, it's not chocolate color. The rest is like seal color."
+    },
+    "bluelynx": {
+      "name": "BLUE LYNX",
+      "description": "The body is light brown, with the color lightening towards the belly and chest. There is a distinct pattern on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are deep gray with a blue tinge with a distinctly lighter background. The nose is preferably slate gray, but it can also be pink with gray edging. The paw pads are gray. The rest is like blue color."
+    },
+    "chocolatelynx": {
+      "name": "CHOCOLATE LYNX",
+      "description": "The body is light brown, with the color lightening towards the belly and chest. There is a distinct pattern on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are in the color of milk chocolate with a distinctly lighter background. The nose is preferably warm brown, but it can also be pink with warm-brown edging. The paw pads are warm brown. The rest is like chocolate color."
+    },
+    "lilaclynx": {
+      "name": "LILAC LYNX",
+      "description": "The body is icy white, with the color lightening towards the belly and chest. There is a distinct pattern on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are icy gray with a warm pink tinge with a distinctly lighter background. The nose is preferably lavender, but it can also be pink with lavender edging. The paw pads are lavender. The rest is like lilac color."
+    },
+    "redlynx": {
+      "name": "RED LYNX",
+      "description": "The body is white, there may be a visible pattern in the color of the points on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are sharp red in carrot color with a distinctly lighter background. The nose is preferably coral red, but it can also be pink with coral red edging. The paw pads are coral red. The rest is like red color."
+    },
+    "creamlynx": {
+      "name": "CREAM LYNX",
+      "description": "The body is pure white, sometimes with cream shades, with the color lightening towards the belly and chest. There are cream shades of pattern on the body - stripes and dots. In the middle of the ears is a lighter spot - the so-called thumbprint. The points are light creamy red with a warm tinge with a distinctly lighter background. The nose is preferably light coral, but it can also be pink with coral red edging. The paw pads are light coral. The rest is like cream color."
+    },
+    "sealtortie": {
+      "name": "SEAL TORTIE",
+      "description": "Only a female cat can have this coloration. The body is light brown, with the color lightening towards the belly and chest. There may be red or cream spots on the body - their size is individual. The points are black-brown, may have red or cream spots. The nose and paws are black-brown, or appropriately coral red - depending on the placement of red spots on the head and paws of the cat. The rest is like seal color."
+    },
+    "bluecream": {
+      "name": "BLUE CREAM",
+      "description": "Only a female cat can have this coloration. The body is bluish-white in a cool shade of color, with the color lightening towards the belly and chest. There may be cream spots on the body - their size is individual. The points are slate gray, may be with cream spots. The nose and paw pads are slate gray, or appropriately coral red - depending on the placement of cream spots on the head and paws of the cat. The rest is like blue color."
+    },
+    "chocolatetortie": {
+      "name": "CHOCOLATE TORTIE",
+      "description": "Only a female cat can have this coloration. The body is ivory white, with the color lightening towards the belly and chest. There may be red or cream spots on the body - their size is individual. The points are in the color of milk chocolate, may be with red or cream spots. The nose and paws are cinnamon brown, or appropriately coral red - depending on the placement of red spots on the head and paws of the cat. The rest is like chocolate color."
+    },
+    "lilaccream": {
+      "name": "LILAC CREAM",
+      "description": "Only a female cat can have this coloration. The body is warm white with a pink tinge, with the color lightening towards the belly and chest. There may be cream spots on the body - their size is individual. The points are in an icy gray color with a pink tinge, may be with cream spots. The nose and paw pads are lavender - or appropriately coral red - depending on the placement of red spots on the head and paws of the cat. The rest is like lilac color."
+    },
+    "sealtorbie": {
+      "name": "SEAL TORTIE LYNX (SEAL TORBIE)",
+      "description": "Only a female cat can have this coloration. The coloration is like seal tortie and seal lynx."
+    },
+    "bluetorbie": {
+      "name": "BLUE CREAM LYNX (BLUE TORBIE)",
+      "description": "Only a female cat can have this coloration. The coloration is like blue cream and blue lynx."
+    },
+    "chocolatetorbie": {
+      "name": "CHOCOLATE TORTIE LYNX (CHOCOLATE TORBIE)",
+      "description": "Only a female cat can have this coloration. The coloration is like chocolate cream and chocolate lynx."
+    },
+    "lilactorbie": {
+      "name": "LILAC CREAM LYNX (LILAC TORBIE)",
+      "description": "Only a female cat can have this coloration. The coloration is like lilac cream and lilac lynx."
+    }
+  },
+  "ui": {
+    "copyright": "I own the copyright to these photos (for some pieces I have permission from their owners). Please do not copy them without asking first."
+  }
+}

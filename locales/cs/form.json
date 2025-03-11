@@ -1,0 +1,20 @@
+{
+  "title": "Kontaktujte nás",
+  "name": {
+    "label": "Jméno",
+    "placeholder": "Vaše jméno a příjmení"
+  },
+  "email": {
+    "label": "Email",
+    "placeholder": "Váš email"
+  },
+  "subject": {
+    "label": "Předmět",
+    "placeholder": "Předmět"
+  },
+  "message": {
+    "label": "Vaše zpráva",
+    "placeholder": "Napište nám zprávu"
+  },
+  "submit": "Odeslat formulář"
+}

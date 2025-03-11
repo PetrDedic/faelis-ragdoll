@@ -1,0 +1,22 @@
+{
+  "location": {
+    "title": "Where to find us?"
+  },
+  "cattery": {
+    "title": "Faelis - Ragdoll Cat Cattery"
+  },
+  "contact": {
+    "name": "Marta Seko",
+    "address1": "Nad Nádrží 433/16",
+    "address2": "10 300 | Prague 10",
+    "email": "Email:",
+    "phone": "Phone:",
+    "skype": "Skype:",
+    "moreContacts": "Detailed Contacts can be found",
+    "here": "HERE!"
+  },
+  "copyright": {
+    "rights": "Faelis - cat cattery © 2002 All rights reserved.",
+    "design": "Designed by: paryn design & sanchez design"
+  }
+}

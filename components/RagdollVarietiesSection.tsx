@@ -13,6 +13,12 @@ import {
   Card,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/router";
+
+// Import translations
+import csTranslations from "../locales/cs/varieties.json";
+import enTranslations from "../locales/en/varieties.json";
+import deTranslations from "../locales/de/varieties.json";
 
 // Define the variety data type
 interface RagdollVariety {
@@ -24,97 +30,85 @@ interface RagdollVariety {
   description: string;
   galleryLink: string | null;
   examples: Array<{
+    id: string;
     image: string;
     title: string;
   }>;
   disqualifications: string;
 }
 
-// Variety data from the old website
-const varietyData: RagdollVariety[] = [
+// Base variety data (non-translatable content)
+const baseVarietyData = [
   {
     id: "colorpoint",
-    name: "Ragdoll colorpoint",
     code: "RAG n, RAG a, RAG b, RAG c",
     smallImage: "http://www.ragdolls.cz/img/variety/colorpoint.jpg",
     largeImage: "http://www.ragdolls.cz/img/variety/colorpoint_big.jpg",
-    description:
-      "Odznaky: uši, maska, packy, varlata a ocas jsou temnější, s jasně stanovenou barvou. Sliznice nosu a polštářky tlapek plně vybarvené a odpovídající dané barvě. Tělo: viditelný kontrast mezi tělem a odznaky. Hruď, hříva a oblasti brady mohou mít poněkud světlejší vybarvení.",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19072",
-    examples: [
+    exampleImages: [
       {
+        id: "seal_colorpoint",
         image: "http://www.ragdolls.cz/img/variety/colorpoint_seal.jpg",
-        title: "Ragdoll seal colorpoint, RAG n",
       },
       {
+        id: "blue_colorpoint",
         image: "http://www.ragdolls.cz/img/variety/colorpoint_blue.jpg",
-        title: "Ragdoll blue colorpoint, RAG a",
       },
       {
+        id: "chocolate_colorpoint",
         image: "http://www.ragdolls.cz/img/variety/colorpoint_chocolate.jpg",
-        title: "Ragdoll chocolate colorpoint, RAG b",
       },
       {
+        id: "lilac_colorpoint",
         image: "http://www.ragdolls.cz/img/variety/colorpoint_lilac.jpg",
-        title: "Ragdoll lilac colorpoint, RAG c",
       },
     ],
-    disqualifications: "Přítomnost bílé barvy srsti kdekoliv na kočičím těle.",
   },
   {
     id: "mitted",
-    name: "Ragdoll mitted",
     code: "RAG n 04, RAG a 04, RAG b 04, RAG c 04",
     smallImage: "http://www.ragdolls.cz/img/variety/mitted.jpg",
     largeImage: "http://www.ragdolls.cz/img/variety/mitted_big.jpg",
-    description:
-      "Odznaky (s vyjímkou bílé na packách): uši, maska, packy a ocas jsou temnější, s jasně stanovenou barvou. Možnost bílé skvrny nebo proužku (tvar hvězdičky, plamínky, přesýpacích hodin - v celku nebo více skvrn či proužků) v srsti od sliznice nosu nahoru nebo pod nosem. Brada musí být vždy bílá a přechází v kuse do bílého pruhu na břiše, který končí až u genitálií. Přední tlapky jsou rovnoměrně bílé, nejlépe do výše zápěstního kloubu. Zadní nohy jsou bílé ideálně po patní kloub. Sliznice nosu plně vybarvena a odpovídající dané barvě srtsi. Polštářky jsou růžové, může se vyskytnout zabarvený polštářek v barvě srsti. Barva srsti po těle by měla být viditelně světlejší než barva odznaků, na těle barva může mít více odstínů. U koťat a dospělých mladších 2-3 let barvy nejsou plně vyvinuté.",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19073",
-    examples: [
+    exampleImages: [
       {
+        id: "seal_mitted",
         image: "http://www.ragdolls.cz/img/variety/mitted_seal.jpg",
-        title: "Ragdoll seal mitted, RAG n 04",
       },
       {
+        id: "blue_mitted",
         image: "http://www.ragdolls.cz/img/variety/mitted_blue.jpg",
-        title: "Ragdoll blue mitted, RAG a 04",
       },
       {
+        id: "chocolate_mitted",
         image: "http://www.ragdolls.cz/img/variety/mitted_chocolate.jpg",
-        title: "Ragdoll chocolate mitted, RAG b 04",
       },
       {
+        id: "lilac_mitted",
         image: "http://www.ragdolls.cz/img/variety/mitted_lilac.jpg",
-        title: "Ragdoll lilac mitted, RAG c 04",
       },
     ],
-    disqualifications: "Absence bílé brady.",
   },
   {
     id: "bicolor",
-    name: "Ragdoll bicolor",
     code: "RAG n 03, RAG a 03, RAG b 03, RAG c 03",
     smallImage: "http://www.ragdolls.cz/img/variety/bicolor.jpg",
     largeImage: "http://www.ragdolls.cz/img/variety/bicolor_big.jpg",
-    description:
-      "Odznaky: uši a ocas. V oblasti masky je bílé obrácené V - maximálně po vnější okraj očí, preferována souměrnost tohoto V. Sliznice nosu růžová, polštářky preferovány růžové, ale mohou být zbarvené podle srsti. Na zádech mohou být bílé skvrny, tělo na hrudi, bradě a břiše má být bílé.",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19074",
-    examples: [
+    exampleImages: [
       {
+        id: "seal_bicolor",
         image: "http://www.ragdolls.cz/img/variety/bicolor_seal.jpg",
-        title: "Ragdoll seal bicolor, RAG n 03",
       },
       {
+        id: "blue_bicolor",
         image: "http://www.ragdolls.cz/img/variety/bicolor_blue.jpg",
-        title: "Ragdoll blue bicolor, RAG a 03",
       },
       {
+        id: "chocolate_tortie_bicolor",
         image: "http://www.ragdolls.cz/img/variety/bicolor_chocolatetortie.jpg",
-        title: "Ragdoll chocolate tortie bicolor, RAG h 03",
       },
     ],
-    disqualifications:
-      "Rozsáhlá tmavá skvrna na noze/nohách, absence V nebo fleky ve V, absence celého barevného odznaku na hlavě nebo ocase.",
   },
 ];
 
@@ -123,6 +117,38 @@ export function RagdollVarietiesSection() {
   const [selectedVariety, setSelectedVariety] = useState<RagdollVariety | null>(
     null
   );
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
+  // Create the full variety data with translations
+  const varietyData: RagdollVariety[] = baseVarietyData.map((variety) => {
+    const translatedVariety =
+      t.varieties[variety.id as keyof typeof t.varieties];
+    const examples = variety.exampleImages.map((example) => ({
+      id: example.id,
+      image: example.image,
+      title: t.examples[example.id as keyof typeof t.examples] || example.id,
+    }));
+
+    return {
+      ...variety,
+      name: translatedVariety.name,
+      description: translatedVariety.description,
+      disqualifications: translatedVariety.disqualifications,
+      examples,
+    };
+  });
 
   const handleVarietyClick = (variety: RagdollVariety): void => {
     setSelectedVariety(variety);
@@ -132,10 +158,10 @@ export function RagdollVarietiesSection() {
   return (
     <Stack w="100%" align="center" gap={32}>
       <Title order={2} size="h1" c="#47a3ee" ta="center">
-        Variety plemene Ragdoll
+        {t.section.title}
       </Title>
       <Text size="lg" c="black">
-        Všechny barvy ragdolů mohou být vždy jen ve třech varietách:
+        {t.section.intro}
       </Text>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
         {varietyData.map((variety) => (
@@ -199,7 +225,7 @@ export function RagdollVarietiesSection() {
             <Text>{selectedVariety.description}</Text>
 
             <Title order={4} size="h4" mt="md">
-              Příklady
+              {t.modal.examples}
             </Title>
             <SimpleGrid cols={{ base: 1, xs: 2, sm: 4 }} spacing="sm">
               {selectedVariety.examples.map((example, index) => (
@@ -219,7 +245,7 @@ export function RagdollVarietiesSection() {
             </SimpleGrid>
 
             <Text mt="md" fw={700}>
-              Diskvalifikace:
+              {t.modal.disqualifications}
             </Text>
             <Text>{selectedVariety.disqualifications}</Text>
           </Stack>

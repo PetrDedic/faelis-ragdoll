@@ -1,0 +1,40 @@
+{
+  "section": {
+    "title": "Ragdoll Breed Varieties",
+    "intro": "All Ragdoll colors can only exist in three varieties:"
+  },
+  "modal": {
+    "examples": "Examples",
+    "disqualifications": "Disqualifications:"
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Ragdoll colorpoint",
+      "description": "Points: ears, mask, paws, testicles, and tail are darker, with a clearly defined color. The nose leather and paw pads are fully colored and correspond to the given color. Body: visible contrast between body and points. The chest, mane, and chin areas may have somewhat lighter coloring.",
+      "disqualifications": "Presence of white coat color anywhere on the cat's body."
+    },
+    "mitted": {
+      "name": "Ragdoll mitted",
+      "description": "Points (with the exception of white on the paws): ears, mask, paws, and tail are darker, with a clearly defined color. Possibility of a white spot or stripe (star shape, flame, hourglass - in whole or multiple spots or stripes) in the coat from the nose leather upward or under the nose. The chin must always be white and transitions in one piece to a white stripe on the belly, which ends at the genitals. The front paws are evenly white, ideally up to the wrist joint. The back legs are white, ideally up to the hock joint. The nose leather is fully colored and corresponds to the given coat color. The paw pads are pink, a colored pad in the coat color may occur. The coat color on the body should be visibly lighter than the color of the points; the body color may have multiple shades. In kittens and adults younger than 2-3 years, colors are not fully developed.",
+      "disqualifications": "Absence of white chin."
+    },
+    "bicolor": {
+      "name": "Ragdoll bicolor",
+      "description": "Points: ears and tail. In the mask area, there is an inverted white V - maximum to the outer edge of the eyes, symmetry of this V is preferred. The nose leather is pink, paw pads are preferred pink but may be colored according to the coat. There may be white spots on the back; the body on the chest, chin, and belly should be white.",
+      "disqualifications": "Extensive dark spot on leg(s), absence of V or spots in the V, absence of entire color point on the head or tail."
+    }
+  },
+  "examples": {
+    "seal_colorpoint": "Ragdoll seal colorpoint, RAG n",
+    "blue_colorpoint": "Ragdoll blue colorpoint, RAG a",
+    "chocolate_colorpoint": "Ragdoll chocolate colorpoint, RAG b",
+    "lilac_colorpoint": "Ragdoll lilac colorpoint, RAG c",
+    "seal_mitted": "Ragdoll seal mitted, RAG n 04",
+    "blue_mitted": "Ragdoll blue mitted, RAG a 04",
+    "chocolate_mitted": "Ragdoll chocolate mitted, RAG b 04",
+    "lilac_mitted": "Ragdoll lilac mitted, RAG c 04",
+    "seal_bicolor": "Ragdoll seal bicolor, RAG n 03",
+    "blue_bicolor": "Ragdoll blue bicolor, RAG a 03",
+    "chocolate_tortie_bicolor": "Ragdoll chocolate tortie bicolor, RAG h 03"
+  }
+}

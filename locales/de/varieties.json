@@ -1,0 +1,40 @@
+{
+  "section": {
+    "title": "Varietäten der Ragdoll-Rasse",
+    "intro": "Alle Ragdoll-Farben können nur in drei Varietäten vorkommen:"
+  },
+  "modal": {
+    "examples": "Beispiele",
+    "disqualifications": "Disqualifikationen:"
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Ragdoll Colorpoint",
+      "description": "Points: Ohren, Maske, Pfoten, Hoden und Schwanz sind dunkler, mit einer klar definierten Farbe. Nasenleder und Fußballen sind vollständig gefärbt und entsprechen der jeweiligen Farbe. Körper: sichtbarer Kontrast zwischen Körper und Points. Brust, Mähne und Kinnbereich können eine etwas hellere Färbung haben.",
+      "disqualifications": "Vorhandensein von weißer Fellfarbe irgendwo am Katzenkörper."
+    },
+    "mitted": {
+      "name": "Ragdoll Mitted",
+      "description": "Points (mit Ausnahme von Weiß an den Pfoten): Ohren, Maske, Pfoten und Schwanz sind dunkler, mit einer klar definierten Farbe. Möglichkeit eines weißen Flecks oder Streifens (Sternform, Flamme, Sanduhr - ganz oder mehrere Flecken oder Streifen) im Fell vom Nasenleder aufwärts oder unter der Nase. Das Kinn muss immer weiß sein und geht in einem Stück in einen weißen Streifen am Bauch über, der an den Genitalien endet. Die Vorderpfoten sind gleichmäßig weiß, idealerweise bis zum Handgelenk. Die Hinterbeine sind weiß, idealerweise bis zum Sprunggelenk. Das Nasenleder ist vollständig gefärbt und entspricht der jeweiligen Fellfarbe. Die Fußballen sind rosa, ein farbiger Ballen in der Fellfarbe kann vorkommen. Die Fellfarbe am Körper sollte sichtbar heller sein als die Farbe der Points; die Körperfarbe kann mehrere Schattierungen haben. Bei Kätzchen und Erwachsenen unter 2-3 Jahren sind die Farben nicht vollständig entwickelt.",
+      "disqualifications": "Fehlen des weißen Kinns."
+    },
+    "bicolor": {
+      "name": "Ragdoll Bicolor",
+      "description": "Points: Ohren und Schwanz. Im Maskenbereich befindet sich ein umgekehrtes weißes V - maximal bis zum äußeren Augenrand, Symmetrie dieses V wird bevorzugt. Das Nasenleder ist rosa, Fußballen werden rosa bevorzugt, können aber je nach Fell gefärbt sein. Es können weiße Flecken auf dem Rücken sein; der Körper an Brust, Kinn und Bauch sollte weiß sein.",
+      "disqualifications": "Ausgedehnter dunkler Fleck am Bein/an den Beinen, Fehlen des V oder Flecken im V, Fehlen des gesamten Farbpoints am Kopf oder Schwanz."
+    }
+  },
+  "examples": {
+    "seal_colorpoint": "Ragdoll Seal Colorpoint, RAG n",
+    "blue_colorpoint": "Ragdoll Blue Colorpoint, RAG a",
+    "chocolate_colorpoint": "Ragdoll Chocolate Colorpoint, RAG b",
+    "lilac_colorpoint": "Ragdoll Lilac Colorpoint, RAG c",
+    "seal_mitted": "Ragdoll Seal Mitted, RAG n 04",
+    "blue_mitted": "Ragdoll Blue Mitted, RAG a 04",
+    "chocolate_mitted": "Ragdoll Chocolate Mitted, RAG b 04",
+    "lilac_mitted": "Ragdoll Lilac Mitted, RAG c 04",
+    "seal_bicolor": "Ragdoll Seal Bicolor, RAG n 03",
+    "blue_bicolor": "Ragdoll Blue Bicolor, RAG a 03",
+    "chocolate_tortie_bicolor": "Ragdoll Chocolate Tortie Bicolor, RAG h 03"
+  }
+}

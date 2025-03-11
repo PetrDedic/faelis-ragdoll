@@ -10,19 +10,39 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { useRouter } from "next/router";
 import { HeroImageBackground } from "../components/HeroImageBackground";
 import { LeftImageSection } from "../components/LeftImageSection";
 import Link from "next/link";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
 
+// Import translations
+import csTranslations from "../locales/cs/about.json";
+import enTranslations from "../locales/en/about.json";
+import deTranslations from "../locales/de/about.json";
+
 export default function AboutPage() {
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
       <HeroImageBackground
         backgroundImage="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        heading="Zde se dozvíte něco málo o tom, jak jsme začali."
-        subtext="Naše vytrvalost a nadšenost."
+        heading={t.hero.heading}
+        subtext={t.hero.subtext}
       />
       <Stack
         px={32}
@@ -36,90 +56,68 @@ export default function AboutPage() {
       >
         <Stack w="100%" align="center" gap={32}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
-            O chovatelské stanici koček Faelis - plemeno Ragdoll
+            {t.section1.title}
           </Title>
           <Text size="lg" c="black" ta="center" maw={960}>
-            Chovatelská stanice koček Faelis chová plemeno Ragdoll. Chovu
-            Ragdoll kočky se věnuji od roku 2002 a snažím se chov dělat co
-            nejlépe se vším, co k němu patří. V dnešní době to je mimo jiného
-            spousta zdravotních testů chovných koček, účast na výstavách atd....
+            {t.section1.paragraph1}
           </Text>
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <AspectRatio ratio={16 / 9}>
               <Image
                 radius="lg"
                 src="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="1"
+                alt="Faelis cattery"
               />
             </AspectRatio>
             <AspectRatio ratio={16 / 9}>
               <Image
                 radius="lg"
                 src="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="1"
+                alt="Faelis cattery"
               />
             </AspectRatio>
           </SimpleGrid>
           <Text size="lg" c="black" ta="center" maw={960}>
-            Prestiž a uznání chovatelské stanice si nikde nekoupíte, k tomu se
-            můžete dopracovat jen krok za krokem dobrou a poctivou chovatelskou
-            prací. Říkat sám o sobě jak jste dobrý je k ničemu, to druzí vás
-            mají takto soudit a pak se teprve můžete cítit jako dobrý chovatel.
-            Ne nadarmo se odpradávna říká, že sebechvála smrdí :o) V
-            chovatelství se člověk stále učí něčemu novému a neustále se setkává
-            s věcmi, s kterými ještě neměl žádnou zkušenost a musí se s nimi
-            poprat. Chovatelství nepřináší jen radost z roztomilých koťátek, je
-            to spousta starostí, odpovědnosti, někdy i smutku a až tam kdesi na
-            konci je radost.
+            {t.section1.paragraph2}
           </Text>
         </Stack>
 
         <FullscreenBackroundSection>
           <Stack align="center" w="100%" maw={720} py={32}>
             <Title order={2} size="h1" c="dark" ta="center">
-              Mám zájem o svou kočičku
+              {t.contact.heading}
             </Title>
             <Text size="lg" c="black" ta="center">
-              Pokud máte zájem zakoupit jednu z našich kočiček, tak nás
-              kontaktujte pomocí telefonního čísla a nebo na níže uvedeném
-              formuláři.
+              {t.contact.subtext}
             </Text>
-            <Button
-              color="#47a3ee"
-              size="compact-lg"
-              fw={400}
-              px={24}
-              w={{ base: "100%", sm: "fit-content" }}
-            >
-              Zjistit více
-            </Button>
+            <Link href="/contact" locale={locale}>
+              <Button
+                color="#47a3ee"
+                size="compact-lg"
+                fw={400}
+                px={24}
+                w={{ base: "100%", sm: "fit-content" }}
+              >
+                {t.contact.button}
+              </Button>
+            </Link>
           </Stack>
         </FullscreenBackroundSection>
 
         <Stack w="100%" align="center" gap={32}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
-            Jsem hrdá na to, že o naše koťátka mají zájem i v zahraničních
-            chovatelských stanicích.
+            {t.section2.title}
           </Title>
           <Stack w="100%" align="center" gap={8}>
             <Text size="lg" c="black" ta="center">
-              Mezi země, kde koťátka z chovatelské stanice Faelis žijí patří:
+              {t.section2.intro}
             </Text>
             <Text size="lg" c="black" ta="center">
-              Holandsko, Belgie, Švédsko, Polsko, Maďarsko, Rumunsko, Norsko,
-              Slovensko, Rakousko, Španělsko, Itálie, Nový Zéland, Kanada, USA,
-              Finsko, Anglie, Německo, Francie, Brazílie a Černá Hora...
+              {t.section2.countries}
             </Text>
           </Stack>
           <Text size="lg" c="black" ta="center">
-            CHS Faelis je registrována v ČSCHK (který patří pod světovou
-            organizaci FIFe) a tím je vázána dodržováním Chovatelského řádu této
-            organizace. V Česku prodávám kočičky do chovu zásadně stejně
-            registrovaným zájemcům, kocourky jen na mazlíčky. Všechna koťata
-            prodávám vždy řádně naočkovaná a s průkazy původu ve stáří 3 měsíců.
-            Ráda poradím všem, nejen majitelům našich koťátek. Pro svá koťátka
-            chci jen ty nejhodnější páníčky, ale to je myslím sen každého
-            chovatele :o) Kotátkům dávám výbavičku pro první dny v novém domově.
+            {t.section2.paragraph}
           </Text>
         </Stack>
 

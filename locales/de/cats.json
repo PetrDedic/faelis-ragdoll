@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "heading": "Alle unsere Kätzchen, Katzen und Kater",
+    "subtext": "Ich möchte mein eigenes Kätzchen."
+  },
+  "kittens": {
+    "title": "Ragdoll Kätzchen",
+    "litterInfo": "Wurf O geboren am 26.10.2024",
+    "description": "Impfung, Entwurmung, Stammbaum, Kaufvertrag... das ist selbstverständlich, wir stehen mit den Besitzern unserer Kätzchen auch nach dem Verkauf in Kontakt. Die Eltern sind negativ auf HCM und PKD, FeLV und FIV getestet."
+  },
+  "cats": {
+    "maleCats": "Ragdoll Kater",
+    "femaleCats": "Ragdoll Katzen"
+  },
+  "catInfo": {
+    "gender": "Geschlecht",
+    "genderMale": "Kater",
+    "genderFemale": "Katze",
+    "birthDate": "Geburtsdatum",
+    "color": "Farbe",
+    "variety": "Variante",
+    "bloodGroup": "Blutgruppe",
+    "geneticCode": "Genetischer Farbcode"
+  },
+  "facts": {
+    "heading": "Einige Fakten über unsere Ragdoll-Zucht",
+    "stat1": {
+      "number": "50+",
+      "text": "Zufriedene Kunden"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Jahre Erfahrung"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Glückliche Katzen"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Erfolgreiche Würfe"
+    },
+    "button": "Mehr erfahren"
+  },
+  "contact": {
+    "heading": "Ich interessiere mich für ein Kätzchen",
+    "subtext": "Wenn Sie Interesse am Kauf eines unserer Kätzchen haben, kontaktieren Sie uns bitte telefonisch oder über das untenstehende Formular.",
+    "button": "Mehr erfahren"
+  }
+}

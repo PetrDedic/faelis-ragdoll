@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "heading": "How to best contact us and where to find us exactly?"
+  },
+  "section1": {
+    "title": "Ragdoll Cat Cattery - Contact",
+    "name": "Marta Seko",
+    "address1": "Nad Nádrží 433/16",
+    "address2": "10300 Prague 10",
+    "phone": "Phone:",
+    "email": "Email:",
+    "skype": "Skype:",
+    "skypeId": "ragdoll.faelis"
+  },
+  "section2": {
+    "title": "Where to find us exactly?",
+    "address": "Nad Nádrží 433/16 | 10300 Prague 10"
+  }
+}

@@ -9,8 +9,28 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useRouter } from "next/router";
+
+// Import translations
+import csTranslations from "../locales/cs/form.json";
+import enTranslations from "../locales/en/form.json";
+import deTranslations from "../locales/de/form.json";
 
 export function Form() {
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -28,7 +48,7 @@ export function Form() {
   return (
     <Stack align="center" w="100%">
       <Title order={2} size="h1" c="#47a3ee" ta="center">
-        Kontaktujte nás
+        {t.title}
       </Title>
       <Card
         bg="#ebf1f7"
@@ -42,16 +62,16 @@ export function Form() {
           <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
             <TextInput
               styles={{ input: { border: "#47a3ee 1px solid" } }}
-              label="Jméno"
-              placeholder="Vaše jméno a příjmení"
+              label={t.name.label}
+              placeholder={t.name.placeholder}
               name="name"
               variant="filled"
               {...form.getInputProps("name")}
             />
             <TextInput
               styles={{ input: { border: "#47a3ee 1px solid" } }}
-              label="Email"
-              placeholder="Váš email"
+              label={t.email.label}
+              placeholder={t.email.placeholder}
               name="email"
               variant="filled"
               {...form.getInputProps("email")}
@@ -60,8 +80,8 @@ export function Form() {
 
           <TextInput
             styles={{ input: { border: "#47a3ee 1px solid" } }}
-            label="Předmět"
-            placeholder="Předmět"
+            label={t.subject.label}
+            placeholder={t.subject.placeholder}
             mt="md"
             name="subject"
             variant="filled"
@@ -70,8 +90,8 @@ export function Form() {
           <Textarea
             styles={{ input: { border: "#47a3ee 1px solid" } }}
             mt="md"
-            label="Vaše zpráva"
-            placeholder="Napište nám zprávu"
+            label={t.message.label}
+            placeholder={t.message.placeholder}
             maxRows={10}
             minRows={5}
             autosize
@@ -82,7 +102,7 @@ export function Form() {
 
           <Group justify="center" mt="xl">
             <Button type="submit" size="md">
-              Odeslat formulář
+              {t.submit}
             </Button>
           </Group>
         </form>

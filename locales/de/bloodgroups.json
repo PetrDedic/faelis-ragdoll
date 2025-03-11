@@ -1,0 +1,126 @@
+{
+  "section": {
+    "title": "Blutgruppen bei Ragdoll-Katzen",
+    "intro": "Es ist kein Unglück, eine Ragdoll-Katze mit Blutgruppe B zu haben, man muss nur vorbereitet und informiert sein und diese Informationen weitergeben. Das Schicksal wollte es, dass ich mich selbst davon überzeugt habe, dass eine Katze und ein Kater mit Blutgruppe A Nachkommen mit Blutgruppe B haben können. Daher reicht es nicht aus, nur die Blutgruppe der Eltern zu kennen; sie muss für jedes Kätzchen in der Zucht separat bestimmt werden, um FNI (Feline Neonatale Isoerythrolyse) zu verhindern."
+  },
+  "alert": {
+    "title": "Wichtiger Hinweis",
+    "content": "Es ist sehr wichtig, die Blutgruppe von Zuchtkatzen zu kennen, bevor Kätzchen geboren werden, am besten ist es, sich bereits beim Kauf eines Kätzchens für die Zucht dafür zu interessieren. Dies liegt daran, dass, wenn die Katze die Blutgruppe B hat und der Kater die Gruppe A, man sich darauf vorbereiten muss, um die geborenen Kätzchen erfolgreich aufziehen zu können. Kätzchen mit Blutgruppe A, die in den ersten 1-3 Tagen von einer Mutter mit Blutgruppe B trinken, sind von FNI betroffen, und solche Kätzchen werden schnell schwächer, verlieren das Interesse am Milchtrinken und sterben mit Symptomen von Gelbsucht und Anämie."
+  },
+  "accordion": {
+    "testing": {
+      "title": "Blutgruppentests",
+      "intro": "Die Blutgruppe kann auf zwei Arten bestimmt werden:",
+      "serology": {
+        "title": "1. Serologisch",
+        "content": "Der Tierarzt nimmt Blut ab. Wenn Sie einen guten Tierarzt haben, wird er der Katze Blut ohne Narkose und ohne Rasieren der Vorderpfote abnehmen. Die Blutanalyse zur Blutgruppenbestimmung kann jetzt auch in unserem Land, in einem Labor in Pilsen, durchgeführt werden."
+      },
+      "genetic": {
+        "title": "2. Genetisch",
+        "content": "Entweder aus abgenommenem Blut oder aus einem Wangenabstrich, den der Züchter selbst sammeln kann. Die genetische Bestimmung der Blutgruppe hat den Vorteil, dass sie auch bestimmen kann, ob eine Katze mit Gruppe A (oder AB) Träger des Merkmals für Blutgruppe B ist oder nicht.",
+        "note": "Der Nachteil ist, dass für die Rassen Ragdoll und Türkische Van der genetische Blutgruppentest immer noch nicht 100% genau ist. Für alle anderen Rassen ist er jedoch 100% genau. Der Test kostet etwa 1000 CZK (der Preis kann variieren)."
+      },
+      "kittenTesting": {
+        "title": "Zur Bestimmung der Blutgruppe bei neugeborenen Kätzchen",
+        "content": "Kann ein sogenannter Schnelltest aus Nabelschnurblut verwendet werden. Dieser kann online gekauft werden:",
+        "link1": "Alvediavet",
+        "link1_desc": "- ein europäisches Produkt, laut meinen Freunden aus Spanien ist es besser, weil es weniger Blut benötigt als der Test aus den USA",
+        "link2": "Rapidvet",
+        "link2_desc": "- ein Test aus den USA"
+      },
+      "research": "Derzeit wird in dem amerikanischen Labor",
+      "researchLink": "UC Davis",
+      "researchDesc": "geforscht, das die Blutgruppe auch bei Ragdoll- und Türkischen Van-Katzen mittels DNA bestimmen könnte, bei denen die genetische Bestimmung der Blutgruppen noch nicht vollständig nachgewiesen ist."
+    },
+    "bloodgroups": {
+      "title": "Vererbung von Blutgruppen",
+      "intro": "Bei Katzen kennen wir drei Blutgruppen: A, AB und B. Typ A wird durch Genpaare A=AA (Aa) oder A=AB (Ab) gebildet, wobei A dominant ist und die Manifestationen von B unterdrückt. Typ AB ist selten und wenig erforscht, unterscheidet sich aber von der Kombination Ab. Typ B wird durch Gene BB (B) gebildet.",
+      "legend": {
+        "title": "Erläuterungen zur Übersicht:",
+        "schema": "Notationsschema: Mutter (Katze) + Vater (Kater) = Nachkommen (Kätzchen)",
+        "aa": "Aa = Blutgruppe A ohne das Merkmal für Blutgruppe B",
+        "ab": "Ab = Blutgruppe A mit dem Merkmal für Blutgruppe B",
+        "b": "B = Blutgruppe B (kann kein Träger des Merkmals für eine andere Blutgruppe sein, ist immer nur B auf beiden Allelen)"
+      },
+      "table": {
+        "header1": "Elternkombinationen",
+        "header2": "Nachkommen",
+        "header3": "Risiko",
+        "header4": "Beschreibung"
+      },
+      "detailedTable": "Detaillierte Tabelle der Blutgruppenvererbung"
+    },
+    "fni": {
+      "title": "FNI (Feline Neonatale Isoerythrolyse)",
+      "intro": "Bei Transfusionen, Spender A, Empfänger B, und umgekehrt, gibt es nach der ersten Anwendung keine Probleme. In der Katzenzucht gab es, wenn das Elternpaar unterschiedliche Blutgruppen hat, die Meinung, dass die Mutter Antikörper gegen den Fötus bildet, der die Blutgruppe des Vaters geerbt hat. Das stimmt nicht, denn bei Katzen passieren Antikörper die Plazenta nicht, die eine natürliche Barriere ist. Eine Mutter mit Blutgruppe B kann Kätzchen mit Blutgruppe A ohne Probleme austragen.",
+      "alert": {
+        "title": "Inkompatibilität manifestiert sich erst nach der Geburt, nach dem ersten Trinken von Kolostrum.",
+        "content": "Im Kolostrum einer Katze mit Blutgruppe B sind Antikörper gegen Blutgruppe A. In den ersten Tagen nach der Geburt erhalten Kätzchen Kolostrum mit Antikörpern gegen ihre eigene Blutgruppe. Diese passieren die Darmbarriere (in den ersten Tagen) und zerstören die roten Blutkörperchen des Kätzchens. Dieser Zustand wird mit der Abkürzung FNI (Feline Neonatale Isoerythrolyse) bezeichnet - feline neonatale Auflösung roter Blutkörperchen."
+      },
+      "symptoms": "Auf diese Weise betroffene Kätzchen werden schnell schwächer, verlieren das Interesse am Saugen, hören völlig auf zu saugen und sterben mit Symptomen von Gelbsucht und Anämie. Einige dieser Kätzchen überleben, sterben aber nach einigen Wochen an Schwäche. Ausnahmsweise überleben sie mit einer milden Form von Anämie, ihre Entwicklung ist verzögert, sie bleiben hinter ihren Geschwistern zurück.",
+      "solution": {
+        "title": "Problemlösung:",
+        "part1": "Wenn es kein Ausweichen gibt und wir aus irgendeinem Grund ein Elternpaar aus Individuen mit unterschiedlichen Blutgruppen bilden müssen, ist die einzige Möglichkeit, das Leben der Kätzchen zu retten, die Kätzchen sofort nach der Geburt, bevor sie Kolostrum trinken, für mindestens 24 Stunden von der Mutter zu trennen, wenn die Darmwand der Kätzchen für Antikörper durchlässig ist.",
+        "part2": "Während der Trennung ist es notwendig, die Kätzchen künstlich mit einem Ersatz für Katzenmilch zu füttern (in Geschäften erhältlich, z.B. Trockenmilch Kitty milk von Beaphar, aber es gibt natürlich mehr Marken) oder eine Amme mit einer Blutgruppe zu haben, die den Kätzchen entspricht. Leider erhalten diese Kätzchen keine Antikörper gegen Infektionen aus dem Kolostrum und tragen somit eine gewisse Belastung ins Leben."
+      },
+      "note": "Individuen mit Blutgruppe B kommen am häufigsten bei britischen Katzen (bis zu 50%), Devon Rex (40%), Abessinier, Somali und Perser (20%) vor, während Siamesen und Orientalen fast immer Blutgruppe A haben. Diese Probleme treten auch bei frei gezüchteten Hauskatzen auf. Katzen gebären gesunde Kätzchen, aber diese sterben bald. Eine solche Katze zieht normalerweise in ihrem Leben keine Kätzchen auf, es sei denn, sie trifft einen Kater, der auch die Gruppe B hat.",
+      "author": "- MVDr. Květa Mahelková"
+    }
+  },
+  "combinations": [
+    {
+      "combination": "Aa + Aa",
+      "result": "Aa",
+      "warning": false,
+      "description": "Idealer Zustand, sowohl Katze als auch Kater sind rein A und keiner von ihnen trägt das Merkmal für Blutgruppe B"
+    },
+    {
+      "combination": "Aa + Ab",
+      "result": "Aa oder Ab",
+      "warning": false,
+      "description": "Alle Kätzchen werden Blutgruppe A haben, aber einige werden Aa und einige werden Ab nach dem Vater sein"
+    },
+    {
+      "combination": "Aa + B",
+      "result": "Ab",
+      "warning": false,
+      "description": "Alle Kätzchen werden mit Blutgruppe Ab geboren, so dass sie auch Träger des Merkmals für Blutgruppe B nach dem Vater sein werden"
+    },
+    {
+      "combination": "Ab + Aa",
+      "result": "Aa oder Ab",
+      "warning": false,
+      "description": "Alle Kätzchen werden Blutgruppe A haben, aber einige werden Aa und einige werden Ab nach der Mutter sein"
+    },
+    {
+      "combination": "Ab + Ab",
+      "result": "Aa oder Ab oder B",
+      "warning": false,
+      "description": "Kätzchen können als reines Aa oder Träger von B als Ab oder Blutgruppe B geboren werden"
+    },
+    {
+      "combination": "Ab + B",
+      "result": "Ab und B",
+      "warning": false,
+      "description": "Wenn die Mutter Blutgruppe Ab und der Vater B ist, dann werden alle Kätzchen Blutgruppe Ab und B haben"
+    },
+    {
+      "combination": "B + Aa",
+      "result": "Ab",
+      "warning": true,
+      "description": "Die Mutterkatze hat Blutgruppe B und der Vater Aa - alle Kätzchen müssen für mindestens 24 Stunden von der Mutter getrennt werden!"
+    },
+    {
+      "combination": "B + Ab",
+      "result": "Ab und B",
+      "warning": true,
+      "description": "Die Katze hat Blutgruppe B und der Vater Ab - einige Kätzchen können gefährdet sein und müssen für mindestens 24 Stunden getrennt werden. Die Bestimmung, welche Kätzchen gefährdet sein könnten, kann bei der Geburt aus Nabelschnurblut und einem Schnelltestkit erfolgen, das im Voraus gekauft werden muss"
+    },
+    {
+      "combination": "B + B",
+      "result": "B",
+      "warning": false,
+      "description": "Beide Eltern haben Blutgruppe B, also ist alles in Ordnung, nur müssen diejenigen informiert werden, die sich für Kätzchen zur Zucht interessieren, wegen zukünftiger Nachkommen"
+    }
+  ]
+}

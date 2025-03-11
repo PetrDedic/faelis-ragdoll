@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "heading": "Welcome to Faelis",
+    "subtext": "We are the best and only Ragdoll cat breeding cattery in the Czech Republic."
+  },
+  "features": {
+    "card1": "Safe and cozy place for cats.",
+    "card2": "Health and care are our top priority.",
+    "card3": "Years of experience and expertise."
+  },
+  "about": {
+    "heading": "About the Faelis Cat Cattery",
+    "subtext": "Here will be text on this topic, which will be added later. Here will be text on this topic, which will be added later.",
+    "button": "Learn more"
+  },
+  "cats": {
+    "heading": "Our Cats",
+    "subtext": "Here will be text on this topic, which will be added later. Here will be text on this topic, which will be added later.",
+    "categories": {
+      "cats": "Cats",
+      "maleCats": "Male Cats",
+      "kittens": "Kittens",
+      "more": "Learn more"
+    }
+  },
+  "facts": {
+    "heading": "Some Facts About Our Ragdoll Breeding",
+    "stat1": {
+      "number": "50+",
+      "text": "Satisfied clients"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Years of experience"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Happy cats"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Successful litters"
+    },
+    "button": "Learn more"
+  },
+  "reviews": {
+    "heading": "Reviews and Client Satisfaction",
+    "subtext": "Here will be text on this topic, which will be added later. Here will be text on this topic, which will be added later.",
+    "reviewText": "Here will be text on this topic, which will be added later. Here will be text on this topic, which will be added later."
+  },
+  "contact": {
+    "heading": "I'm Interested in a Kitten",
+    "subtext": "If you are interested in purchasing one of our kittens, please contact us by phone or using the form below.",
+    "button": "Learn more"
+  }
+}

@@ -756,7 +756,7 @@ const AdminCatsPage = () => {
                       </Badge>
                     </Table.Td>
                     <Table.Td>
-                      <Group spacing="xs">
+                      <Group gap="xs">
                         <ActionIcon
                           color="blue"
                           onClick={() => handleEdit(cat)}
@@ -800,7 +800,7 @@ const AdminCatsPage = () => {
         }
         size="lg"
       >
-        <Stack spacing="md">
+        <Stack gap="md">
           <TextInput
             label="Jméno"
             required

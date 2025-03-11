@@ -1,0 +1,87 @@
+{
+  "colors": {
+    "seal": {
+      "name": "SEAL - ČERNOHNĚDÁ",
+      "description": "Tělo je světle hnědé, směrem k břichu a hrudi se barva zesvětluje, odznaky jsou sytě černohnědé až černé. Nosík a polštářky na tlapkách jsou tmavě černohnědé. Barva seal je tzv. plná barva (v genetickém kódu je značena velkými písmeny BB, ředící geny buď nemá - DD, případně má maximálně jeden - Dd)."
+    },
+    "blue": {
+      "name": "BLUE - MODRÁ",
+      "description": "Tělo je modravě bílé ve studeném odstínu barvy, směrem k břichu a hrudi se barva zesvětluje, odznaky jsou sytě tmavošedé s modravým nádechem. Nosík a polštářky na tlapkách jsou břidlicově šedé - intenzita sytosti barvy je individuální. Barva blue je zředěná barva seal ( v genetickém kódu je značena písmenem velkým BB a k tomu vždy dva ředící geny dd)."
+    },
+    "chocolate": {
+      "name": "CHOCOLATE - ČOKOLÁDOVÁ",
+      "description": "Tělo je slonovinově bílé, směrem k břichu a hrudi se barva zesvětluje, odznaky jsou v teplém barveném tónu mléčné čokolády, nikde na těle není žádný odstín do černé nebo černohnědé barvy. Nosík a polštářky na tlapkách jsou skořicově hnědé s růžovým nádechem - intenzita sytosti barvy je individuální. Barva čokoládová je plná barva (v genetickém kódu je značena dvěma malými písmeny bb, ředící geny buď nemá - DD, případně má maximálně jeden - Dd)."
+    },
+    "lilac": {
+      "name": "LILAC (FROST) - LILOVÁ",
+      "description": "Tělo je teple bílé s růžovám nádechem, směrem k břichu a hrudi se barva zesvětluje, odznaky jsou v ledově šedé barvě s růžovým nádechem. Nosík a polštářky na tlapkách jsou levandulové - intenzita sytosti barvy je individuální. Barva lilová je zředěná čokoládová barva (v genetickém kódu je značena dvěma malými písmeny bb, a k tomu vždy dva ředící geny dd)."
+    },
+    "red": {
+      "name": "RED (FLAME) - ČERVENÁ",
+      "description": "Tělo je čistě bílé, místy s nádechem odznalů. Odznaky jsou červené v ostré barvě mrkve - preferována sytost barvy. Nosík a polštářky na tlapkách jsou korálově červené - intenzita sytosti barvy je individuální. Barva red je tzv. plná barva a v genetickém zápise se značí písmenem O."
+    },
+    "cream": {
+      "name": "CREAM - KRÉMOVÁ",
+      "description": "Tělo je čistě bílé, místy s nádechem barvy odznaků. Odznaky jsou světle krémově červené - barva není ostrá, preferována sytost barvy. Nosík a polštářky na tlapkách jsou světle korálově červené - intenzita sytosti barvy je individuální. Barva cream je tzv. ředěná barva (v genetickém kódu je značena velkými písmem O."
+    },
+    "seallynx": {
+      "name": "SEAL LYNX - ČERNOHNĚDÁ S KRESBOU",
+      "description": "Tělo je světle hnědé, směrem k břichu a hrudi se barva zesvětluje, na těle je zřetelná kresba - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou černohnědé se zřetelným světlejším pozadím. Nosík je preferován černohnědý, ale může být i růžový s černohnědým lemováním. Polštářky na tlapkách jsou hnědé. Může se stát, že vlivem kresby se všechny barvy - srsti, nosíku i polštářků - mohou jevit světlejší než klasická černohnědá - ale pozor, není to čokoládová barva. Ostatní jako u barvy seal."
+    },
+    "bluelynx": {
+      "name": "BLUE LYNX - MODRÁ S KRESBOU",
+      "description": "Tělo je světle hnědé, směrem k břichu a hrudi se barva zesvětluje, na těle je zřetelná kresba - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou sytě šedé s modrým nádechem se zřetelným světlejším pozadím. Nosík je preferován břidlicově šedý, ale může být i růžový s šedým lemováním. Polštářky na tlapkách jsou šedé. Ostatní jako u barvy blue."
+    },
+    "chocolatelynx": {
+      "name": "CHOCOLATE LYNX - ČOKOLÁDOVÁ S KRESBOU",
+      "description": "Tělo je světle hnědé, směrem k břichu a hrudi se barva zesvětluje, na těle je zřetelná kresba - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou v barvě mléčné čokolády se zřetelným světlejším pozadím. Nosík je preferován teple hnědý, ale může být i růžový s teple-hnědým lemováním. Polštářky na tlapkách jsou teple hnědé. Ostatní jako u barvy čokoládové."
+    },
+    "lilaclynx": {
+      "name": "LILAC LYNX - LILOVÁ S KRESBOU",
+      "description": "Tělo je ledově bílé, směrem k břichu a hrudi se barva zesvětluje, na těle je zřetelná kresba - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou ledově šedé s teplým růžovým nádechem se zřetelným světlejším pozadím. Nosík je preferován levandulový, ale může být i růžový s levandulovým lemováním. Polštářky na tlapkách jsou levandulové. Ostatní jako u barvy lilové."
+    },
+    "redlynx": {
+      "name": "RED LYNX - ČERVENÁ S KRESBOU",
+      "description": "Tělo je, na těle může být viditelná kresba v barvě odznaků - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou ostře červené v barvě mrkve se zřetelným světlejším pozadím. Nosík je preferován korálově červený, ale může být i růžový s korálově červeným lemováním. Polštářky na tlapkách jsou korálově červené. Ostatní jako u barvy červené."
+    },
+    "creamlynx": {
+      "name": "CREAM LYNX - KRÉMOVÁ S KRESBOU",
+      "description": "Tělo je čistě bílé, místy s odstíny krémové, směrem k břichu a hrudi se barva zesvětluje, na těle jsou krémové odstíny kresby - pruhy a tečky. Na uších uprostřed je světlejší místo - tzv.otisk palce. Odznaky jsou světle krémově červené s teplým nádechem se zřetelným světlejším pozadím. Nosík je preferován světle korálový, ale může být i růžový s korálově červeným lemováním. Polštářky na tlapkách jsou světle korálové. Ostatní jako u barvy krémové."
+    },
+    "sealtortie": {
+      "name": "SEAL TORTIE - ČERNOHNĚDÁ ŽELVOVINOVÁ",
+      "description": "V tomto vybravení může být pouze kočka. Tělo je světle hnědé, směrem k břichu a hrudi se barva zesvětluje, na těle mohou být červené nebo krémové skvrny - jejich velikost je individuální. Odznaky jsou černohnědé, mohou být červenými nebo krémovými skvrnami. Nosík a tlapky jsou černohnědé, případně vhodně korálově červené - podle rozmístění červených skvrn na hlavě a tlapkách kočky. Ostatní jako u barvy sealové."
+    },
+    "bluecream": {
+      "name": "BLUE CREAM - MODRÁ ŽELVOVINOVÁ",
+      "description": "V tomto vybarvení může být pouze kočka. Tělo je modravě bílé ve studeném odstínu barvy, směrem k břichu a hrudi se barva zesvětluje, na těle mohou být krémové skvrny - jejich velikost je individuální. Odznaky jsou břidlicově šedé, mohou být s krémovými skvrnami. Nosík a polštářky na tlapkách jsou břidlicově šedé, případně vhodně korálově červené - podle rozmístění krémových skvrn na hlavě a tlapkách kočky. Ostatní jako u barvy blue."
+    },
+    "chocolatetortie": {
+      "name": "CHOCOLATE TORTIE - ČOKOLÁDOVÁ ŽELVOVINOVÁ",
+      "description": "V tomto vybravení může být pouze kočka. Tělo je slonovinově bílé, směrem k břichu a hrudi se barva zesvětluje, na těle mohou být červené nebo krémové skvrny - jejich velikost je individuální. Odznaky jsou barvě mléčné čokolády, mohou být s červenými nebo krémovými skvrnami. Nosík a tlapky jsou skořicově hnědé, případně vhodně korálově červené - podle rozmístění červených skvrn na hlavě a tlapkách kočky. Ostatní jako u barvy čokoládové."
+    },
+    "lilaccream": {
+      "name": "LILAC CREAM - LILOVÁ ŽELVOVINOVÁ",
+      "description": "V tomto vybarvení může být pouze kočka. Tělo je teple bílé s růžovám nádechem, směrem k břichu a hrudi se barva zesvětluje na těle mohou být krémové skvrny - jejich velikost je individuální. Odznaky jsou v ledově šedé barvě s růžovým nádechem, mohou být s krémovými skvrnami. Nosík a polštářky na tlapkách jsou levandulové - případně vhodně korálově červené - podle rozmístění červených skvrn na hlavě a tlapkách kočky. Ostatní jako u barvy lilac."
+    },
+    "sealtorbie": {
+      "name": "SEAL TORTIE LYNX (SEAL TORBIE) - ČERNOHNĚDÁ ŽELVOVINOVÁ S KRESBOU",
+      "description": "V tomto vybravení může být pouze kočka. Vybarvení je jako u seal tortie a seal lynx."
+    },
+    "bluetorbie": {
+      "name": "BLUE CREAM LYNX (BLUE TORBIE) - MODRÁ ŽELVOVINOVÁ S KRESBOU",
+      "description": "V tomto vybarvení může být pouze kočka. Vybarvení je jako u blue cream a blue lynx."
+    },
+    "chocolatetorbie": {
+      "name": "CHOCOLATE TORTIE LYNX (CHOCOLATE TORBIE) - ČOKOLÁDOVÁ ŽELVOVINOVÁ S KRESBOU",
+      "description": "V tomto vybravení může být pouze kočka. Vybarvení je jako u chocolate cream a chocolate lynx."
+    },
+    "lilactorbie": {
+      "name": "LILAC CREAM LYNX (LILAC TORBIE) - LILOVÁ ŽELVOVINOVÁ S KRESBOU",
+      "description": "V tomto vybarvení může být pouze kočka. Vybarvení je jako u lilac cream a lilac lynx."
+    }
+  },
+  "ui": {
+    "copyright": "Na fotky mám autorská práva (u pár kousků mám svolení od jejich majitelů). Nekopírujte je tedy aniž by jste se předem zeptali."
+  }
+}

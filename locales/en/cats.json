@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "heading": "All our kittens, cats and males",
+    "subtext": "I want my own kitten."
+  },
+  "kittens": {
+    "title": "Ragdoll kittens",
+    "litterInfo": "Litter O born on 26/10/2024",
+    "description": "Vaccination, deworming, pedigree, purchase contract... this is a matter of course, we are in contact with the owners of our kittens even after the sale. The parents are negatively tested for HCM and PKD, FeLV and FIV."
+  },
+  "cats": {
+    "maleCats": "Ragdoll males",
+    "femaleCats": "Ragdoll females"
+  },
+  "catInfo": {
+    "gender": "Gender",
+    "genderMale": "male",
+    "genderFemale": "female",
+    "birthDate": "Birth date",
+    "color": "Color",
+    "variety": "Variety",
+    "bloodGroup": "Blood group",
+    "geneticCode": "Genetic color code"
+  },
+  "facts": {
+    "heading": "Some facts about our Ragdoll breeding",
+    "stat1": {
+      "number": "50+",
+      "text": "Satisfied clients"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Years of experience"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Happy cats"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Successful litters"
+    },
+    "button": "Learn more"
+  },
+  "contact": {
+    "heading": "I'm interested in a kitten",
+    "subtext": "If you are interested in purchasing one of our kittens, please contact us by phone or using the form below.",
+    "button": "Learn more"
+  }
+}

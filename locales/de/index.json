@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "heading": "Willkommen bei Faelis",
+    "subtext": "Wir sind die beste und einzige Ragdoll-Katzenzucht in der Tschechischen Republik."
+  },
+  "features": {
+    "card1": "Sicherer und gemütlicher Ort für Katzen.",
+    "card2": "Gesundheit und Pflege haben oberste Priorität.",
+    "card3": "Langjährige Praxis und Erfahrung."
+  },
+  "about": {
+    "heading": "Über die Katzenzucht Faelis",
+    "subtext": "Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird. Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird.",
+    "button": "Mehr erfahren"
+  },
+  "cats": {
+    "heading": "Unsere Katzen",
+    "subtext": "Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird. Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird.",
+    "categories": {
+      "cats": "Katzen",
+      "maleCats": "Kater",
+      "kittens": "Kätzchen",
+      "more": "Mehr erfahren"
+    }
+  },
+  "facts": {
+    "heading": "Einige Fakten über unsere Ragdoll-Zucht",
+    "stat1": {
+      "number": "50+",
+      "text": "Zufriedene Kunden"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Jahre Erfahrung"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Glückliche Katzen"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Erfolgreiche Würfe"
+    },
+    "button": "Mehr erfahren"
+  },
+  "reviews": {
+    "heading": "Bewertungen und Kundenzufriedenheit",
+    "subtext": "Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird. Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird.",
+    "reviewText": "Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird. Hier wird Text zu diesem Thema stehen, der später hinzugefügt wird."
+  },
+  "contact": {
+    "heading": "Ich interessiere mich für ein Kätzchen",
+    "subtext": "Wenn Sie Interesse am Kauf eines unserer Kätzchen haben, kontaktieren Sie uns bitte telefonisch oder über das unten stehende Formular.",
+    "button": "Mehr erfahren"
+  }
+}

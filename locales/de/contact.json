@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "heading": "Wie können Sie uns am besten kontaktieren und wo finden Sie uns genau?"
+  },
+  "section1": {
+    "title": "Ragdoll-Katzenzucht - Kontakt",
+    "name": "Marta Seko",
+    "address1": "Nad Nádrží 433/16",
+    "address2": "10300 Prag 10",
+    "phone": "Telefon:",
+    "email": "E-Mail:",
+    "skype": "Skype:",
+    "skypeId": "ragdoll.faelis"
+  },
+  "section2": {
+    "title": "Wo finden Sie uns genau?",
+    "address": "Nad Nádrží 433/16 | 10300 Prag 10"
+  }
+}

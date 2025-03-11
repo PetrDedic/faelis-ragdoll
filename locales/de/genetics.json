@@ -1,0 +1,91 @@
+{
+  "section": {
+    "title": "Genetik der Ragdoll-Rasse",
+    "intro1": "Es ist wichtig, die Grundlagen der Genetik für jeden zu kennen, der züchten möchte. Nur so kann ein Züchter wissen, welche Kätzchen von verschiedenen Eltern geboren werden können. Obwohl es für einen Laien vielleicht kein besonders interessantes Lesen ist, schmälert dies nicht seine Wichtigkeit.",
+    "intro2": "Die Varietät kann nicht durch das Geschlecht der Katze beeinflusst werden, daher verwenden wir den allgemeinen Begriff - Eltern."
+  },
+  "accordion": {
+    "varieties": {
+      "title": "Ragdoll-Varietäten und ihre genetischen Codes",
+      "link_text": "Eine detaillierte Übersicht über Varietätskombinationen finden Sie zum Beispiel",
+      "link_label": "HIER"
+    },
+    "combinations": {
+      "title": "Kurze Übersicht über Varietätskombinationen",
+      "table_header1": "Elternkombinationen",
+      "table_header2": "Mögliche Kätzchen-Varietäten"
+    },
+    "colors": {
+      "title": "Ragdoll-Farben und ihre Genetik",
+      "intro": "Bei den genetischen Codes für Grundfarben werden folgende Begriffe und Bezeichnungen verwendet:",
+      "bullet1": "• Buchstabe B steht für Seal-Fellfarbe",
+      "bullet2": "• Buchstabe b steht für Chocolate-Färbung",
+      "bullet3": "• Buchstabe D steht für volle Färbung (ohne verdünnende Wirkung auf die Farbe)",
+      "bullet4": "• Buchstabe d steht für Farbverdünnung (Dilute-Gen)",
+      "basic_colors": "Grundfarben:",
+      "link_text": "Eine detaillierte Übersicht über Grundfarbenkombinationen finden Sie unter:",
+      "link_label": "Farbkombinationen"
+    }
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Colorpoint (cp)",
+      "description": "Keine weiße Farbe"
+    },
+    "mitted": {
+      "name": "Mitted, Mitted with blase",
+      "description": "Weiße Socken und Strümpfe, weißes Kinn und Bauch. Blase ist die sogenannte weiße Flamme in der Mitte der Nase"
+    },
+    "highmitted": {
+      "name": "High Mitted (HM)",
+      "description": "Visuell bicolor, d.h. weißes umgekehrtes V in der Maske, weiße Beine und Bauch vom Kinn bis zur Schwanzwurzel, Rücken in Point-Farbe"
+    },
+    "bicolor": {
+      "name": "Bicolor",
+      "description": "Sogenannter bicolor true = echter Bicolor, visuell gleich wie High Mitted"
+    },
+    "midhighwhite": {
+      "name": "Bicolor Mid High White (MHW)",
+      "description": "Bicolor mit einem höheren Anteil an weißer Farbe"
+    },
+    "highwhite": {
+      "name": "Bicolor High White (HW, Van)",
+      "description": "Bicolor mit dem höchsten Anteil an weißer Farbe"
+    }
+  },
+  "colors": {
+    "seal": {
+      "name": "Seal (schwarz)",
+      "description": "Die genetischen Codes einer Seal-Ragdoll-Katze hängen davon ab, ob es sich um eine Seal-Ragdoll ohne Verdünnungsgen (BBDD) handelt, oder um eine klassische Seal mit Verdünnungsgen (BBDd), oder um eine Seal mit einem Gen für Chocolate-Färbung (BbDD - Chocolate-Träger), oder um eine Seal mit einem Gen für Chocolate-Färbung und einem Verdünnungsgen (BbDd - Träger von Chocolate und Verdünnungsgen)"
+    },
+    "blue": {
+      "name": "Blue (blau)",
+      "description": "Der genetische Code einer blauen Katze muss immer zwei Verdünnungsgene dd plus entweder zwei Seal-Gene BB haben (der genetische Code ist dann BBdd) oder es kann ein Seal-Gen und ein Chocolate-Gen Bb haben, und die Katze ist dann ein Chocolate-Träger (der genetische Code einer solchen blauen Katze ist Bbdd)"
+    },
+    "chocolate": {
+      "name": "Chocolate (schokolade)",
+      "description": "Eine Chocolate-Katze muss immer zwei Chocolate-Gene bb haben und kann entweder DD haben, was bedeutet, dass sie kein Verdünnungsgen hat (der genetische Code einer solchen Katze ist bbDD), oder sie kann Dd haben und hat ein Verdünnungsgen (der genetische Code einer solchen Katze ist bbDd)"
+    },
+    "lilac": {
+      "name": "Lilac (Frost)",
+      "description": "Der genetische Code einer Lilac-Katze ist immer bbdd und keine andere Möglichkeit. Sie hat also zwei Chocolate-Gene und für jedes ein Verdünnungsgen"
+    }
+  },
+  "combinations": [
+    { "combination": "Colorpoint × Colorpoint", "result": "Colorpoint" },
+    { "combination": "Colorpoint × Mitted", "result": "Colorpoint, Mitted" },
+    { "combination": "Colorpoint × Bicolor High Mitted", "result": "Mitted" },
+    { "combination": "Colorpoint × Bicolor (true)", "result": "Colorpoint, Bicolor" },
+    { "combination": "Colorpoint × Bicolor Mid High White", "result": "Mitted, Bicolor" },
+    { "combination": "Colorpoint × Bicolor High White(Van)", "result": "Bicolor" },
+    { "combination": "Mitted × Mitted", "result": "Colorpoint, Mitted, High Mitted" },
+    { "combination": "Mitted × High Mitted", "result": "Mitted, High Mitted" },
+    { "combination": "High Mitted × High Mitted", "result": "High Mitted" },
+    { "combination": "Mitted × Bicolor true", "result": "Colorpoint, Mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor Mid High White", "result": "Mitted, High mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor High White(Van)", "result": "Bicolor true, Bicolor Mid High White" },
+    { "combination": "Bicolor true × Bicolor true", "result": "Colorpoint, Bicolor true, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor Mid High White", "result": "Mitted, Bicolor true, Bicolor Mid High White, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor High White", "result": "Bicolor true, Bicolor High White" }
+  ]
+}

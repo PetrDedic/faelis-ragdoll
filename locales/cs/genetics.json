@@ -1,0 +1,91 @@
+{
+  "section": {
+    "title": "Genetika plemene Ragdoll",
+    "intro1": "Je důležité znát základy genetiky pro každého, kdo se chce věnovat chovu. Jedině tak může chovatel vědět, jaká koťátka se mohou od různých rodičů narodit. Není to sice moc zajímavé čtení pro laika, ale to mu důležitosti nemůže odebrat.",
+    "intro2": "Variety nemůže pohlaví kočky nijak ovlivnit, proto používáme všeobecný termín - rodiče."
+  },
+  "accordion": {
+    "varieties": {
+      "title": "Variety Ragdoll a jejich genetické kódy",
+      "link_text": "Podrobný přehled kombinací variet najdete například",
+      "link_label": "ZDE"
+    },
+    "combinations": {
+      "title": "Stručný přehled kombinací variet",
+      "table_header1": "Kombinace rodičů",
+      "table_header2": "Možné variety koťat"
+    },
+    "colors": {
+      "title": "Barvy Ragdoll a jejich genetika",
+      "intro": "U genetických kódů základních barev jsou použity termíny a označení:",
+      "bullet1": "• písmeno B je pro sealové zbarvení srsti",
+      "bullet2": "• písmeno b je pro čokoládové zbarvení",
+      "bullet3": "• písmeno D je pro plné zbarvení (tedy bez ředících účinků na barvu)",
+      "bullet4": "• písmeno d je pro ředění barvy (dilute gen)",
+      "basic_colors": "Základní barvy:",
+      "link_text": "Podrobný přehled kombinací základních barev najdete na adrese:",
+      "link_label": "kombinace barev"
+    }
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Colorpoint (cp)",
+      "description": "Bez bílé barvy"
+    },
+    "mitted": {
+      "name": "Mitted, Mitted with blase",
+      "description": "Bílé ponožky a punčošky, bílá brada a břicho. Blase je tzv.plamínek bílé barvy uprostred nosu"
+    },
+    "highmitted": {
+      "name": "High Mitted (HM)",
+      "description": "Vzhledově bicolor, tedy bílé obrácené V v masce, bílé nohy a břicho od brady po koren ocasu, záda v barvě odznaků"
+    },
+    "bicolor": {
+      "name": "Bicolor",
+      "description": "Tzv.bicolor true = pravý bicolor, vzhledově stejný jako High Mitted"
+    },
+    "midhighwhite": {
+      "name": "Bicolor Mid High White (MHW)",
+      "description": "Bicolor s vyšším podílem bílé barvy"
+    },
+    "highwhite": {
+      "name": "Bicolor High White (HW, Van)",
+      "description": "Bicolor s nejvyšším podílem bílé barvy"
+    }
+  },
+  "colors": {
+    "seal": {
+      "name": "Seal (černá)",
+      "description": "Genetické kódy sealové kočky Ragdoll jsou podle toho, zda je to Ragdoll sealový bez ředícího genu (BBDD), nebo je klasický seal s ředícím genem (BBDd), nebo seal s genem pro čokoládové zbarvení (BbDD - nosič čokolády), nebo seal s genem pro čokoládové zbarvení a s ředícím genem (BbDd - nosič čokolády a ředícího genu)"
+    },
+    "blue": {
+      "name": "Blue (modrá)",
+      "description": "Genetický kód blue kočky musí vždy mít dva ředící geny dd a k tomu buď dva sealové geny BB (geneticky kod je potom BBdd) a nebo může mít jeden gen sealový a druhý čokoládový Bb a kočka je potom nosič čokolády (genetický kód takové blue kočky je Bbdd)"
+    },
+    "chocolate": {
+      "name": "Chocolate (čokoládová)",
+      "description": "Čokoládová kočka musí mít vždy dva čokoládové geny bb a k tomu může mít buď DD, což znamená, že nemá ředící gen (genetický kód takové kočky je bbDD), nebo může mít Dd a ředící gen má (genetický kód takové kočky je bbDd)"
+    },
+    "lilac": {
+      "name": "Lilac (lilová, Frost)",
+      "description": "Genetický kód lilové kočky je vždy bbdd a nijak jinak. Má tedy dva čokoládové geny a k nim ke každému jeden ředící gen"
+    }
+  },
+  "combinations": [
+    { "combination": "Colorpoint × Colorpoint", "result": "Colorpoint" },
+    { "combination": "Colorpoint × Mitted", "result": "Colorpoint, Mitted" },
+    { "combination": "Colorpoint × Bicolor High Mitted", "result": "Mitted" },
+    { "combination": "Colorpoint × Bicolor (true)", "result": "Colorpoint, Bicolor" },
+    { "combination": "Colorpoint × Bicolor Mid High White", "result": "Mitted, Bicolor" },
+    { "combination": "Colorpoint × Bicolor High White(Van)", "result": "Bicolor" },
+    { "combination": "Mitted × Mitted", "result": "Colorpoint, Mitted, High Mitted" },
+    { "combination": "Mitted × High Mitted", "result": "Mitted, High Mitted" },
+    { "combination": "High Mitted × High Mitted", "result": "High Mitted" },
+    { "combination": "Mitted × Bicolor true", "result": "Colorpoint, Mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor Mid High White", "result": "Mitted, High mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor High White(Van)", "result": "Bicolor true, Bicolor Mid High White" },
+    { "combination": "Bicolor true × Bicolor true", "result": "Colorpoint, Bicolor true, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor Mid High White", "result": "Mitted, Bicolor true, Bicolor Mid High White, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor High White", "result": "Bicolor true, Bicolor High White" }
+  ]
+}

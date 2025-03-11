@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "heading": "Jak nás nejlépe kontaktovat a kde nás přesně naleznete?"
+  },
+  "section1": {
+    "title": "Chovatelská stanice koček Ragdoll - kontakt",
+    "name": "Marta Seko",
+    "address1": "Nad Nádrží 433/16",
+    "address2": "10300 Praha 10",
+    "phone": "Telefon:",
+    "email": "E-mail:",
+    "skype": "Skype:",
+    "skypeId": "ragdoll.faelis"
+  },
+  "section2": {
+    "title": "Kde nás přesně naleznete?",
+    "address": "Nad Nádrží 433/16 | 10300 Praha 10"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "heading": "Vítejte na stránkách Faelis",
+    "subtext": "Jsme nejlepší a jediná chovatelská stanice plemene Ragdoll v České Republice."
+  },
+  "features": {
+    "card1": "Bezpečné a útulné místo pro kočky.",
+    "card2": "Zdraví a péče na prvním místě.",
+    "card3": "Dlouholetá praxe a zkušenost."
+  },
+  "about": {
+    "heading": "O chovatelské stanici koček Faelis",
+    "subtext": "Zde bude text, k danému tématu, které se zde potom doplní. Zde bude text, k danému tématu, které se zde potom doplní.",
+    "button": "Zjistit více"
+  },
+  "cats": {
+    "heading": "Naše kočky",
+    "subtext": "Zde bude text, k danému tématu, které se zde potom doplní. Zde bude text, k danému tématu, které se zde potom doplní.",
+    "categories": {
+      "cats": "Kočky",
+      "maleCats": "Kocouři",
+      "kittens": "Koťata",
+      "more": "Zjistit více"
+    }
+  },
+  "facts": {
+    "heading": "Pár faktů o našem chovu plemene Ragdoll",
+    "stat1": {
+      "number": "50+",
+      "text": "Spokojených klientů"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Let zkušeností a praxe"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Šťastných koček"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Úspěšných vrhů"
+    },
+    "button": "Zjistit více"
+  },
+  "reviews": {
+    "heading": "Recenze a spokojenost klientů",
+    "subtext": "Zde bude text, k danému tématu, které se zde potom doplní. Zde bude text, k danému tématu, které se zde potom doplní.",
+    "reviewText": "Zde bude text, k danému tématu, které se zde potom doplní. Zde bude text, k danému tématu, které se zde potom doplní."
+  },
+  "contact": {
+    "heading": "Mám zájem o svou kočičku",
+    "subtext": "Pokud máte zájem zakoupit jednu z našich kočiček, tak nás kontaktujte pomocí telefonního čísla a nebo na níže uvedeném formuláři.",
+    "button": "Zjistit více"
+  }
+}

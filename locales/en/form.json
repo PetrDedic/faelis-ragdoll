@@ -1,0 +1,20 @@
+{
+  "title": "Contact Us",
+  "name": {
+    "label": "Name",
+    "placeholder": "Your first and last name"
+  },
+  "email": {
+    "label": "Email",
+    "placeholder": "Your email"
+  },
+  "subject": {
+    "label": "Subject",
+    "placeholder": "Subject"
+  },
+  "message": {
+    "label": "Your message",
+    "placeholder": "Write us a message"
+  },
+  "submit": "Submit form"
+}

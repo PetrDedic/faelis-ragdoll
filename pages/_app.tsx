@@ -33,13 +33,12 @@ export default function App({ Component, pageProps }: any) {
       }}
     >
       <Head>
-        <title>Mantine Template</title>
+        <title>Faelis | Chovatelská stanice koček Ragdoll</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
-        <link rel="shortcut icon" href="/favicon.svg" />
-        <style>body</style>
+        <link rel="shortcut icon" href="/icon.svg" />
       </Head>
       <HeaderMenu />
       <Component {...pageProps} />

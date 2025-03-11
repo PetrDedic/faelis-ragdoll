@@ -29,6 +29,7 @@ import {
   SegmentedControl,
   Flex,
   Input,
+  CopyButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -47,6 +48,7 @@ import {
   IconSortAscending,
   IconSortDescending,
   IconX,
+  IconCopy,
 } from "@tabler/icons-react";
 import supabase from "../../utils/supabase/client";
 
@@ -194,7 +196,7 @@ const GalleryManagementPage = () => {
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
   };
 
-  // Fetch gallery items for current path
+  // Fetch gallery items for current path - with URL matching fix
   const fetchGalleryItems = async () => {
     setLoading(true);
     try {
@@ -243,44 +245,44 @@ const GalleryManagementPage = () => {
             /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i.test(folder.name) &&
             folder.metadata?.size;
 
+          const path = currentPath
+            ? `${currentPath}/${folder.name}`
+            : folder.name;
+
+          // Generate full URL for images
+          const fullUrl = isImage
+            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery/${path}`
+            : undefined;
+
           return {
             id: folder.id || folder.name,
             name: folder.name,
             type: isImage ? "image" : "folder",
-            path: currentPath ? `${currentPath}/${folder.name}` : folder.name,
+            path: path,
             size: folder.metadata?.size,
             created_at: folder.created_at,
-            url: isImage
-              ? `${
-                  process.env.NEXT_PUBLIC_SUPABASE_URL
-                }/storage/v1/object/public/gallery/${
-                  currentPath ? `${currentPath}/` : ""
-                }${folder.name}`
-              : undefined,
+            url: fullUrl,
           };
         });
 
       // Fetch related metadata for images from database
       const imageItems = folderItems.filter((item) => item.type === "image");
       if (imageItems.length > 0) {
-        const imagePaths = imageItems.map((item) =>
-          currentPath ? `${currentPath}/${item.name}` : item.name
-        );
+        // Get all image URLs to match against database
+        const imageUrls = imageItems.map((item) => item.url);
 
         const { data: imageData, error: imageError } = await supabase
           .from("images")
           .select("id, cat_id, url, title, description, is_primary, created_at")
-          .in("url", imagePaths);
+          .in("url", imageUrls);
 
         if (!imageError && imageData) {
           // Merge database data with storage data
           folderItems.forEach((item) => {
-            if (item.type === "image") {
-              const imagePath = currentPath
-                ? `${currentPath}/${item.name}`
-                : item.name;
+            if (item.type === "image" && item.url) {
+              // Match by full URL now
               const matchingImage = imageData.find(
-                (img) => img.url === imagePath
+                (img) => img.url === item.url
               );
               if (matchingImage) {
                 item.id = matchingImage.id;
@@ -434,9 +436,9 @@ const GalleryManagementPage = () => {
           .from("gallery")
           .getPublicUrl(filePath);
 
-        // Create database record
+        // Create database record with the full public URL
         const { error: dbError } = await supabase.from("images").insert({
-          url: filePath,
+          url: urlData.publicUrl, // Use the full public URL instead of just the path
           title: file.name,
           is_primary: false,
         });
@@ -630,11 +632,19 @@ const GalleryManagementPage = () => {
         // Delete from old location
         await supabase.storage.from("gallery").remove([oldPath]);
 
+        // Get new public URL
+        const { data: urlData } = supabase.storage
+          .from("gallery")
+          .getPublicUrl(newPath);
+
         // Update database record if it exists
         if (selectedItem.id) {
           const { error: dbError } = await supabase
             .from("images")
-            .update({ url: newPath, title: newItemName })
+            .update({
+              url: urlData.publicUrl, // Update with the full public URL
+              title: newItemName,
+            })
             .eq("id", selectedItem.id);
 
           if (dbError) throw dbError;
@@ -856,18 +866,7 @@ const GalleryManagementPage = () => {
           <Card key={item.id || item.name} padding="xs" radius="md" withBorder>
             <Card.Section pos="relative">
               {item.type === "folder" ? (
-                <Box
-                  onClick={() => navigateToFolder(item.path || "")}
-                  py="xl"
-                  sx={{
-                    backgroundColor: "#f0f0f0",
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 150,
-                  }}
-                >
+                <Box onClick={() => navigateToFolder(item.path || "")} py="xl">
                   <IconFolder size={64} opacity={0.7} />
                 </Box>
               ) : (
@@ -985,7 +984,7 @@ const GalleryManagementPage = () => {
                 </Menu.Dropdown>
               </Menu>
             </Card.Section>
-            <Text size="sm" weight={500} lineClamp={1} title={item.name} mt={5}>
+            <Text size="sm" fw={500} lineClamp={1} title={item.name} mt={5}>
               {item.name}
             </Text>
             {item.type === "image" && (
@@ -1005,7 +1004,10 @@ const GalleryManagementPage = () => {
 
   return (
     <Stack gap="lg" p={16} maw={1280} mx="auto">
-      <LoadingOverlay visible={loading} overlayBlur={2} />
+      <LoadingOverlay
+        visible={loading}
+        overlayProps={{ radius: "sm", blur: 2 }}
+      />
 
       <Group align="apart">
         <Title order={2}>Správa galerie</Title>
@@ -1035,11 +1037,7 @@ const GalleryManagementPage = () => {
       {/* Navigation breadcrumbs */}
       <Breadcrumbs>
         {breadcrumbs.map((crumb, index) => (
-          <Anchor
-            key={index}
-            onClick={() => handleBreadcrumbClick(index)}
-            sx={{ cursor: "pointer" }}
-          >
+          <Anchor key={index} onClick={() => handleBreadcrumbClick(index)}>
             {crumb}
           </Anchor>
         ))}
@@ -1049,7 +1047,7 @@ const GalleryManagementPage = () => {
       <Flex gap="md" align="center" wrap="wrap">
         <Input
           placeholder="Hledat..."
-          icon={<IconSearch size={16} />}
+          leftSection={<IconSearch size={16} />}
           value={searchTerm}
           onChange={handleSearchChange}
           style={{ flexGrow: 1 }}
@@ -1074,7 +1072,7 @@ const GalleryManagementPage = () => {
       {uploading && (
         <Paper withBorder p="xs">
           <Stack gap="xs">
-            <Group position="apart">
+            <Group justify="apart">
               <Text size="sm">Nahrávání...</Text>
               <ActionIcon size="sm" onClick={() => setUploading(false)}>
                 <IconX size={14} />
@@ -1117,7 +1115,7 @@ const GalleryManagementPage = () => {
             onChange={(e) => setNewFolderName(e.currentTarget.value)}
             required
           />
-          <Group position="right">
+          <Group justify="right">
             <Button variant="outline" onClick={closeNewFolder}>
               Zrušit
             </Button>
@@ -1143,7 +1141,7 @@ const GalleryManagementPage = () => {
             onChange={(e) => setNewItemName(e.currentTarget.value)}
             required
           />
-          <Group position="right">
+          <Group justify="right">
             <Button variant="outline" onClick={closeRename}>
               Zrušit
             </Button>
@@ -1167,7 +1165,7 @@ const GalleryManagementPage = () => {
             {selectedItem?.type === "folder" &&
               " Všechny soubory ve složce budou také smazány."}
           </Text>
-          <Group position="right">
+          <Group justify="right">
             <Button variant="outline" onClick={closeDelete}>
               Zrušit
             </Button>
@@ -1201,7 +1199,7 @@ const GalleryManagementPage = () => {
             checked={setAsPrimary}
             onChange={(e) => setSetAsPrimary(e.currentTarget.checked)}
           />
-          <Group position="right">
+          <Group justify="right">
             <Button variant="outline" onClick={closeAssignCat}>
               Zrušit
             </Button>
@@ -1243,7 +1241,7 @@ const GalleryManagementPage = () => {
             onChange={(e) => setImageDescription(e.currentTarget.value)}
             minRows={3}
           />
-          <Group position="right">
+          <Group justify="right">
             <Button variant="outline" onClick={closeEditMetadata}>
               Zrušit
             </Button>
@@ -1289,7 +1287,18 @@ const GalleryManagementPage = () => {
                   : "Neznámá"}
               </Text>
             </Group>
-            <Group position="right">
+            <Group justify="right">
+              <CopyButton value={selectedItem.url} timeout={2000}>
+                {({ copied, copy }) => (
+                  <Button
+                    leftSection={<IconCopy size={16} />}
+                    variant="outline"
+                    onClick={copy}
+                  >
+                    {copied ? "Zkopírováno!" : "Kopírovat URL"}
+                  </Button>
+                )}
+              </CopyButton>
               <Button
                 leftSection={<IconDownload size={16} />}
                 variant="outline"

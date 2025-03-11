@@ -21,6 +21,12 @@ import {
   IconCircleCheck,
   IconCircleX,
 } from "@tabler/icons-react";
+import { useRouter } from "next/router";
+
+// Import translations
+import csTranslations from "../locales/cs/bloodgroups.json";
+import enTranslations from "../locales/en/bloodgroups.json";
+import deTranslations from "../locales/de/bloodgroups.json";
 
 interface BloodGroupCombination {
   combination: string;
@@ -30,182 +36,100 @@ interface BloodGroupCombination {
 }
 
 export function RagdollBloodGroupsSection() {
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
   // Blood group combinations and their results
-  const bloodGroupCombinations: BloodGroupCombination[] = [
-    {
-      combination: "Aa + Aa",
-      result: "Aa",
-      warning: false,
-      description:
-        "Ideální stav, kočka i kocour jsou čisté A a ani jeden z nich nenese vlohu pro krevní skupinu B",
-    },
-    {
-      combination: "Aa + Ab",
-      result: "Aa nebo Ab",
-      warning: false,
-      description:
-        "Všechna koťata budou mít krevní skupinu A, ale některá budou Aa a některá po otci Ab",
-    },
-    {
-      combination: "Aa + B",
-      result: "Ab",
-      warning: false,
-      description:
-        "Všechna koťata se narodí s krevní skupinou Ab, tedy budou zároveň po otci nosiči vlohy krevní skupinu B",
-    },
-    {
-      combination: "Ab + Aa",
-      result: "Aa nebo Ab",
-      warning: false,
-      description:
-        "Všechna koťata budou mít krevní skupinu A, ale některá budou Aa a některá po matce Ab",
-    },
-    {
-      combination: "Ab + Ab",
-      result: "Aa nebo Ab nebo B",
-      warning: false,
-      description:
-        "Mohou se narodit koťata čistá Aa nebo nosiči béčka Ab nebo krevní skupina B",
-    },
-    {
-      combination: "Ab + B",
-      result: "Ab a B",
-      warning: false,
-      description:
-        "Pokud je matka krevní skupina Ab a otec B, tak budou mít všechna koťata krevní skupinu Ab a B",
-    },
-    {
-      combination: "B + Aa",
-      result: "Ab",
-      warning: true,
-      description:
-        "Kočka matka má krevní skupinu B a otec Aa - všechna koťata je třeba minimálně na 24 hodin oddělit od matky!",
-    },
-    {
-      combination: "B + Ab",
-      result: "Ab a B",
-      warning: true,
-      description:
-        "Kočka má krevní skupinu B a otec Ab - některá koťata mohou být ohrožena a je třeba je minimálně na 24 hodin oddělit. Určit která koťata mohou být ohrožena se dá při porodu z pupečníkové krve a sady pro rychlé testy, kterou je potřeba předem zakoupit",
-    },
-    {
-      combination: "B + B",
-      result: "B",
-      warning: false,
-      description:
-        "Oba rodiče mají krevní skupinu B, takže je vše v pořádku, jen je třeba na to upozornit zájemco o koťátka do chovu kvůli dalšímu potomstvu",
-    },
-  ];
+  const bloodGroupCombinations: BloodGroupCombination[] = t.combinations;
 
   return (
     <Stack w="100%" align="center" gap={32}>
       <Title order={2} size="h1" c="#47a3ee" ta="center">
-        Krevní skupiny koček Ragdoll
+        {t.section.title}
       </Title>
 
       <Text size="lg" c="black">
-        Není neštěstí mít Ragdoll kočku s krevní skupinou B, jenom je třeba být
-        připraven a informován a tyto informace předávat dál. Osud tomu chtěl,
-        že jsme se sama přesvědčila o tom, že kočka a kocour s krevní skupinou A
-        mohou mít potomka s krevní skupinou B. Proto nestačí znát jen krevní
-        skupinu rodičů, je třeba ji určit u každého kotěte v chovu zvlášť aby se
-        předešlo FNI (Feline neonatal isoerythrolysis).
+        {t.section.intro}
       </Text>
 
       <Alert
         icon={<IconAlertCircle size={16} />}
-        title="Důležité upozornění"
+        title={t.alert.title}
         color="red"
         radius="md"
       >
-        Je velmi důležité znát krevní skupinu chovných koček dříve, než se
-        narodí koťátka, nejlépe je se o to zajímat již při koupi kotěte do
-        chovu. Je to proto, že pokud by měla kočka krevní skupinu B a kocour by
-        byl skupiny A, tak je třeba se na to připravit, aby člověk dokázal
-        odchovat narozená koťátka. Koťata s krevní skupinou A, která se napijí v
-        prvních 1-3 dnech od matky s krevní skupinou B, jsou postižena FNI a
-        taková koťata rychle slábnou, ztrácejí zájem o sání mléka a hynou za
-        příznaků žloutenky a anemie.
+        {t.alert.content}
       </Alert>
 
       <Accordion variant="separated" radius="md" w="100%">
         <Accordion.Item value="testing">
           <Accordion.Control>
             <Title order={3} size="h3">
-              Testování krevních skupin
+              {t.accordion.testing.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
             <Stack gap="md">
-              <Text>Krevní skupina se dá určit dvěma způsoby:</Text>
+              <Text>{t.accordion.testing.intro}</Text>
 
               <Box>
                 <Text fw={700} mb={8}>
-                  1. Sérologicky
+                  {t.accordion.testing.serology.title}
                 </Text>
-                <Text>
-                  Veterinář odebere krev. Pokud máte dobrého veterináře, odebere
-                  krev kočce bez uspání i bez oholení přední tlapky. Rozbor krve
-                  na určení krevní skupiny je možné již nechat udělat i u nás, v
-                  laboratoři v Plzni.
-                </Text>
+                <Text>{t.accordion.testing.serology.content}</Text>
               </Box>
 
               <Box>
                 <Text fw={700} mb={8}>
-                  2. Geneticky
+                  {t.accordion.testing.genetic.title}
                 </Text>
-                <Text>
-                  Buď z odebrané krve nebo ze stěru z tlamičky, což si může
-                  chovatel odebrat sám. Genetické určení krevní skupiny má
-                  výhodu v tom, že dokáže určit i to, jestli kočka se skupinou A
-                  (případně AB) je nebo není nosičem vlohy pro krevní skupinu B.
-                </Text>
+                <Text>{t.accordion.testing.genetic.content}</Text>
                 <Text mt={8} c="dimmed">
-                  Nevýhodou je to, že pro plemeno Ragdoll a Turecká Van není
-                  genetický test krevní skupiny stále ještě stoprocentní. Ovšem
-                  pro všechna ostatní plemena ja přesný na 100%. Test stojí
-                  řádově 1000 Kč (cena se možná bude různit).
+                  {t.accordion.testing.genetic.note}
                 </Text>
               </Box>
 
               <Box>
                 <Text fw={700} mb={8}>
-                  Pro určení krevní skupiny u narozených koťat
+                  {t.accordion.testing.kittenTesting.title}
                 </Text>
-                <Text>
-                  Lze použít tzv. rychlý test z pupečníkové krve. Tento můžete
-                  koupit na internetu:
-                </Text>
+                <Text>{t.accordion.testing.kittenTesting.content}</Text>
                 <List mt={8} spacing="xs">
                   <List.Item>
                     <Anchor href="http://www.alvediavet.com/" target="_blank">
-                      Alvediavet
+                      {t.accordion.testing.kittenTesting.link1}
                     </Anchor>{" "}
-                    - evropský výrobek, podle mých přátel ze Španělska je lepší,
-                    protože je k testu potřeba menší množství krve než u testu z
-                    USA
+                    {t.accordion.testing.kittenTesting.link1_desc}
                   </List.Item>
                   <List.Item>
                     <Anchor href="http://www.rapidvet.com/" target="_blank">
-                      Rapidvet
+                      {t.accordion.testing.kittenTesting.link2}
                     </Anchor>{" "}
-                    - test z USA
+                    {t.accordion.testing.kittenTesting.link2_desc}
                   </List.Item>
                 </List>
               </Box>
 
               <Text mt={8}>
-                V současné době probíhá výzkum v americké laboratoři{" "}
+                {t.accordion.testing.research}{" "}
                 <Anchor
                   href="http://www.vgl.ucdavis.edu/services/cat/ragdoll.php"
                   target="_blank"
                 >
-                  UC Davis
+                  {t.accordion.testing.researchLink}
                 </Anchor>
-                , který by mohl určit krevní skupinu pomocí DNA i u koček
-                Ragdoll a Tureckých Van, kde genetické určené krevní skupiny
-                ještě stále není průkazné.
+                {t.accordion.testing.researchDesc}
               </Text>
             </Stack>
           </Accordion.Panel>
@@ -214,37 +138,22 @@ export function RagdollBloodGroupsSection() {
         <Accordion.Item value="bloodgroups">
           <Accordion.Control>
             <Title order={3} size="h3">
-              Dědičnost krevních skupin
+              {t.accordion.bloodgroups.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
             <Stack gap="md">
-              <Text>
-                U koček známe tři krevní skupiny A, AB a B. Typ A je tvořen páry
-                genů A=AA (Aa) nebo A=AB (Ab), kde A je dominantní a potlačuje
-                projevy B. Typ AB je vzácný a málo probádaný, je však jiný než
-                kombinace Ab. Typ B je formován geny BB (B).
-              </Text>
+              <Text>{t.accordion.bloodgroups.intro}</Text>
 
               <Box>
                 <Text fw={700} mb={8}>
-                  Vysvětlivky k přehledu:
+                  {t.accordion.bloodgroups.legend.title}
                 </Text>
-                <Text size="sm">
-                  Schéma zápisu: matka (kočka) + otec (kocour) = potomci
-                  (koťata)
-                </Text>
+                <Text size="sm">{t.accordion.bloodgroups.legend.schema}</Text>
                 <List mt={8} spacing="xs" size="sm">
-                  <List.Item>
-                    Aa = krevní skupina A bez vlohy pro krevní skupinu B
-                  </List.Item>
-                  <List.Item>
-                    Ab = krevní skupina A s vlohou pro krevní skupinu B
-                  </List.Item>
-                  <List.Item>
-                    B = krevní skupina B (nemůže být nositelem vlohy pro žádnou
-                    jinou krevní skupinu, je to vždy jen B na obou alelách)
-                  </List.Item>
+                  <List.Item>{t.accordion.bloodgroups.legend.aa}</List.Item>
+                  <List.Item>{t.accordion.bloodgroups.legend.ab}</List.Item>
+                  <List.Item>{t.accordion.bloodgroups.legend.b}</List.Item>
                 </List>
               </Box>
 
@@ -252,10 +161,18 @@ export function RagdollBloodGroupsSection() {
                 <Table striped highlightOnHover mt={16}>
                   <Table.Thead>
                     <Table.Tr>
-                      <Table.Th>Kombinace rodičů</Table.Th>
-                      <Table.Th>Potomci</Table.Th>
-                      <Table.Th w={64}>Riziko</Table.Th>
-                      <Table.Th>Popis</Table.Th>
+                      <Table.Th>
+                        {t.accordion.bloodgroups.table.header1}
+                      </Table.Th>
+                      <Table.Th>
+                        {t.accordion.bloodgroups.table.header2}
+                      </Table.Th>
+                      <Table.Th w={64}>
+                        {t.accordion.bloodgroups.table.header3}
+                      </Table.Th>
+                      <Table.Th>
+                        {t.accordion.bloodgroups.table.header4}
+                      </Table.Th>
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
@@ -286,7 +203,7 @@ export function RagdollBloodGroupsSection() {
                 target="_blank"
                 mt={8}
               >
-                Podrobná tabulka dědičnosti krevních skupin
+                {t.accordion.bloodgroups.detailedTable}
               </Anchor>
             </Stack>
           </Accordion.Panel>
@@ -295,48 +212,23 @@ export function RagdollBloodGroupsSection() {
         <Accordion.Item value="fni">
           <Accordion.Control>
             <Title order={3} size="h3">
-              FNI (Feline Neonatal Isoerythrolysis)
+              {t.accordion.fni.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
             <Stack gap="md">
-              <Text>
-                Při transfuzi dárce A, příjemce B a naopak po první aplikaci
-                nedochází k problémům. Při chovu koček, pokud má rodičovský pár
-                rozdílné krevní skupiny, panoval názor, že matka vytváří
-                protilátky proti plodu, který zdědil krevní skupinu otce.
-                Neodpovídá to pravdě, protože u koček protilátky neprocházejí
-                placentou, ta je přirozenou barierou. Matka krevní skupiny B bez
-                problémů donosí koťata krevní skupiny A.
-              </Text>
+              <Text>{t.accordion.fni.intro}</Text>
 
               <Alert
                 icon={<IconAlertCircle size={16} />}
                 color="orange"
                 radius="md"
               >
-                <Text fw={700}>
-                  Inkompatibilita se projeví až po porodu, po prvním napití se
-                  kolostra.
-                </Text>
-                <Text mt={8}>
-                  V kolostru kočky s krevní skupinou B jsou protilátky proti
-                  krevní skupině A. V prvních dnech po narození koťata přijímají
-                  kolostrum s protilátkami proti vlastní krevní skupině. Ty
-                  procházejí střevní barierou (v prvních dnech) a ničí červené
-                  krvinky kotěte. Tento stav se označuje zkratkou FNI (Feline
-                  neonatal isoerythrolysis) - kočičí novorozenecké rozpouštění
-                  červených krvinek.
-                </Text>
+                <Text fw={700}>{t.accordion.fni.alert.title}</Text>
+                <Text mt={8}>{t.accordion.fni.alert.content}</Text>
               </Alert>
 
-              <Text>
-                Takto postižená koťata rychle slábnou, ztrácí zájem o sání,
-                zcela přestanou sát a hynou za příznaků žloutenky a anemie.
-                Některá z těchto koťat přežívají, ale za několik týdnů slabostí
-                hynou. Výjimečně přežijí se slabou formou anemie, jejich vývoj
-                je opožděný, zaostávají za sourozenci.
-              </Text>
+              <Text>{t.accordion.fni.symptoms}</Text>
 
               <Box
                 py={16}
@@ -345,38 +237,18 @@ export function RagdollBloodGroupsSection() {
                 style={{ borderRadius: "8px" }}
               >
                 <Text fw={700} size="lg" mb={16}>
-                  Řešení problému:
+                  {t.accordion.fni.solution.title}
                 </Text>
-                <Text>
-                  Jestliže není vyhnutí a z nějakého důvodu musíme rodičovský
-                  pár vytvořit z jedinců s rozdílnými krevními skupinami, je
-                  záchrana života koťat jedině v tom, že koťata ihned po porodu,
-                  dříve než se napijí kolostra, oddělíme od matky minimálně na
-                  24 hod, kdy je střevní stěna koťat prostupná pro protilátky.
-                </Text>
-                <Text mt={8}>
-                  Po dobu oddělení je nutno koťata krmit uměle náhradou kočičího
-                  mléka (lze zakoupit v obchodech např. sušené mléko Kitty milk
-                  od firmy Beaphar, ale existuje samozřejmě více značek) nebo
-                  mít k dispozici kojnou kočku s krevní skupinou odpovídající
-                  koťatům. Bohužel tato koťata nezískají z kolostra ani
-                  protilátky proti infekcím a tím si nesou do života určitou
-                  zátěž.
-                </Text>
+                <Text>{t.accordion.fni.solution.part1}</Text>
+                <Text mt={8}>{t.accordion.fni.solution.part2}</Text>
               </Box>
 
               <Text size="sm" c="dimmed" mt={16}>
-                Nejčastěji se jedinci s krevní skupinou B vyskytují u britských
-                koček (až 50%), devon rexů (40%), habešských, somálských a
-                perských (20%), oproti tomu siamské a orientální mají téměř vždy
-                krevní skupinu A. I u volně chovaných domácích koček se tyto
-                problémy vyskytují. Kočky porodí zdravá koťata, ale ta brzy
-                hynou. Taková kočka ve svém životě obvykle neodchová žádná
-                koťata, pokud nepotká kocoura také se skupinou B.
+                {t.accordion.fni.note}
               </Text>
 
               <Text size="sm" c="dimmed" ta="right" mt={8}>
-                - MVDr. Květa Mahelková
+                {t.accordion.fni.author}
               </Text>
             </Stack>
           </Accordion.Panel>

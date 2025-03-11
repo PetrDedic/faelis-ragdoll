@@ -1,0 +1,91 @@
+{
+  "section": {
+    "title": "Ragdoll Breed Genetics",
+    "intro1": "It is important for anyone who wants to breed cats to know the basics of genetics. This is the only way a breeder can know what kittens can be born from different parents. While it may not be very interesting reading for a layperson, it does not diminish its importance.",
+    "intro2": "The variety cannot be influenced by the gender of the cat, which is why we use the general term - parents."
+  },
+  "accordion": {
+    "varieties": {
+      "title": "Ragdoll Varieties and Their Genetic Codes",
+      "link_text": "A detailed overview of variety combinations can be found, for example,",
+      "link_label": "HERE"
+    },
+    "combinations": {
+      "title": "Brief Overview of Variety Combinations",
+      "table_header1": "Parent Combinations",
+      "table_header2": "Possible Kitten Varieties"
+    },
+    "colors": {
+      "title": "Ragdoll Colors and Their Genetics",
+      "intro": "The genetic codes for basic colors use the following terms and designations:",
+      "bullet1": "• letter B is for seal coat color",
+      "bullet2": "• letter b is for chocolate coloration",
+      "bullet3": "• letter D is for full coloration (without diluting effects on color)",
+      "bullet4": "• letter d is for color dilution (dilute gene)",
+      "basic_colors": "Basic colors:",
+      "link_text": "A detailed overview of basic color combinations can be found at:",
+      "link_label": "color combinations"
+    }
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Colorpoint (cp)",
+      "description": "No white color"
+    },
+    "mitted": {
+      "name": "Mitted, Mitted with blase",
+      "description": "White socks and stockings, white chin and belly. Blase is the so-called white flame in the middle of the nose"
+    },
+    "highmitted": {
+      "name": "High Mitted (HM)",
+      "description": "Visually bicolor, i.e., white inverted V in the mask, white legs and belly from chin to tail root, back in point color"
+    },
+    "bicolor": {
+      "name": "Bicolor",
+      "description": "So-called bicolor true = true bicolor, visually the same as High Mitted"
+    },
+    "midhighwhite": {
+      "name": "Bicolor Mid High White (MHW)",
+      "description": "Bicolor with a higher proportion of white color"
+    },
+    "highwhite": {
+      "name": "Bicolor High White (HW, Van)",
+      "description": "Bicolor with the highest proportion of white color"
+    }
+  },
+  "colors": {
+    "seal": {
+      "name": "Seal (black)",
+      "description": "The genetic codes of a seal Ragdoll cat depend on whether it is a seal Ragdoll without a dilution gene (BBDD), or a classic seal with a dilution gene (BBDd), or a seal with a gene for chocolate coloration (BbDD - chocolate carrier), or a seal with a gene for chocolate coloration and a dilution gene (BbDd - carrier of chocolate and dilution gene)"
+    },
+    "blue": {
+      "name": "Blue",
+      "description": "The genetic code of a blue cat must always have two dilution genes dd plus either two seal genes BB (the genetic code is then BBdd) or it can have one seal gene and one chocolate gene Bb, and the cat is then a chocolate carrier (the genetic code of such a blue cat is Bbdd)"
+    },
+    "chocolate": {
+      "name": "Chocolate",
+      "description": "A chocolate cat must always have two chocolate genes bb and can either have DD, which means it has no dilution gene (the genetic code of such a cat is bbDD), or it can have Dd and has a dilution gene (the genetic code of such a cat is bbDd)"
+    },
+    "lilac": {
+      "name": "Lilac (Frost)",
+      "description": "The genetic code of a lilac cat is always bbdd and no other way. It thus has two chocolate genes and for each one dilution gene"
+    }
+  },
+  "combinations": [
+    { "combination": "Colorpoint × Colorpoint", "result": "Colorpoint" },
+    { "combination": "Colorpoint × Mitted", "result": "Colorpoint, Mitted" },
+    { "combination": "Colorpoint × Bicolor High Mitted", "result": "Mitted" },
+    { "combination": "Colorpoint × Bicolor (true)", "result": "Colorpoint, Bicolor" },
+    { "combination": "Colorpoint × Bicolor Mid High White", "result": "Mitted, Bicolor" },
+    { "combination": "Colorpoint × Bicolor High White(Van)", "result": "Bicolor" },
+    { "combination": "Mitted × Mitted", "result": "Colorpoint, Mitted, High Mitted" },
+    { "combination": "Mitted × High Mitted", "result": "Mitted, High Mitted" },
+    { "combination": "High Mitted × High Mitted", "result": "High Mitted" },
+    { "combination": "Mitted × Bicolor true", "result": "Colorpoint, Mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor Mid High White", "result": "Mitted, High mitted, Bicolor true, Bicolor mid high white" },
+    { "combination": "Mitted × Bicolor High White(Van)", "result": "Bicolor true, Bicolor Mid High White" },
+    { "combination": "Bicolor true × Bicolor true", "result": "Colorpoint, Bicolor true, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor Mid High White", "result": "Mitted, Bicolor true, Bicolor Mid High White, Bicolor High White" },
+    { "combination": "Bicolor true × Bicolor High White", "result": "Bicolor true, Bicolor High White" }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "heading": "Všechny naše koťata, kočky a kocouři",
+    "subtext": "Chci mít vlastní kočičku."
+  },
+  "kittens": {
+    "title": "Ragdoll koťata",
+    "litterInfo": "Vrh O narozen 26/10/2024",
+    "description": "Očkování, odčervení, rodokmen, kupní smlouva... to je samozřejmostí, s majiteli našich koťátek jsme v kontaktu i po prodeji. Rodiče jsou negativně testovaní na HCM a PKD, FeLV a FIV."
+  },
+  "cats": {
+    "maleCats": "Ragdoll kocouři",
+    "femaleCats": "Ragdoll kočky"
+  },
+  "catInfo": {
+    "gender": "Pohlaví",
+    "genderMale": "kocour",
+    "genderFemale": "kočka",
+    "birthDate": "Datum narození",
+    "color": "Barva",
+    "variety": "Varianta",
+    "bloodGroup": "Krevní skupina",
+    "geneticCode": "Genetický kód barvy"
+  },
+  "facts": {
+    "heading": "Pár faktů o našem chovu plemene Ragdoll",
+    "stat1": {
+      "number": "50+",
+      "text": "Spokojených klientů"
+    },
+    "stat2": {
+      "number": "20+",
+      "text": "Let zkušeností a praxe"
+    },
+    "stat3": {
+      "number": "200+",
+      "text": "Šťastných koček"
+    },
+    "stat4": {
+      "number": "30+",
+      "text": "Úspěšných vrhů"
+    },
+    "button": "Zjistit více"
+  },
+  "contact": {
+    "heading": "Mám zájem o svou kočičku",
+    "subtext": "Pokud máte zájem zakoupit jednu z našich kočiček, tak nás kontaktujte pomocí telefonního čísla a nebo na níže uvedeném formuláři.",
+    "button": "Zjistit více"
+  }
+}

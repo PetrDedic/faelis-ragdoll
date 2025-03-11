@@ -1,0 +1,126 @@
+{
+  "section": {
+    "title": "Krevní skupiny koček Ragdoll",
+    "intro": "Není neštěstí mít Ragdoll kočku s krevní skupinou B, jenom je třeba být připraven a informován a tyto informace předávat dál. Osud tomu chtěl, že jsme se sama přesvědčila o tom, že kočka a kocour s krevní skupinou A mohou mít potomka s krevní skupinou B. Proto nestačí znát jen krevní skupinu rodičů, je třeba ji určit u každého kotěte v chovu zvlášť aby se předešlo FNI (Feline neonatal isoerythrolysis)."
+  },
+  "alert": {
+    "title": "Důležité upozornění",
+    "content": "Je velmi důležité znát krevní skupinu chovných koček dříve, než se narodí koťátka, nejlépe je se o to zajímat již při koupi kotěte do chovu. Je to proto, že pokud by měla kočka krevní skupinu B a kocour by byl skupiny A, tak je třeba se na to připravit, aby člověk dokázal odchovat narozená koťátka. Koťata s krevní skupinou A, která se napijí v prvních 1-3 dnech od matky s krevní skupinou B, jsou postižena FNI a taková koťata rychle slábnou, ztrácejí zájem o sání mléka a hynou za příznaků žloutenky a anemie."
+  },
+  "accordion": {
+    "testing": {
+      "title": "Testování krevních skupin",
+      "intro": "Krevní skupina se dá určit dvěma způsoby:",
+      "serology": {
+        "title": "1. Sérologicky",
+        "content": "Veterinář odebere krev. Pokud máte dobrého veterináře, odebere krev kočce bez uspání i bez oholení přední tlapky. Rozbor krve na určení krevní skupiny je možné již nechat udělat i u nás, v laboratoři v Plzni."
+      },
+      "genetic": {
+        "title": "2. Geneticky",
+        "content": "Buď z odebrané krve nebo ze stěru z tlamičky, což si může chovatel odebrat sám. Genetické určení krevní skupiny má výhodu v tom, že dokáže určit i to, jestli kočka se skupinou A (případně AB) je nebo není nosičem vlohy pro krevní skupinu B.",
+        "note": "Nevýhodou je to, že pro plemeno Ragdoll a Turecká Van není genetický test krevní skupiny stále ještě stoprocentní. Ovšem pro všechna ostatní plemena ja přesný na 100%. Test stojí řádově 1000 Kč (cena se možná bude různit)."
+      },
+      "kittenTesting": {
+        "title": "Pro určení krevní skupiny u narozených koťat",
+        "content": "Lze použít tzv. rychlý test z pupečníkové krve. Tento můžete koupit na internetu:",
+        "link1": "Alvediavet",
+        "link1_desc": "- evropský výrobek, podle mých přátel ze Španělska je lepší, protože je k testu potřeba menší množství krve než u testu z USA",
+        "link2": "Rapidvet",
+        "link2_desc": "- test z USA"
+      },
+      "research": "V současné době probíhá výzkum v americké laboratoři",
+      "researchLink": "UC Davis",
+      "researchDesc": ", který by mohl určit krevní skupinu pomocí DNA i u koček Ragdoll a Tureckých Van, kde genetické určené krevní skupiny ještě stále není průkazné."
+    },
+    "bloodgroups": {
+      "title": "Dědičnost krevních skupin",
+      "intro": "U koček známe tři krevní skupiny A, AB a B. Typ A je tvořen páry genů A=AA (Aa) nebo A=AB (Ab), kde A je dominantní a potlačuje projevy B. Typ AB je vzácný a málo probádaný, je však jiný než kombinace Ab. Typ B je formován geny BB (B).",
+      "legend": {
+        "title": "Vysvětlivky k přehledu:",
+        "schema": "Schéma zápisu: matka (kočka) + otec (kocour) = potomci (koťata)",
+        "aa": "Aa = krevní skupina A bez vlohy pro krevní skupinu B",
+        "ab": "Ab = krevní skupina A s vlohou pro krevní skupinu B",
+        "b": "B = krevní skupina B (nemůže být nositelem vlohy pro žádnou jinou krevní skupinu, je to vždy jen B na obou alelách)"
+      },
+      "table": {
+        "header1": "Kombinace rodičů",
+        "header2": "Potomci",
+        "header3": "Riziko",
+        "header4": "Popis"
+      },
+      "detailedTable": "Podrobná tabulka dědičnosti krevních skupin"
+    },
+    "fni": {
+      "title": "FNI (Feline Neonatal Isoerythrolysis)",
+      "intro": "Při transfuzi dárce A, příjemce B a naopak po první aplikaci nedochází k problémům. Při chovu koček, pokud má rodičovský pár rozdílné krevní skupiny, panoval názor, že matka vytváří protilátky proti plodu, který zdědil krevní skupinu otce. Neodpovídá to pravdě, protože u koček protilátky neprocházejí placentou, ta je přirozenou barierou. Matka krevní skupiny B bez problémů donosí koťata krevní skupiny A.",
+      "alert": {
+        "title": "Inkompatibilita se projeví až po porodu, po prvním napití se kolostra.",
+        "content": "V kolostru kočky s krevní skupinou B jsou protilátky proti krevní skupině A. V prvních dnech po narození koťata přijímají kolostrum s protilátkami proti vlastní krevní skupině. Ty procházejí střevní barierou (v prvních dnech) a ničí červené krvinky kotěte. Tento stav se označuje zkratkou FNI (Feline neonatal isoerythrolysis) - kočičí novorozenecké rozpouštění červených krvinek."
+      },
+      "symptoms": "Takto postižená koťata rychle slábnou, ztrácí zájem o sání, zcela přestanou sát a hynou za příznaků žloutenky a anemie. Některá z těchto koťat přežívají, ale za několik týdnů slabostí hynou. Výjimečně přežijí se slabou formou anemie, jejich vývoj je opožděný, zaostávají za sourozenci.",
+      "solution": {
+        "title": "Řešení problému:",
+        "part1": "Jestliže není vyhnutí a z nějakého důvodu musíme rodičovský pár vytvořit z jedinců s rozdílnými krevními skupinami, je záchrana života koťat jedině v tom, že koťata ihned po porodu, dříve než se napijí kolostra, oddělíme od matky minimálně na 24 hod, kdy je střevní stěna koťat prostupná pro protilátky.",
+        "part2": "Po dobu oddělení je nutno koťata krmit uměle náhradou kočičího mléka (lze zakoupit v obchodech např. sušené mléko Kitty milk od firmy Beaphar, ale existuje samozřejmě více značek) nebo mít k dispozici kojnou kočku s krevní skupinou odpovídající koťatům. Bohužel tato koťata nezískají z kolostra ani protilátky proti infekcím a tím si nesou do života určitou zátěž."
+      },
+      "note": "Nejčastěji se jedinci s krevní skupinou B vyskytují u britských koček (až 50%), devon rexů (40%), habešských, somálských a perských (20%), oproti tomu siamské a orientální mají téměř vždy krevní skupinu A. I u volně chovaných domácích koček se tyto problémy vyskytují. Kočky porodí zdravá koťata, ale ta brzy hynou. Taková kočka ve svém životě obvykle neodchová žádná koťata, pokud nepotká kocoura také se skupinou B.",
+      "author": "- MVDr. Květa Mahelková"
+    }
+  },
+  "combinations": [
+    {
+      "combination": "Aa + Aa",
+      "result": "Aa",
+      "warning": false,
+      "description": "Ideální stav, kočka i kocour jsou čisté A a ani jeden z nich nenese vlohu pro krevní skupinu B"
+    },
+    {
+      "combination": "Aa + Ab",
+      "result": "Aa nebo Ab",
+      "warning": false,
+      "description": "Všechna koťata budou mít krevní skupinu A, ale některá budou Aa a některá po otci Ab"
+    },
+    {
+      "combination": "Aa + B",
+      "result": "Ab",
+      "warning": false,
+      "description": "Všechna koťata se narodí s krevní skupinou Ab, tedy budou zároveň po otci nosiči vlohy krevní skupinu B"
+    },
+    {
+      "combination": "Ab + Aa",
+      "result": "Aa nebo Ab",
+      "warning": false,
+      "description": "Všechna koťata budou mít krevní skupinu A, ale některá budou Aa a některá po matce Ab"
+    },
+    {
+      "combination": "Ab + Ab",
+      "result": "Aa nebo Ab nebo B",
+      "warning": false,
+      "description": "Mohou se narodit koťata čistá Aa nebo nosiči béčka Ab nebo krevní skupina B"
+    },
+    {
+      "combination": "Ab + B",
+      "result": "Ab a B",
+      "warning": false,
+      "description": "Pokud je matka krevní skupina Ab a otec B, tak budou mít všechna koťata krevní skupinu Ab a B"
+    },
+    {
+      "combination": "B + Aa",
+      "result": "Ab",
+      "warning": true,
+      "description": "Kočka matka má krevní skupinu B a otec Aa - všechna koťata je třeba minimálně na 24 hodin oddělit od matky!"
+    },
+    {
+      "combination": "B + Ab",
+      "result": "Ab a B",
+      "warning": true,
+      "description": "Kočka má krevní skupinu B a otec Ab - některá koťata mohou být ohrožena a je třeba je minimálně na 24 hodin oddělit. Určit která koťata mohou být ohrožena se dá při porodu z pupečníkové krve a sady pro rychlé testy, kterou je potřeba předem zakoupit"
+    },
+    {
+      "combination": "B + B",
+      "result": "B",
+      "warning": false,
+      "description": "Oba rodiče mají krevní skupinu B, takže je vše v pořádku, jen je třeba na to upozornit zájemco o koťátka do chovu kvůli dalšímu potomstvu"
+    }
+  ]
+}

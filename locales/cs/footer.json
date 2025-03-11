@@ -1,0 +1,22 @@
+{
+  "location": {
+    "title": "Kde nás naleznete?"
+  },
+  "cattery": {
+    "title": "Faelis - Chovatelská stanice koček Ragdoll"
+  },
+  "contact": {
+    "name": "Marta Seko",
+    "address1": "Nad Nádrží 433/16",
+    "address2": "10 300 | Praha 10",
+    "email": "E-mail:",
+    "phone": "Telefon:",
+    "skype": "Skype:",
+    "moreContacts": "Podrobné Kontakty naleznete",
+    "here": "ZDE!"
+  },
+  "copyright": {
+    "rights": "Faelis - chovatelská stanice © 2002 Všechna práva vyhrazena.",
+    "design": "Designed by: paryn design & sanchez design"
+  }
+}

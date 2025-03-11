@@ -1,0 +1,40 @@
+{
+  "section": {
+    "title": "Variety plemene Ragdoll",
+    "intro": "Všechny barvy ragdolů mohou být vždy jen ve třech varietách:"
+  },
+  "modal": {
+    "examples": "Příklady",
+    "disqualifications": "Diskvalifikace:"
+  },
+  "varieties": {
+    "colorpoint": {
+      "name": "Ragdoll colorpoint",
+      "description": "Odznaky: uši, maska, packy, varlata a ocas jsou temnější, s jasně stanovenou barvou. Sliznice nosu a polštářky tlapek plně vybarvené a odpovídající dané barvě. Tělo: viditelný kontrast mezi tělem a odznaky. Hruď, hříva a oblasti brady mohou mít poněkud světlejší vybarvení.",
+      "disqualifications": "Přítomnost bílé barvy srsti kdekoliv na kočičím těle."
+    },
+    "mitted": {
+      "name": "Ragdoll mitted",
+      "description": "Odznaky (s vyjímkou bílé na packách): uši, maska, packy a ocas jsou temnější, s jasně stanovenou barvou. Možnost bílé skvrny nebo proužku (tvar hvězdičky, plamínky, přesýpacích hodin - v celku nebo více skvrn či proužků) v srsti od sliznice nosu nahoru nebo pod nosem. Brada musí být vždy bílá a přechází v kuse do bílého pruhu na břiše, který končí až u genitálií. Přední tlapky jsou rovnoměrně bílé, nejlépe do výše zápěstního kloubu. Zadní nohy jsou bílé ideálně po patní kloub. Sliznice nosu plně vybarvena a odpovídající dané barvě srtsi. Polštářky jsou růžové, může se vyskytnout zabarvený polštářek v barvě srsti. Barva srsti po těle by měla být viditelně světlejší než barva odznaků, na těle barva může mít více odstínů. U koťat a dospělých mladších 2-3 let barvy nejsou plně vyvinuté.",
+      "disqualifications": "Absence bílé brady."
+    },
+    "bicolor": {
+      "name": "Ragdoll bicolor",
+      "description": "Odznaky: uši a ocas. V oblasti masky je bílé obrácené V - maximálně po vnější okraj očí, preferována souměrnost tohoto V. Sliznice nosu růžová, polštářky preferovány růžové, ale mohou být zbarvené podle srsti. Na zádech mohou být bílé skvrny, tělo na hrudi, bradě a břiše má být bílé.",
+      "disqualifications": "Rozsáhlá tmavá skvrna na noze/nohách, absence V nebo fleky ve V, absence celého barevného odznaku na hlavě nebo ocase."
+    }
+  },
+  "examples": {
+    "seal_colorpoint": "Ragdoll seal colorpoint, RAG n",
+    "blue_colorpoint": "Ragdoll blue colorpoint, RAG a",
+    "chocolate_colorpoint": "Ragdoll chocolate colorpoint, RAG b",
+    "lilac_colorpoint": "Ragdoll lilac colorpoint, RAG c",
+    "seal_mitted": "Ragdoll seal mitted, RAG n 04",
+    "blue_mitted": "Ragdoll blue mitted, RAG a 04",
+    "chocolate_mitted": "Ragdoll chocolate mitted, RAG b 04",
+    "lilac_mitted": "Ragdoll lilac mitted, RAG c 04",
+    "seal_bicolor": "Ragdoll seal bicolor, RAG n 03",
+    "blue_bicolor": "Ragdoll blue bicolor, RAG a 03",
+    "chocolate_tortie_bicolor": "Ragdoll chocolate tortie bicolor, RAG h 03"
+  }
+}

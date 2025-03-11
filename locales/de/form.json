@@ -1,0 +1,20 @@
+{
+  "title": "Kontaktieren Sie uns",
+  "name": {
+    "label": "Name",
+    "placeholder": "Ihr Vor- und Nachname"
+  },
+  "email": {
+    "label": "E-Mail",
+    "placeholder": "Ihre E-Mail"
+  },
+  "subject": {
+    "label": "Betreff",
+    "placeholder": "Betreff"
+  },
+  "message": {
+    "label": "Ihre Nachricht",
+    "placeholder": "Schreiben Sie uns eine Nachricht"
+  },
+  "submit": "Formular absenden"
+}

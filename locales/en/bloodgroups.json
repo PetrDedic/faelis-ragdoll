@@ -1,0 +1,126 @@
+{
+  "section": {
+    "title": "Blood Groups in Ragdoll Cats",
+    "intro": "Having a Ragdoll cat with blood group B is not a misfortune, but it's necessary to be prepared, informed, and to pass this information on. Fate would have it that I myself have been convinced that a cat and a tomcat with blood group A can have offspring with blood group B. Therefore, it's not enough to know only the blood group of the parents; it needs to be determined for each kitten in breeding separately to prevent FNI (Feline neonatal isoerythrolysis)."
+  },
+  "alert": {
+    "title": "Important notice",
+    "content": "It is very important to know the blood group of breeding cats before kittens are born, preferably to be interested in this when buying a kitten for breeding. This is because if the cat has blood group B and the tomcat is group A, it is necessary to prepare for this so that one can successfully raise the born kittens. Kittens with blood group A, which drink from a mother with blood group B in the first 1-3 days, are affected by FNI, and such kittens quickly weaken, lose interest in suckling milk, and die with symptoms of jaundice and anemia."
+  },
+  "accordion": {
+    "testing": {
+      "title": "Blood Group Testing",
+      "intro": "Blood group can be determined in two ways:",
+      "serology": {
+        "title": "1. Serologically",
+        "content": "The veterinarian takes blood. If you have a good veterinarian, they will take blood from the cat without anesthesia and without shaving the front paw. Blood analysis for blood group determination can now also be done in our country, in a laboratory in Pilsen."
+      },
+      "genetic": {
+        "title": "2. Genetically",
+        "content": "Either from drawn blood or from a cheek swab, which the breeder can collect themselves. Genetic determination of blood group has the advantage that it can also determine whether a cat with group A (or AB) is or is not a carrier of the trait for blood group B.",
+        "note": "The disadvantage is that for the Ragdoll and Turkish Van breeds, the genetic blood group test is still not 100% accurate. However, for all other breeds, it is 100% accurate. The test costs around 1000 CZK (the price may vary)."
+      },
+      "kittenTesting": {
+        "title": "For determining the blood group in newborn kittens",
+        "content": "A so-called rapid test from umbilical cord blood can be used. This can be purchased online:",
+        "link1": "Alvediavet",
+        "link1_desc": "- a European product, according to my friends from Spain, it's better because it requires less blood than the test from the USA",
+        "link2": "Rapidvet",
+        "link2_desc": "- a test from the USA"
+      },
+      "research": "Currently, research is being conducted in the American laboratory",
+      "researchLink": "UC Davis",
+      "researchDesc": ", which could determine blood group using DNA even in Ragdoll and Turkish Van cats, where genetic determination of blood groups is still not fully proven."
+    },
+    "bloodgroups": {
+      "title": "Inheritance of Blood Groups",
+      "intro": "In cats, we know three blood groups: A, AB, and B. Type A is formed by gene pairs A=AA (Aa) or A=AB (Ab), where A is dominant and suppresses the manifestations of B. Type AB is rare and little studied, but it is different from the combination Ab. Type B is formed by genes BB (B).",
+      "legend": {
+        "title": "Explanations for the overview:",
+        "schema": "Notation scheme: mother (cat) + father (tomcat) = offspring (kittens)",
+        "aa": "Aa = blood group A without the trait for blood group B",
+        "ab": "Ab = blood group A with the trait for blood group B",
+        "b": "B = blood group B (cannot be a carrier of the trait for any other blood group, it's always just B on both alleles)"
+      },
+      "table": {
+        "header1": "Parent Combinations",
+        "header2": "Offspring",
+        "header3": "Risk",
+        "header4": "Description"
+      },
+      "detailedTable": "Detailed table of blood group inheritance"
+    },
+    "fni": {
+      "title": "FNI (Feline Neonatal Isoerythrolysis)",
+      "intro": "During transfusion, donor A, recipient B, and vice versa, there are no problems after the first application. In cat breeding, if the parent pair has different blood groups, there was an opinion that the mother creates antibodies against the fetus, which inherited the father's blood group. This is not true, because in cats, antibodies do not pass through the placenta, which is a natural barrier. A mother with blood group B can carry kittens with blood group A without problems.",
+      "alert": {
+        "title": "Incompatibility manifests only after birth, after the first drink of colostrum.",
+        "content": "In the colostrum of a cat with blood group B, there are antibodies against blood group A. In the first days after birth, kittens receive colostrum with antibodies against their own blood group. These pass through the intestinal barrier (in the first days) and destroy the red blood cells of the kitten. This condition is referred to by the abbreviation FNI (Feline neonatal isoerythrolysis) - feline neonatal dissolution of red blood cells."
+      },
+      "symptoms": "Kittens affected in this way quickly weaken, lose interest in suckling, completely stop suckling, and die with symptoms of jaundice and anemia. Some of these kittens survive, but die of weakness after a few weeks. Exceptionally, they survive with a mild form of anemia, their development is delayed, they lag behind their siblings.",
+      "solution": {
+        "title": "Problem solution:",
+        "part1": "If there is no avoidance and for some reason we must create a parent pair from individuals with different blood groups, the only way to save the kittens' lives is to separate the kittens from the mother immediately after birth, before they drink colostrum, for at least 24 hours, when the intestinal wall of the kittens is permeable to antibodies.",
+        "part2": "During separation, it is necessary to feed the kittens artificially with a substitute for cat's milk (available in stores, e.g., dried milk Kitty milk from Beaphar, but there are of course more brands) or to have a nursing cat with a blood group corresponding to the kittens. Unfortunately, these kittens do not gain antibodies against infections from colostrum and thus carry a certain burden into life."
+      },
+      "note": "Individuals with blood group B most commonly occur in British cats (up to 50%), Devon Rex (40%), Abyssinian, Somali, and Persian (20%), whereas Siamese and Oriental almost always have blood group A. These problems also occur in freely bred domestic cats. Cats give birth to healthy kittens, but they soon die. Such a cat usually does not raise any kittens in its life, unless it meets a tomcat also with group B.",
+      "author": "- MVDr. Květa Mahelková"
+    }
+  },
+  "combinations": [
+    {
+      "combination": "Aa + Aa",
+      "result": "Aa",
+      "warning": false,
+      "description": "Ideal state, both cat and tomcat are pure A and neither of them carries the trait for blood group B"
+    },
+    {
+      "combination": "Aa + Ab",
+      "result": "Aa or Ab",
+      "warning": false,
+      "description": "All kittens will have blood group A, but some will be Aa and some will be Ab after the father"
+    },
+    {
+      "combination": "Aa + B",
+      "result": "Ab",
+      "warning": false,
+      "description": "All kittens will be born with blood group Ab, so they will also be carriers of the trait for blood group B after the father"
+    },
+    {
+      "combination": "Ab + Aa",
+      "result": "Aa or Ab",
+      "warning": false,
+      "description": "All kittens will have blood group A, but some will be Aa and some will be Ab after the mother"
+    },
+    {
+      "combination": "Ab + Ab",
+      "result": "Aa or Ab or B",
+      "warning": false,
+      "description": "Kittens can be born pure Aa or carriers of B as Ab or blood group B"
+    },
+    {
+      "combination": "Ab + B",
+      "result": "Ab and B",
+      "warning": false,
+      "description": "If the mother is blood group Ab and the father is B, then all kittens will have blood group Ab and B"
+    },
+    {
+      "combination": "B + Aa",
+      "result": "Ab",
+      "warning": true,
+      "description": "The mother cat has blood group B and the father Aa - all kittens need to be separated from the mother for at least 24 hours!"
+    },
+    {
+      "combination": "B + Ab",
+      "result": "Ab and B",
+      "warning": true,
+      "description": "The cat has blood group B and the father Ab - some kittens may be at risk and need to be separated for at least 24 hours. Determining which kittens may be at risk can be done at birth from umbilical cord blood and a rapid test kit, which needs to be purchased in advance"
+    },
+    {
+      "combination": "B + B",
+      "result": "B",
+      "warning": false,
+      "description": "Both parents have blood group B, so everything is fine, just need to alert those interested in kittens for breeding because of future offspring"
+    }
+  ]
+}

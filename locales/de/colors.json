@@ -1,0 +1,87 @@
+{
+  "colors": {
+    "seal": {
+      "name": "SEAL (SCHWARZBRAUN)",
+      "description": "Der Körper ist hellbraun, wobei die Farbe zum Bauch und zur Brust hin heller wird. Die Abzeichen sind tief schwarzbraun bis schwarz. Die Nase und Pfotenballen sind dunkel schwarzbraun. Seal ist eine satte Farbe (im genetischen Code wird sie mit Großbuchstaben BB gekennzeichnet, sie hat entweder keine Verdünnungsgene - DD, oder maximal eines - Dd)."
+    },
+    "blue": {
+      "name": "BLUE (BLAU)",
+      "description": "Der Körper ist bläulich-weiß in einem kühlen Farbton, wobei die Farbe zum Bauch und zur Brust hin heller wird. Die Abzeichen sind tiefes Dunkelgrau mit einem bläulichen Schimmer. Die Nase und Pfotenballen sind schiefergrau - die Intensität der Farbsättigung ist individuell. Blau ist eine verdünnte Seal-Farbe (im genetischen Code wird sie mit einem Großbuchstaben BB und immer zwei Verdünnungsgenen dd gekennzeichnet)."
+    },
+    "chocolate": {
+      "name": "CHOCOLATE (SCHOKOLADE)",
+      "description": "Der Körper ist elfenbeinweiß, wobei die Farbe zum Bauch und zur Brust hin heller wird. Die Abzeichen sind in einem warmen Farbton von Milchschokolade, nirgendwo am Körper ist ein Hauch von Schwarz oder Schwarzbraun. Die Nase und Pfotenballen sind zimtbraun mit einem rosa Schimmer - die Intensität der Farbsättigung ist individuell. Schokolade ist eine satte Farbe (im genetischen Code wird sie mit zwei Kleinbuchstaben bb gekennzeichnet, sie hat entweder keine Verdünnungsgene - DD, oder maximal eines - Dd)."
+    },
+    "lilac": {
+      "name": "LILAC (FROST) - FLIEDER",
+      "description": "Der Körper ist warmweiß mit einem rosa Schimmer, wobei die Farbe zum Bauch und zur Brust hin heller wird. Die Abzeichen sind in einer eisgrauen Farbe mit einem rosa Schimmer. Die Nase und Pfotenballen sind lavendel - die Intensität der Farbsättigung ist individuell. Flieder ist eine verdünnte Schokoladenfarbe (im genetischen Code wird sie mit zwei Kleinbuchstaben bb und immer zwei Verdünnungsgenen dd gekennzeichnet)."
+    },
+    "red": {
+      "name": "RED (FLAME) - ROT",
+      "description": "Der Körper ist reinweiß, manchmal mit einem Hauch von Abzeichenfarbe. Die Abzeichen sind rot in einer scharfen Karottenfarbe - Farbsättigung wird bevorzugt. Die Nase und Pfotenballen sind korallenrot - die Intensität der Farbsättigung ist individuell. Rot ist eine satte Farbe und wird in der genetischen Notation mit dem Buchstaben O gekennzeichnet."
+    },
+    "cream": {
+      "name": "CREAM - CREME",
+      "description": "Der Körper ist reinweiß, manchmal mit einem Hauch von Abzeichenfarbe. Die Abzeichen sind hell cremerot - die Farbe ist nicht scharf, Farbsättigung wird bevorzugt. Die Nase und Pfotenballen sind hell korallenrot - die Intensität der Farbsättigung ist individuell. Creme ist eine verdünnte Farbe (im genetischen Code wird sie mit dem Großbuchstaben O gekennzeichnet)."
+    },
+    "seallynx": {
+      "name": "SEAL LYNX - SCHWARZBRAUN MIT MUSTER",
+      "description": "Der Körper ist hellbraun, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es gibt ein deutliches Muster auf dem Körper - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind schwarzbraun mit einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise schwarzbraun, kann aber auch rosa mit schwarzbrauner Umrandung sein. Die Pfotenballen sind braun. Es kann vorkommen, dass aufgrund des Musters alle Farben - Fell, Nase und Pfotenballen - heller erscheinen als das klassische Schwarzbraun - aber Vorsicht, es ist keine Schokoladenfarbe. Der Rest ist wie bei der Seal-Farbe."
+    },
+    "bluelynx": {
+      "name": "BLUE LYNX - BLAU MIT MUSTER",
+      "description": "Der Körper ist hellbraun, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es gibt ein deutliches Muster auf dem Körper - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind tiefgrau mit einem blauen Schimmer und einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise schiefergrau, kann aber auch rosa mit grauer Umrandung sein. Die Pfotenballen sind grau. Der Rest ist wie bei der blauen Farbe."
+    },
+    "chocolatelynx": {
+      "name": "CHOCOLATE LYNX - SCHOKOLADE MIT MUSTER",
+      "description": "Der Körper ist hellbraun, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es gibt ein deutliches Muster auf dem Körper - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind in der Farbe von Milchschokolade mit einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise warmbraun, kann aber auch rosa mit warmbrauner Umrandung sein. Die Pfotenballen sind warmbraun. Der Rest ist wie bei der Schokoladenfarbe."
+    },
+    "lilaclynx": {
+      "name": "LILAC LYNX - FLIEDER MIT MUSTER",
+      "description": "Der Körper ist eisweiß, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es gibt ein deutliches Muster auf dem Körper - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind eisgrau mit einem warmen rosa Schimmer und einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise lavendel, kann aber auch rosa mit Lavendelumrandung sein. Die Pfotenballen sind lavendel. Der Rest ist wie bei der Fliederfarbe."
+    },
+    "redlynx": {
+      "name": "RED LYNX - ROT MIT MUSTER",
+      "description": "Der Körper ist weiß, es kann ein sichtbares Muster in der Farbe der Abzeichen auf dem Körper geben - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind scharf rot in Karottenfarbe mit einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise korallenrot, kann aber auch rosa mit korallenroter Umrandung sein. Die Pfotenballen sind korallenrot. Der Rest ist wie bei der roten Farbe."
+    },
+    "creamlynx": {
+      "name": "CREAM LYNX - CREME MIT MUSTER",
+      "description": "Der Körper ist reinweiß, manchmal mit cremefarbenen Schattierungen, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es gibt cremefarbene Schattierungen des Musters auf dem Körper - Streifen und Punkte. In der Mitte der Ohren ist ein hellerer Fleck - der sogenannte Daumenabdruck. Die Abzeichen sind hell cremerot mit einem warmen Schimmer und einem deutlich helleren Hintergrund. Die Nase ist vorzugsweise hell korall, kann aber auch rosa mit korallenroter Umrandung sein. Die Pfotenballen sind hell korall. Der Rest ist wie bei der Cremefarbe."
+    },
+    "sealtortie": {
+      "name": "SEAL TORTIE - SCHWARZBRAUN SCHILDPATT",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Der Körper ist hellbraun, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es können rote oder cremefarbene Flecken auf dem Körper sein - ihre Größe ist individuell. Die Abzeichen sind schwarzbraun, können rote oder cremefarbene Flecken haben. Die Nase und Pfoten sind schwarzbraun oder angemessen korallenrot - je nach der Platzierung der roten Flecken auf dem Kopf und den Pfoten der Katze. Der Rest ist wie bei der Seal-Farbe."
+    },
+    "bluecream": {
+      "name": "BLUE CREAM - BLAU-CREME SCHILDPATT",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Der Körper ist bläulich-weiß in einem kühlen Farbton, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es können cremefarbene Flecken auf dem Körper sein - ihre Größe ist individuell. Die Abzeichen sind schiefergrau, können cremefarbene Flecken haben. Die Nase und Pfotenballen sind schiefergrau oder angemessen korallenrot - je nach der Platzierung der cremefarbenen Flecken auf dem Kopf und den Pfoten der Katze. Der Rest ist wie bei der blauen Farbe."
+    },
+    "chocolatetortie": {
+      "name": "CHOCOLATE TORTIE - SCHOKOLADE SCHILDPATT",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Der Körper ist elfenbeinweiß, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es können rote oder cremefarbene Flecken auf dem Körper sein - ihre Größe ist individuell. Die Abzeichen sind in der Farbe von Milchschokolade, können rote oder cremefarbene Flecken haben. Die Nase und Pfoten sind zimtbraun oder angemessen korallenrot - je nach der Platzierung der roten Flecken auf dem Kopf und den Pfoten der Katze. Der Rest ist wie bei der Schokoladenfarbe."
+    },
+    "lilaccream": {
+      "name": "LILAC CREAM - FLIEDER-CREME SCHILDPATT",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Der Körper ist warmweiß mit einem rosa Schimmer, wobei die Farbe zum Bauch und zur Brust hin heller wird. Es können cremefarbene Flecken auf dem Körper sein - ihre Größe ist individuell. Die Abzeichen sind in einer eisgrauen Farbe mit einem rosa Schimmer, können cremefarbene Flecken haben. Die Nase und Pfotenballen sind lavendel oder angemessen korallenrot - je nach der Platzierung der roten Flecken auf dem Kopf und den Pfoten der Katze. Der Rest ist wie bei der Fliederfarbe."
+    },
+    "sealtorbie": {
+      "name": "SEAL TORTIE LYNX (SEAL TORBIE) - SCHWARZBRAUN SCHILDPATT MIT MUSTER",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Die Färbung ist wie bei Seal Tortie und Seal Lynx."
+    },
+    "bluetorbie": {
+      "name": "BLUE CREAM LYNX (BLUE TORBIE) - BLAU-CREME SCHILDPATT MIT MUSTER",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Die Färbung ist wie bei Blue Cream und Blue Lynx."
+    },
+    "chocolatetorbie": {
+      "name": "CHOCOLATE TORTIE LYNX (CHOCOLATE TORBIE) - SCHOKOLADE SCHILDPATT MIT MUSTER",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Die Färbung ist wie bei Chocolate Cream und Chocolate Lynx."
+    },
+    "lilactorbie": {
+      "name": "LILAC CREAM LYNX (LILAC TORBIE) - FLIEDER-CREME SCHILDPATT MIT MUSTER",
+      "description": "Nur eine weibliche Katze kann diese Färbung haben. Die Färbung ist wie bei Lilac Cream und Lilac Lynx."
+    }
+  },
+  "ui": {
+    "copyright": "Ich besitze das Urheberrecht an diesen Fotos (für einige Stücke habe ich die Erlaubnis ihrer Besitzer). Bitte kopieren Sie sie nicht ohne vorherige Anfrage."
+  }
+}

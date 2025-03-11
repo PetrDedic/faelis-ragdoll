@@ -10,9 +10,28 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+// Import translations
+import csTranslations from "../locales/cs/footer.json";
+import enTranslations from "../locales/en/footer.json";
+import deTranslations from "../locales/de/footer.json";
 
 const Footer = () => {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
 
   return (
     <Stack w="100%" gap={0} mt={64}>
@@ -40,7 +59,7 @@ const Footer = () => {
         >
           <Stack w="100%">
             <Text c="white" fz={32} fw={700} ta="center">
-              Kde nás naleznete?
+              {t.location.title}
             </Text>
             <AspectRatio ratio={16 / 9}>
               <iframe
@@ -54,17 +73,17 @@ const Footer = () => {
           </Stack>
           <Stack w="100%" align="start" justify="center">
             <Title order={4} c="white" fz={32} style={{ letterSpacing: 1 }}>
-              Faelis - Chovatelská stanice koček Ragdoll
+              {t.cattery.title}
             </Title>
             <Stack gap={0} align="start" justify="start" c="white">
-              <Text fw={700}>Marta Seko</Text>
-              <Text>Nad Nádrží 433/16</Text>
-              <Text>10 300 | Praha 10</Text>
+              <Text fw={700}>{t.contact.name}</Text>
+              <Text>{t.contact.address1}</Text>
+              <Text>{t.contact.address2}</Text>
             </Stack>
             <Divider w="75%" />
             <Stack gap={0} align="start" justify="start" c="white">
               <Text>
-                E-mail:{" "}
+                {t.contact.email}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
                     href="mailto:marta@ragdolls.cz"
@@ -78,7 +97,7 @@ const Footer = () => {
                 </Text>
               </Text>
               <Text>
-                Telefon:{" "}
+                {t.contact.phone}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
                     href="tel:+420 602 278 682"
@@ -92,22 +111,22 @@ const Footer = () => {
                 </Text>
               </Text>{" "}
               <Text>
-                Skype:{" "}
+                {t.contact.skype}{" "}
                 <Text span fw={700} td="underline">
                   ragdoll.faelis
                 </Text>
               </Text>
               <Text>
-                Podrobné Kontakty naleznete{" "}
+                {t.contact.moreContacts}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
-                    href="/kontakt"
+                    href={locale === "cs" ? "/kontakt" : "/contact"}
                     style={{
                       color: "inherit",
                       whiteSpace: "nowrap",
                     }}
                   >
-                    ZDE!
+                    {t.contact.here}
                   </Link>
                 </Text>
               </Text>
@@ -116,10 +135,8 @@ const Footer = () => {
         </Flex>
       </Card>
       <Stack align="center" justify="center" p={16} gap={8}>
-        <Text>
-          Faelis - chovatelská stanice © 2002 Všechna práva vyhrazena.
-        </Text>
-        <Text>Designed by: paryn design & sanchez design</Text>
+        <Text>{t.copyright.rights}</Text>
+        <Text>{t.copyright.design}</Text>
       </Stack>
     </Stack>
   );

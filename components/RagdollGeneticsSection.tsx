@@ -11,6 +11,12 @@ import {
   Group,
   Badge,
 } from "@mantine/core";
+import { useRouter } from "next/router";
+
+// Import translations
+import csTranslations from "../locales/cs/genetics.json";
+import enTranslations from "../locales/en/genetics.json";
+import deTranslations from "../locales/de/genetics.json";
 
 interface GeneticCombination {
   combination: string;
@@ -25,46 +31,57 @@ interface GeneticInfo {
 }
 
 export function RagdollGeneticsSection() {
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
   // Variety genetic information
   const varietyInfo: GeneticInfo[] = [
     {
       id: "colorpoint",
-      name: "Colorpoint (cp)",
+      name: t.varieties.colorpoint.name,
       code: "ss",
-      description: "Bez bílé barvy",
+      description: t.varieties.colorpoint.description,
     },
     {
       id: "mitted",
-      name: "Mitted, Mitted with blase",
+      name: t.varieties.mitted.name,
       code: "S2s",
-      description:
-        "Bílé ponožky a punčošky, bílá brada a břicho. Blase je tzv.plamínek bílé barvy uprostred nosu",
+      description: t.varieties.mitted.description,
     },
     {
       id: "highmitted",
-      name: "High Mitted (HM)",
+      name: t.varieties.highmitted.name,
       code: "S2S2",
-      description:
-        "Vzhledově bicolor, tedy bílé obrácené V v masce, bílé nohy a břicho od brady po koren ocasu, záda v barvě odznaků",
+      description: t.varieties.highmitted.description,
     },
     {
       id: "bicolor",
-      name: "Bicolor",
+      name: t.varieties.bicolor.name,
       code: "S4s",
-      description:
-        "Tzv.bicolor true = pravý bicolor, vzhledově stejný jako High Mitted",
+      description: t.varieties.bicolor.description,
     },
     {
       id: "midhighwhite",
-      name: "Bicolor Mid High White (MHW)",
+      name: t.varieties.midhighwhite.name,
       code: "S4S2",
-      description: "Bicolor s vyšším podílem bílé barvy",
+      description: t.varieties.midhighwhite.description,
     },
     {
       id: "highwhite",
-      name: "Bicolor High White (HW, Van)",
+      name: t.varieties.highwhite.name,
       code: "S4S4",
-      description: "Bicolor s nejvyšším podílem bílé barvy",
+      description: t.varieties.highwhite.description,
     },
   ];
 
@@ -72,102 +89,50 @@ export function RagdollGeneticsSection() {
   const colorInfo: GeneticInfo[] = [
     {
       id: "seal",
-      name: "Seal (černá)",
+      name: t.colors.seal.name,
       code: "BBDD, BBDd, BbDD, BbDd",
-      description:
-        "Genetické kódy sealové kočky Ragdoll jsou podle toho, zda je to Ragdoll sealový bez ředícího genu (BBDD), nebo je klasický seal s ředícím genem (BBDd), nebo seal s genem pro čokoládové zbarvení (BbDD - nosič čokolády), nebo seal s genem pro čokoládové zbarvení a s ředícím genem (BbDd - nosič čokolády a ředícího genu)",
+      description: t.colors.seal.description,
     },
     {
       id: "blue",
-      name: "Blue (modrá)",
+      name: t.colors.blue.name,
       code: "BBdd, Bbdd",
-      description:
-        "Genetický kód blue kočky musí vždy mít dva ředící geny dd a k tomu buď dva sealové geny BB (geneticky kod je potom BBdd) a nebo může mít jeden gen sealový a druhý čokoládový Bb a kočka je potom nosič čokolády (genetický kód takové blue kočky je Bbdd)",
+      description: t.colors.blue.description,
     },
     {
       id: "chocolate",
-      name: "Chocolate (čokoládová)",
+      name: t.colors.chocolate.name,
       code: "bbDD, bbDd",
-      description:
-        "Čokoládová kočka musí mít vždy dva čokoládové geny bb a k tomu může mít buď DD, což znamená, že nemá ředící gen (genetický kód takové kočky je bbDD), nebo může mít Dd a ředící gen má (genetický kód takové kočky je bbDd)",
+      description: t.colors.chocolate.description,
     },
     {
       id: "lilac",
-      name: "Lilac (lilová, Frost)",
+      name: t.colors.lilac.name,
       code: "bbdd",
-      description:
-        "Genetický kód lilové kočky je vždy bbdd a nijak jinak. Má tedy dva čokoládové geny a k nim ke každému jeden ředící gen",
+      description: t.colors.lilac.description,
     },
   ];
 
   // Variety combinations
-  const varietyCombinations: GeneticCombination[] = [
-    { combination: "Colorpoint × Colorpoint", result: "Colorpoint" },
-    { combination: "Colorpoint × Mitted", result: "Colorpoint, Mitted" },
-    { combination: "Colorpoint × Bicolor High Mitted", result: "Mitted" },
-    {
-      combination: "Colorpoint × Bicolor (true)",
-      result: "Colorpoint, Bicolor",
-    },
-    {
-      combination: "Colorpoint × Bicolor Mid High White",
-      result: "Mitted, Bicolor",
-    },
-    { combination: "Colorpoint × Bicolor High White(Van)", result: "Bicolor" },
-    {
-      combination: "Mitted × Mitted",
-      result: "Colorpoint, Mitted, High Mitted",
-    },
-    { combination: "Mitted × High Mitted", result: "Mitted, High Mitted" },
-    { combination: "High Mitted × High Mitted", result: "High Mitted" },
-    {
-      combination: "Mitted × Bicolor true",
-      result: "Colorpoint, Mitted, Bicolor true, Bicolor mid high white",
-    },
-    {
-      combination: "Mitted × Bicolor Mid High White",
-      result: "Mitted, High mitted, Bicolor true, Bicolor mid high white",
-    },
-    {
-      combination: "Mitted × Bicolor High White(Van)",
-      result: "Bicolor true, Bicolor Mid High White",
-    },
-    {
-      combination: "Bicolor true × Bicolor true",
-      result: "Colorpoint, Bicolor true, Bicolor High White",
-    },
-    {
-      combination: "Bicolor true × Bicolor Mid High White",
-      result:
-        "Mitted, Bicolor true, Bicolor Mid High White, Bicolor High White",
-    },
-    {
-      combination: "Bicolor true × Bicolor High White",
-      result: "Bicolor true, Bicolor High White",
-    },
-  ];
+  const varietyCombinations: GeneticCombination[] = t.combinations;
 
   return (
     <Stack w="100%" align="center" gap={32}>
       <Title order={2} size="h1" c="#47a3ee" ta="center">
-        Genetika plemene Ragdoll
+        {t.section.title}
       </Title>
       <Text size="lg" c="black">
-        Je důležité znát základy genetiky pro každého, kdo se chce věnovat
-        chovu. Jedině tak může chovatel vědět, jaká koťátka se mohou od různých
-        rodičů narodit. Není to sice moc zajímavé čtení pro laika, ale to mu
-        důležitosti nemůže odebrat.
+        {t.section.intro1}
       </Text>
       <Text size="lg" c="black">
-        Variety nemůže pohlaví kočky nijak ovlivnit, proto používáme všeobecný
-        termín - rodiče.
+        {t.section.intro2}
       </Text>
 
       <Accordion variant="separated" radius="md" w="100%">
         <Accordion.Item value="varieties">
           <Accordion.Control>
             <Title order={3} size="h3">
-              Variety Ragdoll a jejich genetické kódy
+              {t.accordion.varieties.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
@@ -190,14 +155,14 @@ export function RagdollGeneticsSection() {
               </Paper>
 
               <Text size="sm">
-                Podrobný přehled kombinací variet najdete například{" "}
+                {t.accordion.varieties.link_text}{" "}
                 <Text
                   component="a"
                   href="http://rfwclub.org/Gwsf.htm"
                   target="_blank"
                   c="blue"
                 >
-                  ZDE
+                  {t.accordion.varieties.link_label}
                 </Text>
               </Text>
             </Stack>
@@ -207,15 +172,15 @@ export function RagdollGeneticsSection() {
         <Accordion.Item value="combinations">
           <Accordion.Control>
             <Title order={3} size="h3">
-              Stručný přehled kombinací variet
+              {t.accordion.combinations.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
             <Table striped highlightOnHover withTableBorder withColumnBorders>
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Th>Kombinace rodičů</Table.Th>
-                  <Table.Th>Možné variety koťat</Table.Th>
+                  <Table.Th>{t.accordion.combinations.table_header1}</Table.Th>
+                  <Table.Th>{t.accordion.combinations.table_header2}</Table.Th>
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
@@ -233,27 +198,21 @@ export function RagdollGeneticsSection() {
         <Accordion.Item value="colors">
           <Accordion.Control>
             <Title order={3} size="h3">
-              Barvy Ragdoll a jejich genetika
+              {t.accordion.colors.title}
             </Title>
           </Accordion.Control>
           <Accordion.Panel>
             <Stack gap="md">
-              <Text>
-                U genetických kódů základních barev jsou použity termíny a
-                označení:
-              </Text>
+              <Text>{t.accordion.colors.intro}</Text>
               <Box px="md">
-                <Text>• písmeno B je pro sealové zbarvení srsti</Text>
-                <Text>• písmeno b je pro čokoládové zbarvení</Text>
-                <Text>
-                  • písmeno D je pro plné zbarvení (tedy bez ředících účinků na
-                  barvu)
-                </Text>
-                <Text>• písmeno d je pro ředění barvy (dilute gen)</Text>
+                <Text>{t.accordion.colors.bullet1}</Text>
+                <Text>{t.accordion.colors.bullet2}</Text>
+                <Text>{t.accordion.colors.bullet3}</Text>
+                <Text>{t.accordion.colors.bullet4}</Text>
               </Box>
 
               <Title order={4} size="h4" mt="md">
-                Základní barvy:
+                {t.accordion.colors.basic_colors}
               </Title>
 
               <Paper withBorder p="md" radius="md">
@@ -274,14 +233,14 @@ export function RagdollGeneticsSection() {
               </Paper>
 
               <Text size="sm">
-                Podrobný přehled kombinací základních barev najdete na adrese:{" "}
+                {t.accordion.colors.link_text}{" "}
                 <Text
                   component="a"
                   href="http://rfwclub.org/Gcolor.htm"
                   target="_blank"
                   c="blue"
                 >
-                  kombinace barev
+                  {t.accordion.colors.link_label}
                 </Text>
               </Text>
             </Stack>

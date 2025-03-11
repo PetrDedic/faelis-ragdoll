@@ -13,12 +13,23 @@ import {
 } from "@mantine/core";
 import { createClient } from "@supabase/supabase-js";
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import { HeroImageBackground } from "../components/HeroImageBackground";
 import { FeaturesCards } from "../components/FeaturesCards";
 import { LeadGrid } from "../components/LeadGrid";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
 import { CatInfo } from "../components/CatInfo";
+import {
+  formatDate,
+  getGenderText,
+  getLocalizedCatProperty,
+} from "../utils/catTranslations";
+
+// Import translations
+import csTranslations from "../locales/cs/cats.json";
+import enTranslations from "../locales/en/cats.json";
+import deTranslations from "../locales/de/cats.json";
 
 // Define types for our cat data
 interface Cat {
@@ -34,10 +45,14 @@ interface Cat {
   color: {
     code: string;
     name_cs: string;
+    name_en?: string;
+    name_de?: string;
   };
   variety: {
     code: string;
     name_cs: string;
+    name_en?: string;
+    name_de?: string;
   };
   blood_type: {
     type: string;
@@ -63,11 +78,26 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
+  const router = useRouter();
+  const { locale } = router;
+
+  // Create a translations object with all locales
+  const translations = {
+    cs: csTranslations,
+    en: enTranslations,
+    de: deTranslations,
+  };
+
+  // Use the current locale from router or fallback to Czech
+  const t =
+    translations[locale as keyof typeof translations] || translations.cs;
+
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
       <HeroImageBackground
-        heading="Všechny naše koťata, kočky a kocouři"
-        subtext="Chci mít vlastní kočičku."
+        heading={t.hero.heading}
+        subtext={t.hero.subtext}
+        backgroundImage="https://images.unsplash.com/photo-1583399704033-3db671c65f5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       />
       <Stack
         px={32}
@@ -81,27 +111,23 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
       >
         <Stack w="100%" align="center" gap={32}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
-            Ragdoll koťata
+            {t.kittens.title}
           </Title>
           <Text fw={700} size="xl" c="black" ta="center">
-            Vrh O narozen 26/10/2024
+            {t.kittens.litterInfo}
           </Text>
           <Text size="lg" c="black" ta="center">
-            Očkování, odčervení, rodokmen, kupní smlouva... to je samozřejmostí,
-            s majiteli našich koťátek jsme v kontaktu i po prodeji. Rodiče jsou
-            negativně testovaní na HCM a PKD, FeLV a FIV.
+            {t.kittens.description}
           </Text>
         </Stack>
 
         <FullscreenBackroundSection>
           <Stack align="center" w="100%" maw={720} py={32}>
             <Title order={2} size="h1" c="dark" ta="center">
-              Mám zájem o svou kočičku
+              {t.contact.heading}
             </Title>
             <Text size="lg" c="black" ta="center">
-              Pokud máte zájem zakoupit jednu z našich kočiček, tak nás
-              kontaktujte pomocí telefonního čísla a nebo na níže uvedeném
-              formuláři.
+              {t.contact.subtext}
             </Text>
             <Button
               color="#47a3ee"
@@ -110,105 +136,126 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
               px={24}
               w={{ base: "100%", sm: "fit-content" }}
             >
-              Zjistit více
+              {t.contact.button}
             </Button>
           </Stack>
         </FullscreenBackroundSection>
 
         <Stack w="100%" align="center" gap={32}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
-            Ragdoll kocouři
+            {t.cats.maleCats}
           </Title>
 
-          {maleCats.map((cat) => (
-            <CatInfo
-              key={cat.id}
-              images={
-                cat.images.length > 0
-                  ? {
-                      top: cat.images[0]?.url,
-                      middle: cat.images[0]?.url,
-                      right: cat.images[0]?.url,
-                    }
-                  : {
-                      top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                      middle:
-                        "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                      right:
-                        "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    }
-              }
-              name={`${cat.name} ${cat.description}`}
-              info={
-                <>
-                  <Text>
-                    Pohlaví: {cat.gender === "male" ? "kocour" : "kočka"}
-                  </Text>
-                  <Text>
-                    Datum narození:{" "}
-                    {new Date(cat.birth_date).toLocaleDateString("cs-CZ")}
-                  </Text>
-                  <Text>Barva: {cat.color?.name_cs}</Text>
-                  <Text>Varianta: {cat.variety?.name_cs}</Text>
-                  <Text>
-                    Krevní skupina: {cat.blood_type?.type} /{" "}
-                    {cat.blood_type?.type}
-                  </Text>
-                  <Text>Genetický kód barvy: {cat.genetic_code}</Text>
-                  <Text mt="md">{cat.details}</Text>
-                </>
-              }
-            />
-          ))}
+          {maleCats.map((cat) => {
+            console.log(cat);
+            return (
+              <CatInfo
+                key={cat.id}
+                images={
+                  cat.images.length > 0
+                    ? {
+                        // Use different images for each position when available
+                        top: cat.images[0]?.url,
+                        middle:
+                          cat.images.length > 1
+                            ? cat.images[1]?.url
+                            : cat.images[0]?.url,
+                        right:
+                          cat.images.length > 2
+                            ? cat.images[2]?.url
+                            : cat.images[0]?.url,
+                      }
+                    : {
+                        // Fallback images
+                        top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        middle:
+                          "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        right:
+                          "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      }
+                }
+                name={`${cat.name} ${cat.description}`}
+                info={
+                  <>
+                    <Text span>
+                      {t.catInfo.gender}: {getGenderText(cat.gender, t)}
+                    </Text>
+                    <Text span>
+                      {t.catInfo.birthDate}:{" "}
+                      {formatDate(cat.birth_date, locale as string)}
+                    </Text>
+                    <Text span>
+                      {t.catInfo.color}:{" "}
+                      {getLocalizedCatProperty(cat, "color", locale as string)}
+                    </Text>
+                    <Text span>
+                      {t.catInfo.variety}:{" "}
+                      {getLocalizedCatProperty(
+                        cat,
+                        "variety",
+                        locale as string
+                      )}
+                    </Text>
+                    <Text span>
+                      {t.catInfo.bloodGroup}: {cat.blood_type?.type} /{" "}
+                      {cat.blood_type?.type}
+                    </Text>
+                    <Text span>
+                      {t.catInfo.geneticCode}: {cat.genetic_code}
+                    </Text>
+                    <Text mt="md" span>
+                      {cat.details}
+                    </Text>
+                  </>
+                }
+              />
+            );
+          })}
         </Stack>
 
         <FullscreenBackroundSection image="https://images.unsplash.com/photo-1586417752912-b0389b445a20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
           <Stack align="center" w="100%" maw={960} gap={48} py={32}>
             <Title order={2} size="h1">
-              Pár faktů o našem chovu plemene Ragdoll
+              {t.facts.heading}
             </Title>
             <Grid w="100%" gutter={32}>
               <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
                 <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
                   <Text fw={700} fz={24} c="dark" ta="center">
-                    50+
+                    {t.facts.stat1.number}
                   </Text>
                   <Text c="dark" ta="center">
-                    Spokojených klientů
+                    {t.facts.stat1.text}
                   </Text>
                 </Card>
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
                 <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
                   <Text fw={700} fz={24} c="dark" ta="center">
-                    20+
+                    {t.facts.stat2.number}
                   </Text>
                   <Text c="dark" ta="center">
-                    Let zkušeností a praxe
+                    {t.facts.stat2.text}
                   </Text>
                 </Card>
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
                 <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
                   <Text fw={700} fz={24} c="dark" ta="center">
-                    200+
+                    {t.facts.stat3.number}
                   </Text>
                   <Text c="dark" ta="center">
-                    Šťastných
-                    <br />
-                    koček
+                    {t.facts.stat3.text}
                   </Text>
                 </Card>
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
                 <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
                   <Text fw={700} fz={24} c="dark" ta="center">
-                    30+
+                    {t.facts.stat4.number}
                   </Text>
                   <Text c="dark" ta="center">
-                    Úspěšných
-                    <br />
-                    vrhů
+                    {t.facts.stat4.text}
                   </Text>
                 </Card>
               </Grid.Col>
@@ -220,14 +267,14 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
               px={24}
               w={{ base: "100%", sm: "fit-content" }}
             >
-              Zjistit více
+              {t.facts.button}
             </Button>
           </Stack>
         </FullscreenBackroundSection>
 
         <Stack w="100%" align="center" gap={32}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
-            Ragdoll kočky
+            {t.cats.femaleCats}
           </Title>
 
           {femaleCats.map((cat) => (
@@ -237,8 +284,14 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                 cat.images.length > 0
                   ? {
                       top: cat.images[0]?.url,
-                      middle: cat.images[0]?.url,
-                      right: cat.images[0]?.url,
+                      middle:
+                        cat.images.length > 1
+                          ? cat.images[1]?.url
+                          : cat.images[0]?.url,
+                      right:
+                        cat.images.length > 2
+                          ? cat.images[2]?.url
+                          : cat.images[0]?.url,
                     }
                   : {
                       top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -251,21 +304,31 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
               name={`${cat.name} ${cat.description}`}
               info={
                 <>
-                  <Text>
-                    Pohlaví: {cat.gender === "male" ? "kocour" : "kočka"}
+                  <Text span>
+                    {t.catInfo.gender}: {getGenderText(cat.gender, t)}
                   </Text>
-                  <Text>
-                    Datum narození:{" "}
-                    {new Date(cat.birth_date).toLocaleDateString("cs-CZ")}
+                  <Text span>
+                    {t.catInfo.birthDate}:{" "}
+                    {formatDate(cat.birth_date, locale as string)}
                   </Text>
-                  <Text>Barva: {cat.color?.name_cs}</Text>
-                  <Text>Varianta: {cat.variety?.name_cs}</Text>
-                  <Text>
-                    Krevní skupina: {cat.blood_type?.type} /{" "}
+                  <Text span>
+                    {t.catInfo.color}:{" "}
+                    {getLocalizedCatProperty(cat, "color", locale as string)}
+                  </Text>
+                  <Text span>
+                    {t.catInfo.variety}:{" "}
+                    {getLocalizedCatProperty(cat, "variety", locale as string)}
+                  </Text>
+                  <Text span>
+                    {t.catInfo.bloodGroup}: {cat.blood_type?.type} /{" "}
                     {cat.blood_type?.type}
                   </Text>
-                  <Text>Genetický kód barvy: {cat.genetic_code}</Text>
-                  <Text mt="md">{cat.details}</Text>
+                  <Text span>
+                    {t.catInfo.geneticCode}: {cat.genetic_code}
+                  </Text>
+                  <Text mt="md" span>
+                    {cat.details}
+                  </Text>
                 </>
               }
             />
@@ -380,11 +443,12 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         const catImages = (images || [])
           .filter((img) => img.cat_id === cat.id)
           .sort((a, b) => {
+            // First sort by primary image
             if (a.is_primary && !b.is_primary) return -1;
             if (!a.is_primary && b.is_primary) return 1;
-            return 0;
+            // Then sort by ID to ensure consistent ordering
+            return a.id.localeCompare(b.id);
           });
-
         // Get colors for this cat (prioritize is_phenotype)
         const catColorRelations = (catColors || []).filter(
           (cc) => cc.cat_id === cat.id
