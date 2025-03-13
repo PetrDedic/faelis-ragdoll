@@ -114,15 +114,20 @@ export default function RagdollPage() {
             <Text size="lg" c="black" ta="center">
               {t.contact.subtext}
             </Text>
-            <Button
-              color="#47a3ee"
-              size="compact-lg"
-              fw={400}
-              px={24}
-              w={{ base: "100%", sm: "fit-content" }}
+            <Link
+              href="/litters"
+              style={{ textDecoration: "inherit", color: "inherit" }}
             >
-              {t.contact.button}
-            </Button>
+              <Button
+                color="#47a3ee"
+                size="compact-lg"
+                fw={400}
+                px={24}
+                w={{ base: "100%", sm: "fit-content" }}
+              >
+                {t.contact.button}
+              </Button>
+            </Link>
           </Stack>
         </FullscreenBackroundSection>
         <Stack w="100%" align="center" gap={32}>
@@ -135,7 +140,8 @@ export default function RagdollPage() {
             subtext={t.standard.subtext}
             button={{
               label: t.standard.button,
-              onClick: () => console.log("Button clicked"),
+              onClick: () =>
+                window.open("https://fifeweb.org/app/uploads/2023/10/RAG.pdf"),
             }}
           />
         </Stack>

@@ -9,7 +9,11 @@ export function FeaturesCards({ cards }: { cards: FeaturesCardsProps[] }) {
   const features = cards.map((card, index) => (
     <Card
       key={index}
-      style={{ boxShadow: "0px 0px 15px 0px rgba(0,0,0,0.25)" }}
+      style={{
+        boxShadow: "0px 0px 15px 0px rgba(0,0,0,0.25)",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       radius="lg"
       padding="xl"
     >

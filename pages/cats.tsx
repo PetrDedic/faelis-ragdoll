@@ -30,6 +30,7 @@ import {
 import csTranslations from "../locales/cs/cats.json";
 import enTranslations from "../locales/en/cats.json";
 import deTranslations from "../locales/de/cats.json";
+import Link from "next/link";
 
 // Define types for our cat data
 interface Cat {
@@ -129,15 +130,20 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
             <Text size="lg" c="black" ta="center">
               {t.contact.subtext}
             </Text>
-            <Button
-              color="#47a3ee"
-              size="compact-lg"
-              fw={400}
-              px={24}
-              w={{ base: "100%", sm: "fit-content" }}
+            <Link
+              href="/litters"
+              style={{ textDecoration: "inherit", color: "inherit" }}
             >
-              {t.contact.button}
-            </Button>
+              <Button
+                color="#47a3ee"
+                size="compact-lg"
+                fw={400}
+                px={24}
+                w={{ base: "100%", sm: "fit-content" }}
+              >
+                {t.contact.button}
+              </Button>
+            </Link>
           </Stack>
         </FullscreenBackroundSection>
 
@@ -147,7 +153,6 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
           </Title>
 
           {maleCats.map((cat) => {
-            console.log(cat);
             return (
               <CatInfo
                 key={cat.id}
@@ -260,15 +265,20 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                 </Card>
               </Grid.Col>
             </Grid>
-            <Button
-              color="#47a3ee"
-              size="compact-lg"
-              fw={400}
-              px={24}
-              w={{ base: "100%", sm: "fit-content" }}
+            <Link
+              href="/about"
+              style={{ textDecoration: "inherit", color: "inherit" }}
             >
-              {t.facts.button}
-            </Button>
+              <Button
+                color="#47a3ee"
+                size="compact-lg"
+                fw={400}
+                px={24}
+                w={{ base: "100%", sm: "fit-content" }}
+              >
+                {t.facts.button}
+              </Button>
+            </Link>
           </Stack>
         </FullscreenBackroundSection>
 

@@ -22,6 +22,7 @@ import csTranslations from "../locales/cs/index.json";
 import enTranslations from "../locales/en/index.json";
 import deTranslations from "../locales/de/index.json";
 import HomePageSEO from "../components/SEO/HomePageSEO";
+import Link from "next/link";
 
 const images = {
   top: "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Lily/Lily.webp",
@@ -88,7 +89,7 @@ export default function IndexPage() {
               subtext={t.about.subtext}
               button={{
                 label: t.about.button,
-                onClick: () => console.log("Button clicked"),
+                onClick: () => router.push("/about", "/about", { locale }),
               }}
             />
           </Flex>
@@ -96,70 +97,85 @@ export default function IndexPage() {
           <Stack gap={0}>
             <FullscreenBackroundSection>
               <Stack align="center" w="100%" maw={960}>
-                <Title order={2} size="h1" c="#47a3ee">
+                <Title order={2} size="h1" c="#47a3ee" ta="center">
                   {t.cats.heading}
                 </Title>
-                <Text size="lg" c="black">
+                <Text size="lg" c="black" ta="center">
                   {t.cats.subtext}
                 </Text>
                 <Grid w="100%" gutter={32}>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-                    <Card padding="lg" radius="lg" bg="#d6e6f3">
-                      <AspectRatio ratio={3 / 4}>
-                        <Image
-                          radius="md"
-                          src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Juliet/Juliet.webp"
-                          alt="Julinka"
-                        />
-                      </AspectRatio>
-                      <Title order={2} size="h2" c="dark" mt={16} ta="center">
-                        {t.cats.categories.cats}
-                      </Title>
-                      <Text c="dimmed" ta="center">
-                        {t.cats.categories.more}
-                      </Text>
-                    </Card>
+                    <Link
+                      href="/cats#cats"
+                      style={{ textDecoration: "inherit", color: "inherit" }}
+                    >
+                      <Card padding="lg" radius="lg" bg="#d6e6f3">
+                        <AspectRatio ratio={3 / 4}>
+                          <Image
+                            radius="md"
+                            src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Juliet/Juliet.webp"
+                            alt="Julinka"
+                          />
+                        </AspectRatio>
+                        <Title order={2} size="h2" c="dark" mt={16} ta="center">
+                          {t.cats.categories.cats}
+                        </Title>
+                        <Text c="dimmed" ta="center">
+                          {t.cats.categories.more}
+                        </Text>
+                      </Card>
+                    </Link>
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-                    <Card padding="lg" radius="lg" bg="#d6e6f3">
-                      <AspectRatio ratio={3 / 4}>
-                        <Image
-                          radius="md"
-                          src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/George/George3.webp"
-                          alt="George"
-                        />
-                      </AspectRatio>
-                      <Title order={2} size="h2" c="dark" mt={16} ta="center">
-                        {t.cats.categories.maleCats}
-                      </Title>
-                      <Text c="dimmed" ta="center">
-                        {t.cats.categories.more}
-                      </Text>
-                    </Card>
+                    <Link
+                      href="/cats#maleCats"
+                      style={{ textDecoration: "inherit", color: "inherit" }}
+                    >
+                      <Card padding="lg" radius="lg" bg="#d6e6f3">
+                        <AspectRatio ratio={3 / 4}>
+                          <Image
+                            radius="md"
+                            src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/George/George3.webp"
+                            alt="George"
+                          />
+                        </AspectRatio>
+                        <Title order={2} size="h2" c="dark" mt={16} ta="center">
+                          {t.cats.categories.maleCats}
+                        </Title>
+                        <Text c="dimmed" ta="center">
+                          {t.cats.categories.more}
+                        </Text>
+                      </Card>
+                    </Link>
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-                    <Card padding="lg" radius="lg" bg="#d6e6f3">
-                      <AspectRatio ratio={3 / 4}>
-                        <Image
-                          radius="md"
-                          src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Ori.webp"
-                          alt="Ori"
-                        />
-                      </AspectRatio>
-                      <Title order={2} size="h2" c="dark" mt={16} ta="center">
-                        {t.cats.categories.kittens}
-                      </Title>
-                      <Text c="dimmed" ta="center">
-                        {t.cats.categories.more}
-                      </Text>
-                    </Card>
+                    <Link
+                      href="/litters"
+                      style={{ textDecoration: "inherit", color: "inherit" }}
+                    >
+                      <Card padding="lg" radius="lg" bg="#d6e6f3">
+                        <AspectRatio ratio={3 / 4}>
+                          <Image
+                            radius="md"
+                            src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Ori.webp"
+                            alt="Ori"
+                          />
+                        </AspectRatio>
+                        <Title order={2} size="h2" c="dark" mt={16} ta="center">
+                          {t.cats.categories.kittens}
+                        </Title>
+                        <Text c="dimmed" ta="center">
+                          {t.cats.categories.more}
+                        </Text>
+                      </Card>
+                    </Link>
                   </Grid.Col>
                 </Grid>
               </Stack>
             </FullscreenBackroundSection>
             <FullscreenBackroundSection image="https://images.unsplash.com/photo-1586417752912-b0389b445a20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
               <Stack align="center" w="100%" maw={960} gap={48} py={32}>
-                <Title order={2} size="h1">
+                <Title order={2} size="h1" ta="center">
                   {t.facts.heading}
                 </Title>
                 <Grid w="100%" gutter={32}>
@@ -220,24 +236,29 @@ export default function IndexPage() {
                     </Card>
                   </Grid.Col>
                 </Grid>
-                <Button
-                  color="#47a3ee"
-                  size="compact-lg"
-                  fw={400}
-                  px={24}
-                  w={{ base: "100%", sm: "fit-content" }}
+                <Link
+                  href="/about"
+                  style={{ textDecoration: "inherit", color: "inherit" }}
                 >
-                  {t.facts.button}
-                </Button>
+                  <Button
+                    color="#47a3ee"
+                    size="compact-lg"
+                    fw={400}
+                    px={24}
+                    w={{ base: "100%", sm: "fit-content" }}
+                  >
+                    {t.facts.button}
+                  </Button>
+                </Link>
               </Stack>
             </FullscreenBackroundSection>
           </Stack>
 
           <Stack align="center" w="100%" gap={32}>
-            <Title order={2} size="h1" c="#47a3ee">
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
               {t.reviews.heading}
             </Title>
-            <Text size="lg" c="black">
+            <Text size="lg" c="black" ta="center">
               {t.reviews.subtext}
             </Text>
             <Grid w="100%" gutter={32}>
@@ -302,15 +323,20 @@ export default function IndexPage() {
               <Text size="lg" c="black" ta="center">
                 {t.contact.subtext}
               </Text>
-              <Button
-                color="#47a3ee"
-                size="compact-lg"
-                fw={400}
-                px={24}
-                w={{ base: "100%", sm: "fit-content" }}
+              <Link
+                href="/litters"
+                style={{ textDecoration: "inherit", color: "inherit" }}
               >
-                {t.contact.button}
-              </Button>
+                <Button
+                  color="#47a3ee"
+                  size="compact-lg"
+                  fw={400}
+                  px={24}
+                  w={{ base: "100%", sm: "fit-content" }}
+                >
+                  {t.contact.button}
+                </Button>
+              </Link>
             </Stack>
           </FullscreenBackroundSection>
 

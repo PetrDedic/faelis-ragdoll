@@ -1,0 +1,38 @@
+{
+  "title": "Galerie",
+  "breadcrumbs": {
+    "home": "Domů"
+  },
+  "search": {
+    "placeholder": "Hledat..."
+  },
+  "sort": {
+    "nameAsc": "Název ↑",
+    "nameDesc": "Název ↓",
+    "dateAsc": "Datum ↑",
+    "dateDesc": "Datum ↓"
+  },
+  "fileInfo": {
+    "size": "Velikost:"
+  },
+  "buttons": {
+    "copy": "Kopírovat URL",
+    "copied": "Zkopírováno!",
+    "download": "Stáhnout",
+    "close": "Zavřít"
+  },
+  "modal": {
+    "imagePreview": "Náhled obrázku"
+  },
+  "notifications": {
+    "error": {
+      "title": "Chyba",
+      "loadFailed": "Nepodařilo se načíst položky z galerie",
+      "downloadFailed": "Nepodařilo se stáhnout obrázek"
+    }
+  },
+  "empty": {
+    "noItems": "Žádné položky v této složce",
+    "noSearchResults": "Nenalezeny žádné položky odpovídající vašemu vyhledávání"
+  }
+}

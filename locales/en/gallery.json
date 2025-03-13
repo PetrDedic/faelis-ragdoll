@@ -1,0 +1,38 @@
+{
+  "title": "Gallery",
+  "breadcrumbs": {
+    "home": "Home"
+  },
+  "search": {
+    "placeholder": "Search..."
+  },
+  "sort": {
+    "nameAsc": "Name ↑",
+    "nameDesc": "Name ↓",
+    "dateAsc": "Date ↑",
+    "dateDesc": "Date ↓"
+  },
+  "fileInfo": {
+    "size": "Size:"
+  },
+  "buttons": {
+    "copy": "Copy URL",
+    "copied": "Copied!",
+    "download": "Download",
+    "close": "Close"
+  },
+  "modal": {
+    "imagePreview": "Image Preview"
+  },
+  "notifications": {
+    "error": {
+      "title": "Error",
+      "loadFailed": "Failed to load gallery items",
+      "downloadFailed": "Failed to download image"
+    }
+  },
+  "empty": {
+    "noItems": "No items in this folder",
+    "noSearchResults": "No items found matching your search"
+  }
+}

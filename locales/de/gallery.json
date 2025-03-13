@@ -1,0 +1,38 @@
+{
+  "title": "Galerie",
+  "breadcrumbs": {
+    "home": "Startseite"
+  },
+  "search": {
+    "placeholder": "Suchen..."
+  },
+  "sort": {
+    "nameAsc": "Name ↑",
+    "nameDesc": "Name ↓",
+    "dateAsc": "Datum ↑",
+    "dateDesc": "Datum ↓"
+  },
+  "fileInfo": {
+    "size": "Größe:"
+  },
+  "buttons": {
+    "copy": "URL kopieren",
+    "copied": "Kopiert!",
+    "download": "Herunterladen",
+    "close": "Schließen"
+  },
+  "modal": {
+    "imagePreview": "Bildvorschau"
+  },
+  "notifications": {
+    "error": {
+      "title": "Fehler",
+      "loadFailed": "Galerie-Elemente konnten nicht geladen werden",
+      "downloadFailed": "Bild konnte nicht heruntergeladen werden"
+    }
+  },
+  "empty": {
+    "noItems": "Keine Elemente in diesem Ordner",
+    "noSearchResults": "Keine Elemente gefunden, die Ihrer Suche entsprechen"
+  }
+}
