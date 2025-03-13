@@ -506,8 +506,6 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         maleCats,
         femaleCats,
       },
-      // Revalidate every 24 hours (86400 seconds)
-      revalidate: 86400,
     };
   } catch (error) {
     console.error("Error in getStaticProps:", error);
@@ -516,7 +514,6 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         maleCats: [],
         femaleCats: [],
       },
-      revalidate: 86400,
     };
   }
 };

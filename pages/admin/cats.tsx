@@ -29,6 +29,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconEdit, IconTrash, IconSearch, IconPlus } from "@tabler/icons-react";
 import supabase from "../../utils/supabase/client";
+import { AdminNav } from "../../components/AdminLinks";
+import CatImagesButton from "../../components/AdminCatImagesButton";
 
 // Define types
 interface Cat {
@@ -41,6 +43,8 @@ interface Cat {
   is_breeding: boolean;
   is_neutered: boolean;
   status: string;
+  father_id?: string | null;
+  mother_id?: string | null;
   color?: {
     id: string;
     name_cs: string;
@@ -85,6 +89,7 @@ const AdminCatsPage = () => {
   const itemsPerPage = 10;
 
   // Form state
+  // Form state
   const [formValues, setFormValues] = useState<Partial<Cat>>({
     name: "",
     birth_date: "",
@@ -94,12 +99,34 @@ const AdminCatsPage = () => {
     is_breeding: true,
     is_neutered: false,
     status: "alive",
+    father_id: null,
+    mother_id: null,
   });
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedVariety, setSelectedVariety] = useState<string | null>(null);
   const [selectedBloodType, setSelectedBloodType] = useState<string | null>(
     null
   );
+
+  // Compute parent options from existing cats
+  const fatherOptions = cats
+    .filter(
+      (cat) =>
+        cat.gender === "male" && (!editingCat || cat.id !== editingCat.id)
+    )
+    .map((cat) => ({
+      value: cat.id,
+      label: cat.name,
+    }));
+  const motherOptions = cats
+    .filter(
+      (cat) =>
+        cat.gender === "female" && (!editingCat || cat.id !== editingCat.id)
+    )
+    .map((cat) => ({
+      value: cat.id,
+      label: cat.name,
+    }));
 
   // Fetch cats and reference data on component mount
   useEffect(() => {
@@ -336,6 +363,8 @@ const AdminCatsPage = () => {
       is_breeding: cat.is_breeding,
       is_neutered: cat.is_neutered,
       status: cat.status,
+      father_id: cat.father_id || null,
+      mother_id: cat.mother_id || null,
     });
     setSelectedColor(cat.color?.id || null);
     setSelectedVariety(cat.variety?.id || null);
@@ -352,7 +381,7 @@ const AdminCatsPage = () => {
   const handleSave = () => {
     if (!editingCat) return;
 
-    // Update the cat record
+    // Update the cat record, including parent selections
     supabase
       .from("cats")
       .update({
@@ -364,6 +393,8 @@ const AdminCatsPage = () => {
         is_breeding: formValues.is_breeding,
         is_neutered: formValues.is_neutered,
         status: formValues.status,
+        father_id: formValues.father_id,
+        mother_id: formValues.mother_id,
       })
       .eq("id", editingCat.id)
       .then(({ error }) => {
@@ -381,49 +412,46 @@ const AdminCatsPage = () => {
         const promises = [];
 
         // Update cat_colors
-        if (selectedColor) {
-          promises.push(
-            // First check if a record exists
-            supabase
-              .from("cat_colors")
-              .select("*")
-              .eq("cat_id", editingCat.id)
-              .then(({ data: existingColors }) => {
-                if (existingColors && existingColors.length > 0) {
-                  // Update existing record
-                  return supabase
-                    .from("cat_colors")
-                    .update({
+        if (formValues && formValues.name) {
+          if (true) {
+            promises.push(
+              supabase
+                .from("cat_colors")
+                .select("*")
+                .eq("cat_id", editingCat.id)
+                .then(({ data: existingColors }) => {
+                  if (existingColors && existingColors.length > 0) {
+                    return supabase
+                      .from("cat_colors")
+                      .update({
+                        color_id: selectedColor,
+                        is_phenotype: true,
+                        is_genotype: true,
+                      })
+                      .eq("cat_id", editingCat.id)
+                      .eq("is_phenotype", true);
+                  } else {
+                    return supabase.from("cat_colors").insert({
+                      cat_id: editingCat.id,
                       color_id: selectedColor,
                       is_phenotype: true,
                       is_genotype: true,
-                    })
-                    .eq("cat_id", editingCat.id)
-                    .eq("is_phenotype", true);
-                } else {
-                  // Insert new record
-                  return supabase.from("cat_colors").insert({
-                    cat_id: editingCat.id,
-                    color_id: selectedColor,
-                    is_phenotype: true,
-                    is_genotype: true,
-                  });
-                }
-              })
-          );
+                    });
+                  }
+                })
+            );
+          }
         }
 
         // Update cat_varieties
         if (selectedVariety) {
           promises.push(
-            // First check if a record exists
             supabase
               .from("cat_varieties")
               .select("*")
               .eq("cat_id", editingCat.id)
               .then(({ data: existingVarieties }) => {
                 if (existingVarieties && existingVarieties.length > 0) {
-                  // Update existing record
                   return supabase
                     .from("cat_varieties")
                     .update({
@@ -434,7 +462,6 @@ const AdminCatsPage = () => {
                     .eq("cat_id", editingCat.id)
                     .eq("is_phenotype", true);
                 } else {
-                  // Insert new record
                   return supabase.from("cat_varieties").insert({
                     cat_id: editingCat.id,
                     variety_id: selectedVariety,
@@ -449,14 +476,12 @@ const AdminCatsPage = () => {
         // Update cat_blood_types
         if (selectedBloodType) {
           promises.push(
-            // First check if a record exists
             supabase
               .from("cat_blood_types")
               .select("*")
               .eq("cat_id", editingCat.id)
               .then(({ data: existingBloodTypes }) => {
                 if (existingBloodTypes && existingBloodTypes.length > 0) {
-                  // Update existing record
                   return supabase
                     .from("cat_blood_types")
                     .update({
@@ -465,7 +490,6 @@ const AdminCatsPage = () => {
                     })
                     .eq("cat_id", editingCat.id);
                 } else {
-                  // Insert new record
                   return supabase.from("cat_blood_types").insert({
                     cat_id: editingCat.id,
                     blood_type_id: selectedBloodType,
@@ -476,7 +500,6 @@ const AdminCatsPage = () => {
           );
         }
 
-        // Wait for all updates to complete
         Promise.all(promises)
           .then(() => {
             notifications.show({
@@ -484,8 +507,6 @@ const AdminCatsPage = () => {
               message: "Kočka byla úspěšně aktualizována",
               color: "green",
             });
-
-            // Refresh data
             fetchCats();
             close();
           })
@@ -526,8 +547,6 @@ const AdminCatsPage = () => {
           message: "Kočka byla úspěšně smazána",
           color: "green",
         });
-
-        // Refresh data
         fetchCats();
       });
   };
@@ -544,16 +563,14 @@ const AdminCatsPage = () => {
       is_breeding: true,
       is_neutered: false,
       status: "alive",
+      father_id: null,
+      mother_id: null,
     });
-    setSelectedColor(null);
-    setSelectedVariety(null);
-    setSelectedBloodType(null);
     open();
   };
 
   // Save new cat
   const handleSaveNewCat = () => {
-    // Create new cat record
     supabase
       .from("cats")
       .insert({
@@ -565,6 +582,8 @@ const AdminCatsPage = () => {
         is_breeding: formValues.is_breeding,
         is_neutered: formValues.is_neutered,
         status: formValues.status,
+        father_id: formValues.father_id,
+        mother_id: formValues.mother_id,
       })
       .select()
       .single()
@@ -590,10 +609,8 @@ const AdminCatsPage = () => {
           return;
         }
 
-        // Add related records
         const promises = [];
 
-        // Add color if selected
         if (selectedColor) {
           promises.push(
             supabase.from("cat_colors").insert({
@@ -605,7 +622,6 @@ const AdminCatsPage = () => {
           );
         }
 
-        // Add variety if selected
         if (selectedVariety) {
           promises.push(
             supabase.from("cat_varieties").insert({
@@ -617,7 +633,6 @@ const AdminCatsPage = () => {
           );
         }
 
-        // Add blood type if selected
         if (selectedBloodType) {
           promises.push(
             supabase.from("cat_blood_types").insert({
@@ -628,7 +643,6 @@ const AdminCatsPage = () => {
           );
         }
 
-        // Wait for all inserts to complete
         Promise.all(promises)
           .then(() => {
             notifications.show({
@@ -636,8 +650,6 @@ const AdminCatsPage = () => {
               message: "Nová kočka byla úspěšně vytvořena",
               color: "green",
             });
-
-            // Refresh data
             fetchCats();
             close();
           })
@@ -654,6 +666,7 @@ const AdminCatsPage = () => {
 
   return (
     <Stack gap="lg" p={16} maw={1280} mx="auto">
+      <AdminNav activePage="cats" />
       <Group align="apart">
         <Title order={2}>Správa koček</Title>
         <Button leftSection={<IconPlus size={16} />} onClick={handleCreateNew}>
@@ -757,6 +770,7 @@ const AdminCatsPage = () => {
                     </Table.Td>
                     <Table.Td>
                       <Group gap="xs">
+                        <CatImagesButton catId={cat.id} catName={cat.name} />
                         <ActionIcon
                           color="blue"
                           onClick={() => handleEdit(cat)}
@@ -842,8 +856,8 @@ const AdminCatsPage = () => {
           <Select
             label="Barva"
             data={colorOptions}
-            value={selectedColor}
-            onChange={setSelectedColor}
+            value={formValues.color?.id || undefined}
+            onChange={(value) => handleInputChange("color", value)}
             searchable
             clearable
           />
@@ -851,8 +865,8 @@ const AdminCatsPage = () => {
           <Select
             label="Varieta"
             data={varietyOptions}
-            value={selectedVariety}
-            onChange={setSelectedVariety}
+            value={formValues.variety?.id || undefined}
+            onChange={(value) => handleInputChange("variety", value)}
             searchable
             clearable
           />
@@ -860,8 +874,27 @@ const AdminCatsPage = () => {
           <Select
             label="Krevní skupina"
             data={bloodTypeOptions}
-            value={selectedBloodType}
-            onChange={setSelectedBloodType}
+            value={formValues.blood_type?.id || undefined}
+            onChange={(value) => handleInputChange("blood_type", value)}
+            searchable
+            clearable
+          />
+
+          {/* New parent selections */}
+          <Select
+            label="Otec"
+            data={fatherOptions}
+            value={formValues.father_id || undefined}
+            onChange={(value) => handleInputChange("father_id", value)}
+            searchable
+            clearable
+          />
+
+          <Select
+            label="Matka"
+            data={motherOptions}
+            value={formValues.mother_id || undefined}
+            onChange={(value) => handleInputChange("mother_id", value)}
             searchable
             clearable
           />
@@ -882,7 +915,7 @@ const AdminCatsPage = () => {
           <Group>
             <Switch
               label="Chovná kočka"
-              checked={formValues.is_breeding}
+              checked={formValues.is_breeding || false}
               onChange={(e) =>
                 handleInputChange("is_breeding", e.currentTarget.checked)
               }
@@ -890,7 +923,7 @@ const AdminCatsPage = () => {
 
             <Switch
               label="Kastrovaná"
-              checked={formValues.is_neutered}
+              checked={formValues.is_neutered || false}
               onChange={(e) =>
                 handleInputChange("is_neutered", e.currentTarget.checked)
               }

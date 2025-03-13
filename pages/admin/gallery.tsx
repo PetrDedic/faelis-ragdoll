@@ -51,6 +51,7 @@ import {
   IconCopy,
 } from "@tabler/icons-react";
 import supabase from "../../utils/supabase/client";
+import { AdminNav } from "../../components/AdminLinks";
 
 // Define types
 interface GalleryItem {
@@ -1004,6 +1005,7 @@ const GalleryManagementPage = () => {
 
   return (
     <Stack gap="lg" p={16} maw={1280} mx="auto">
+      <AdminNav activePage="gallery" />
       <LoadingOverlay
         visible={loading}
         overlayProps={{ radius: "sm", blur: 2 }}
