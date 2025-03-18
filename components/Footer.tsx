@@ -6,6 +6,8 @@ import {
   Stack,
   Text,
   Title,
+  Box,
+  Center,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
@@ -16,6 +18,7 @@ import { useRouter } from "next/router";
 import csTranslations from "../locales/cs/footer.json";
 import enTranslations from "../locales/en/footer.json";
 import deTranslations from "../locales/de/footer.json";
+import { IconBrandFacebookFilled } from "@tabler/icons-react";
 
 const Footer = () => {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
@@ -71,7 +74,7 @@ const Footer = () => {
               />
             </AspectRatio>
           </Stack>
-          <Stack w="100%" align="start" justify="center">
+          <Stack w="100%" align="start" justify="end">
             <Title order={4} c="white" fz={32} style={{ letterSpacing: 1 }}>
               {t.cattery.title}
             </Title>
@@ -130,10 +133,53 @@ const Footer = () => {
                   </Link>
                 </Text>
               </Text>
+              <Link
+                href="http://cs-cz.facebook.com/MartaVrabelova"
+                target="_blank"
+                style={{
+                  fontFamily: "'lucida grande',tahoma,verdana,arial,sans-serif",
+                  textDecoration: "none",
+                  marginTop: 32,
+                }}
+              >
+                <Image
+                  src="/images/Facebook.svg"
+                  alt="Facebook"
+                  width={64}
+                  height={64}
+                />
+              </Link>
             </Stack>
           </Stack>
         </Flex>
       </Card>
+
+      {/* Associations and Social Media Links Section */}
+      <Center py={24} bg="#f5f5f5">
+        <Stack align="center" gap={16}>
+          <Flex gap={16} justify="center" align="center">
+            <Link href="http://www.fifeweb.org/" target="_blank" title="FIFE">
+              <Image
+                src="/images/fife_logo.jpg"
+                alt="FIFE"
+                width={100}
+                height={100}
+              />
+            </Link>
+            <Link href="http://www.schk.cz/" target="_blank" title="SCHK">
+              <Image
+                src="/images/schk_logo.gif"
+                alt="SCHK"
+                width={100}
+                height={100}
+              />
+            </Link>
+          </Flex>
+
+          <Flex direction="column" align="center"></Flex>
+        </Stack>
+      </Center>
+
       <Stack align="center" justify="center" p={16} gap={8}>
         <Text>{t.copyright.rights}</Text>
         <Text>{t.copyright.design}</Text>

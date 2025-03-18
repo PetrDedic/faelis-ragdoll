@@ -40,7 +40,8 @@ export default function AboutPage() {
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
       <HeroImageBackground
-        backgroundImage="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/017.webp"
+        backgroundPosition="center 75%"
         heading={t.hero.heading}
         subtext={t.hero.subtext}
       />
@@ -65,14 +66,14 @@ export default function AboutPage() {
             <AspectRatio ratio={16 / 9}>
               <Image
                 radius="lg"
-                src="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/P8050026.webp"
                 alt="Faelis cattery"
               />
             </AspectRatio>
             <AspectRatio ratio={16 / 9}>
               <Image
                 radius="lg"
-                src="https://images.unsplash.com/photo-1568470010257-111aa304d53b?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_0043.webp"
                 alt="Faelis cattery"
               />
             </AspectRatio>

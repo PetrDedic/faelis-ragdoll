@@ -27,7 +27,7 @@ import Link from "next/link";
 const images = {
   top: "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Lily/Lily.webp",
   middle:
-    "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/76_n.webp",
+    "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/029.webp",
   right:
     "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/George/George.webp",
 };
@@ -54,6 +54,7 @@ export default function IndexPage() {
         <HeroImageBackground
           heading={t.hero.heading}
           subtext={t.hero.subtext}
+          backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/002.webp"
         />
         <Stack
           px={32}

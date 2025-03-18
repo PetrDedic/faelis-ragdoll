@@ -29,6 +29,7 @@ import Link from "next/link";
 import csTranslations from "../locales/cs/ragdoll.json";
 import enTranslations from "../locales/en/ragdoll.json";
 import deTranslations from "../locales/de/ragdoll.json";
+import RagdollHistorySection from "../components/RagdollHistorySection";
 
 const images = {
   top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -55,7 +56,11 @@ export default function RagdollPage() {
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground heading={t.hero.heading} subtext={t.hero.subtext} />
+      <HeroImageBackground
+        heading={t.hero.heading}
+        subtext={t.hero.subtext}
+        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/P1040182.webp"
+      />
       <Stack
         px={32}
         py={128}
@@ -135,7 +140,8 @@ export default function RagdollPage() {
             {t.about.paragraph4}
           </Text>
           <LeftImageSection
-            image="https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            image="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/075_n.jpg"
+            ratio={4 / 3}
             heading={t.standard.heading}
             subtext={t.standard.subtext}
             button={{
@@ -148,20 +154,7 @@ export default function RagdollPage() {
 
         <Divider w="100%" />
 
-        <Stack w="100%" align="center" gap={32}>
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.history.title}
-          </Title>
-          <Text size="lg" c="black">
-            {t.history.paragraph1}
-          </Text>
-          <Text size="lg" c="black">
-            {t.history.paragraph2}
-          </Text>
-          <Text size="lg" c="black">
-            {t.history.paragraph3}
-          </Text>
-        </Stack>
+        <RagdollHistorySection />
 
         <Divider w="100%" />
 
@@ -218,7 +211,7 @@ export default function RagdollPage() {
             {t.health.paragraph2}{" "}
             <Text
               component="a"
-              href="http://www.kocky-online.cz/jportal/articles.phtml?way=home&id=12&pohlavi=&kastrat=&region=&vek=&op=topic&sw=&article_type=&authors_type=&utulek_id=&isForm=true&handicap=&pagenr=1&step=100"
+              href="https://www.metropolevet.cz/nemoci-kocek/"
               target="_blank"
               c="blue"
             >
@@ -233,7 +226,7 @@ export default function RagdollPage() {
             <br />
             <Text
               component="a"
-              href="http://www.vetonline.cz/pece-o-kocku-nemoci-kocek"
+              href="https://cz.mypet.com/zdravi/navstevy-veterinare/veterinarni-lekar/?imgtcs=true"
               target="_blank"
               c="blue"
             >

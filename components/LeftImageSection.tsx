@@ -21,6 +21,7 @@ interface LeadGridProps {
     label: string;
     onClick: () => void;
   };
+  ratio?: number;
 }
 
 export function LeftImageSection({
@@ -28,12 +29,13 @@ export function LeftImageSection({
   heading,
   subtext,
   button,
+  ratio = 4 / 2,
 }: LeadGridProps) {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
 
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%">
-      <AspectRatio ratio={4 / 2}>
+      <AspectRatio ratio={ratio}>
         <Flex gap="md" align="stretch" w="100%">
           <BackgroundImage
             src={image}

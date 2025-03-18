@@ -37,141 +37,181 @@ const baseColorData = [
   {
     id: "seal",
     code: "RAG n (seal colorpoint), RAG n 04 (seal mitted), RAG n 03 (seal bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/seal.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/seal_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/seal.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/seal_big.jpg",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19054",
   },
   {
     id: "blue",
     code: "RAG a (blue colorpoint), RAG a 04 (blue mitted), RAG a 03 (blue bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/blue.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/blue_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/blue.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/blue_big.jpg",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19055",
   },
   {
     id: "chocolate",
     code: "RAG b (chocolate colorpoint), RAG b 04 (chocolate mitted), RAG b 03 (chocolate bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/chocolate.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/chocolate_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolate.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolate_big.jpg",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19056",
   },
   {
     id: "lilac",
     code: "RAG c (lilac colorpoint), RAG c 04 (lilac mitted), RAG c 03 (lilac bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/lilac.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/lilac_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilac.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilac_big.jpg",
     galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19057",
   },
   {
     id: "red",
     code: "RAG d (red colorpoint), RAG d 04 (red mitted), RAG n 03 (red bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/red.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/red_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/red.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/red_big.jpg",
     galleryLink: null,
   },
   {
     id: "cream",
     code: "RAG e (cream colorpoint), RAG e 04 (cream mitted), RAG e 03 (cream bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/cream.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/cream_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/cream.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/cream_big.jpg",
     galleryLink: null,
   },
   {
     id: "seallynx",
     code: "RAG n 21 (seal lynx colorpoint), RAG n 04 21 (seal lynx mitted), RAG n 03 21 (seal lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/seallynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/seallynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/seallynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/seallynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "bluelynx",
     code: "RAG a 21 (blue lynx colorpoint), RAG a 04 21 (blue lynx mitted), RAG a 03 21 (blue lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/bluelynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/bluelynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluelynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluelynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "chocolatelynx",
     code: "RAG b 21 (chocolate lynx colorpoint), RAG b 04 21 (chocolate lynx mitted), RAG b 03 21 (chocolate lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/chocolatelynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/chocolatelynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatelynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatelynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "lilaclynx",
     code: "RAG c 21 (lilac lynx colorpoint), RAG c 04 21 (lilac lynx mitted), RAG c 03 21 (lilac lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/lilaclynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/lilaclynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilaclynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilaclynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "redlynx",
     code: "RAG d 21 (red lynx colorpoint), RAG d 04 21 (red lynx mitted), RAG d 03 21 (red lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/redlynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/redlynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/redlynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/redlynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "creamlynx",
     code: "RAG e 21 (cream lynx colorpoint), RAG e 04 21 (cream lynx mitted), RAG e 03 21 (cream lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/creamlynx.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/creamlynx_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/creamlynx.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/creamlynx_big.jpg",
     galleryLink: null,
   },
   {
     id: "sealtortie",
     code: "RAG f (seal tortie colorpoint), RAG f 04 (seal tortie mitted), RAG f 03 (seal tortie bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/sealtortie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/sealtortie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/sealtortie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/sealtortie_big.jpg",
     galleryLink: null,
   },
   {
     id: "bluecream",
     code: "RAG g (blue cream colorpoint), RAG g 04 (blue cream mitted), RAG g 03 (blue cream bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/bluecream.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/bluecream_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluecream.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluecream_big.jpg",
     galleryLink: null,
   },
   {
     id: "chocolatetortie",
     code: "RAG h (chocolate tortie colorpoint), RAG h 04 (chocolate tortie mitted), RAG h 03 (chocolate tortie bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/chocolatetortie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/chocolatetortie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatetortie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatetortie_big.jpg",
     galleryLink: null,
   },
   {
     id: "lilaccream",
     code: "RAG j (lilac cream colorpoint), RAG j 04 (lilac cream mitted), RAG j 03 (lilac cream bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/lilaccream.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/lilaccream_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilaccream.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilaccream_big.jpg",
     galleryLink: null,
   },
   {
     id: "sealtorbie",
     code: "RAG f 21 (seal tortie lynx colorpoint), RAG f 04 21 (seal tortie lynx mitted), RAG f 03 21 (seal tortie lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/sealtorbie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/sealtorbie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/sealtorbie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/sealtorbie_big.jpg",
     galleryLink: null,
   },
   {
     id: "bluetorbie",
     code: "RAG g 21 (blue cream lynx colorpoint), RAG g 04 21 (blue cream lynx mitted), RAG g 03 21 (blue cream lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/bluetorbie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/bluetorbie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluetorbie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/bluetorbie_big.jpg",
     galleryLink: null,
   },
   {
     id: "chocolatetorbie",
     code: "RAG h 21 (chocolate tortie lynx colorpoint), RAG h 04 21 (chocolate tortie lynx mitted), RAG h 03 21 (chocolate tortie lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/chocolatetorbie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/chocolatetorbie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatetorbie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/chocolatetorbie_big.jpg",
     galleryLink: null,
   },
   {
     id: "lilactorbie",
     code: "RAG j 21 (lilac cream lynx colorpoint), RAG j 04 21 (lilac cream lynx mitted), RAG j 03 21 (lilac cream lynx bicolor)",
-    smallImage: "http://www.ragdolls.cz/img/barvy/lilactorbie.jpg",
-    largeImage: "http://www.ragdolls.cz/img/barvy/lilactorbie_big.jpg",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilactorbie.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Barvy%20RAG/lilactorbie_big.jpg",
     galleryLink: null,
   },
 ];

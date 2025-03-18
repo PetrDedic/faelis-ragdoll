@@ -368,7 +368,7 @@ export default function LittersPage({
       <HeroImageBackground
         heading={t.hero.heading}
         subtext={t.hero.subtext}
-        backgroundImage="https://images.unsplash.com/photo-1721472759580-45b18b23fa26?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_1271.webp"
       />
       <Stack
         px={32}

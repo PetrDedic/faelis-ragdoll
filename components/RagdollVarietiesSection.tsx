@@ -28,7 +28,6 @@ interface RagdollVariety {
   smallImage: string;
   largeImage: string;
   description: string;
-  galleryLink: string | null;
   examples: Array<{
     id: string;
     image: string;
@@ -42,71 +41,85 @@ const baseVarietyData = [
   {
     id: "colorpoint",
     code: "RAG n, RAG a, RAG b, RAG c",
-    smallImage: "http://www.ragdolls.cz/img/variety/colorpoint.jpg",
-    largeImage: "http://www.ragdolls.cz/img/variety/colorpoint_big.jpg",
-    galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19072",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint_big.jpg",
     exampleImages: [
       {
         id: "seal_colorpoint",
-        image: "http://www.ragdolls.cz/img/variety/colorpoint_seal.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint_seal.jpg",
       },
       {
         id: "blue_colorpoint",
-        image: "http://www.ragdolls.cz/img/variety/colorpoint_blue.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint_blue.jpg",
       },
       {
         id: "chocolate_colorpoint",
-        image: "http://www.ragdolls.cz/img/variety/colorpoint_chocolate.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint_chocolate.jpg",
       },
       {
         id: "lilac_colorpoint",
-        image: "http://www.ragdolls.cz/img/variety/colorpoint_lilac.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/colorpoint_lilac.jpg",
       },
     ],
   },
   {
     id: "mitted",
     code: "RAG n 04, RAG a 04, RAG b 04, RAG c 04",
-    smallImage: "http://www.ragdolls.cz/img/variety/mitted.jpg",
-    largeImage: "http://www.ragdolls.cz/img/variety/mitted_big.jpg",
-    galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19073",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted_big.jpg",
     exampleImages: [
       {
         id: "seal_mitted",
-        image: "http://www.ragdolls.cz/img/variety/mitted_seal.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted_seal.jpg",
       },
       {
         id: "blue_mitted",
-        image: "http://www.ragdolls.cz/img/variety/mitted_blue.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted_blue.jpg",
       },
       {
         id: "chocolate_mitted",
-        image: "http://www.ragdolls.cz/img/variety/mitted_chocolate.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted_chocolate.jpg",
       },
       {
         id: "lilac_mitted",
-        image: "http://www.ragdolls.cz/img/variety/mitted_lilac.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/mitted_lilac.jpg",
       },
     ],
   },
   {
     id: "bicolor",
     code: "RAG n 03, RAG a 03, RAG b 03, RAG c 03",
-    smallImage: "http://www.ragdolls.cz/img/variety/bicolor.jpg",
-    largeImage: "http://www.ragdolls.cz/img/variety/bicolor_big.jpg",
-    galleryLink: "http://www.ragdolls.cz/gallery2/main.php?g2_itemId=19074",
+    smallImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/bicolor.jpg",
+    largeImage:
+      "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/bicolor_big.jpg",
     exampleImages: [
       {
         id: "seal_bicolor",
-        image: "http://www.ragdolls.cz/img/variety/bicolor_seal.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/bicolor_seal.jpg",
       },
       {
         id: "blue_bicolor",
-        image: "http://www.ragdolls.cz/img/variety/bicolor_blue.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/bicolor_blue.jpg",
       },
       {
         id: "chocolate_tortie_bicolor",
-        image: "http://www.ragdolls.cz/img/variety/bicolor_chocolatetortie.jpg",
+        image:
+          "https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Variety%20RAG/bicolor_chocolatetortie.jpg",
       },
     ],
   },

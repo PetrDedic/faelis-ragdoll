@@ -1290,7 +1290,10 @@ const GalleryManagementPage = () => {
               </Text>
             </Group>
             <Group justify="right">
-              <CopyButton value={selectedItem.url} timeout={2000}>
+              <CopyButton
+                value={selectedItem.url ? encodeURI(selectedItem.url) : ""}
+                timeout={2000}
+              >
                 {({ copied, copy }) => (
                   <Button
                     leftSection={<IconCopy size={16} />}

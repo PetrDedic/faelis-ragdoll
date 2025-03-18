@@ -107,7 +107,10 @@ export function RagdollBloodGroupsSection() {
                 <Text>{t.accordion.testing.kittenTesting.content}</Text>
                 <List mt={8} spacing="xs">
                   <List.Item>
-                    <Anchor href="http://www.alvediavet.com/" target="_blank">
+                    <Anchor
+                      href="https://www.labtechnik.cz/ALVEDIA-krevni-skupina-kocka-d495.htm"
+                      target="_blank"
+                    >
                       {t.accordion.testing.kittenTesting.link1}
                     </Anchor>{" "}
                     {t.accordion.testing.kittenTesting.link1_desc}
@@ -124,7 +127,7 @@ export function RagdollBloodGroupsSection() {
               <Text mt={8}>
                 {t.accordion.testing.research}{" "}
                 <Anchor
-                  href="http://www.vgl.ucdavis.edu/services/cat/ragdoll.php"
+                  href="https://vgl.ucdavis.edu/dna-tests/cat"
                   target="_blank"
                 >
                   {t.accordion.testing.researchLink}

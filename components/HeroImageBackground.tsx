@@ -23,6 +23,7 @@ interface HeroImageBackgroundProps {
   subtext?: string;
   buttons?: HeroButton[];
   backgroundImage?: string;
+  backgroundPosition?: string;
 }
 
 export function HeroImageBackground({
@@ -31,6 +32,7 @@ export function HeroImageBackground({
   subtext,
   buttons,
   backgroundImage = "https://images.unsplash.com/photo-1620933288385-b2f6f1931d9e?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  backgroundPosition = "center",
 }: HeroImageBackgroundProps) {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
 
@@ -39,7 +41,7 @@ export function HeroImageBackground({
       src={backgroundImage}
       h={{ base: 500, xs: 600 }}
       style={{ position: "relative" }}
-      styles={{ root: { backgroundPositionY: "25%" } }}
+      styles={{ root: { backgroundPosition } }}
     >
       <Overlay color="#000" opacity={1} zIndex={1} />
 
