@@ -179,9 +179,10 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                           "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                       }
                 }
-                name={`${cat.name} ${cat.description}`}
+                name={cat.name}
                 info={
-                  <>
+                  <Stack gap={4}>
+                    <Text span>{cat.description}</Text>
                     <Text span>
                       {t.catInfo.gender}: {getGenderText(cat.gender, t)}
                     </Text>
@@ -211,7 +212,7 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                     <Text mt="md" span>
                       {cat.details}
                     </Text>
-                  </>
+                  </Stack>
                 }
               />
             );
@@ -311,9 +312,10 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                         "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     }
               }
-              name={`${cat.name} ${cat.description}`}
+              name={cat.name}
               info={
-                <>
+                <Stack gap={4}>
+                  <Text span>{cat.description}</Text>
                   <Text span>
                     {t.catInfo.gender}: {getGenderText(cat.gender, t)}
                   </Text>
@@ -339,7 +341,7 @@ export default function CatsPage({ maleCats, femaleCats }: CatsPageProps) {
                   <Text mt="md" span>
                     {cat.details}
                   </Text>
-                </>
+                </Stack>
               }
             />
           ))}
@@ -374,6 +376,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         .select("*")
         .eq("gender", gender)
         .eq("status", "alive")
+        .eq("is_own_breeding_cat", true)
         .eq("is_breeding", true);
 
       if (error) {

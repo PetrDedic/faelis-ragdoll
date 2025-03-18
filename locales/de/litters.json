@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "heading": "Unsere Würfe",
+    "subtext": "Entdecken Sie unsere aktuellen und vergangenen Ragdoll-Würfe"
+  },
+  "currentLitters": {
+    "title": "Aktuelle Würfe",
+    "description": "Unsere neuesten Würfe mit Kätzchen, die jetzt verfügbar sind. Kontaktieren Sie uns, um einen Besuch zu vereinbaren."
+  },
+  "upcomingLitters": {
+    "title": "Kommende Würfe",
+    "description": "Wir freuen uns, Ihnen unsere geplanten Würfe mitzuteilen. Kontaktieren Sie uns, um ein Kätzchen aus diesen kommenden Würfen zu reservieren.",
+    "expectedHeading": "Erwarteter Wurf",
+    "expectedDate": "Erwartetes Datum"
+  },
+  "pastLitters": {
+    "title": "Vergangene Würfe",
+    "description": "Durchstöbern Sie unsere bisherigen Würfe, um die wunderschönen Kätzchen zu sehen, die wir gezüchtet haben.",
+    "litterHeading": "Wurf",
+    "birthDate": "Geburtsdatum",
+    "numberOfKittens": "Anzahl der Kätzchen",
+    "males": "Männlich",
+    "females": "Weiblich",
+    "kittens": "Kätzchen"
+  },
+  "commonLabels": {
+    "parents": "Eltern",
+    "father": "Vater",
+    "mother": "Mutter",
+    "male": "Männlich",
+    "female": "Weiblich",
+    "available": "Verfügbar",
+    "reserved": "Reserviert",
+    "sold": "Verkauft",
+    "current": "Aktueller Wurf",
+    "planned": "Geplanter Wurf",
+    "viewProfile": "Profil anzeigen"
+  },
+  "info": {
+    "heading": "Interesse an unseren Kätzchen?",
+    "subtext": "Wenn Sie Interesse haben, ein Kätzchen aus unseren kommenden Würfen zu reservieren oder Fragen zur Verfügbarkeit haben, zögern Sie bitte nicht, uns zu kontaktieren.",
+    "button": "Kontaktieren Sie uns"
+  }
+}

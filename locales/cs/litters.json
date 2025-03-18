@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "heading": "Naše vrhy",
+    "subtext": "Prohlédněte si naše současné a minulé vrhy ragdollů"
+  },
+  "currentLitters": {
+    "title": "Aktuální vrhy",
+    "description": "Naše nejnovější vrhy s koťaty, která jsou nyní k dispozici. Kontaktujte nás pro domluvení návštěvy."
+  },
+  "upcomingLitters": {
+    "title": "Plánované vrhy",
+    "description": "S radostí vám představujeme naše plánované vrhy. Kontaktujte nás pro rezervaci kotěte z těchto nadcházejících vrhů.",
+    "expectedHeading": "Očekávaný vrh",
+    "expectedDate": "Očekávané datum"
+  },
+  "pastLitters": {
+    "title": "Minulé vrhy",
+    "description": "Prohlédněte si naše předchozí vrhy a podívejte se na krásná koťata, která jsme odchovali.",
+    "litterHeading": "Vrh",
+    "birthDate": "Datum narození",
+    "numberOfKittens": "Počet koťat",
+    "males": "Kocouři",
+    "females": "Kočky",
+    "kittens": "Koťata"
+  },
+  "commonLabels": {
+    "parents": "Rodiče",
+    "father": "Otec",
+    "mother": "Matka",
+    "male": "Kocour",
+    "female": "Kočka",
+    "available": "K dispozici",
+    "reserved": "Rezervováno",
+    "sold": "Prodáno",
+    "current": "Aktuální vrh",
+    "planned": "Plánovaný vrh",
+    "viewProfile": "Zobrazit profil"
+  },
+  "info": {
+    "heading": "Máte zájem o naše koťata?",
+    "subtext": "Pokud máte zájem o rezervaci kotěte z našich plánovaných vrhů nebo máte dotazy ohledně dostupnosti, neváhejte nás kontaktovat.",
+    "button": "Kontaktujte nás"
+  }
+}

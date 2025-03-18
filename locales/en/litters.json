@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "heading": "Our Litters",
+    "subtext": "Explore our current and past Ragdoll litters"
+  },
+  "currentLitters": {
+    "title": "Current Litters",
+    "description": "Our newest litters with kittens available now. Contact us to arrange a visit."
+  },
+  "upcomingLitters": {
+    "title": "Upcoming Litters",
+    "description": "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters.",
+    "expectedHeading": "Expected Litter",
+    "expectedDate": "Expected date"
+  },
+  "pastLitters": {
+    "title": "Past Litters",
+    "description": "Browse through our previous litters to see the beautiful kittens we've produced.",
+    "litterHeading": "Litter",
+    "birthDate": "Birth date",
+    "numberOfKittens": "Number of kittens",
+    "males": "Males",
+    "females": "Females",
+    "kittens": "Kittens"
+  },
+  "commonLabels": {
+    "parents": "Parents",
+    "father": "Father",
+    "mother": "Mother",
+    "male": "Male",
+    "female": "Female",
+    "available": "Available",
+    "reserved": "Reserved",
+    "sold": "Sold",
+    "current": "Current litter",
+    "planned": "Planned litter",
+    "viewProfile": "View Profile"
+  },
+  "info": {
+    "heading": "Interested in our kittens?",
+    "subtext": "If you're interested in reserving a kitten from our upcoming litters or have questions about availability, please don't hesitate to contact us.",
+    "button": "Contact Us"
+  }
+}

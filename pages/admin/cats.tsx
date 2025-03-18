@@ -27,7 +27,13 @@ import {
 import { DatePickerInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconEdit, IconTrash, IconSearch, IconPlus } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconTrash,
+  IconSearch,
+  IconPlus,
+  IconPaw,
+} from "@tabler/icons-react";
 import supabase from "../../utils/supabase/client";
 import { AdminNav } from "../../components/AdminLinks";
 import CatImagesButton from "../../components/AdminCatImagesButton";
@@ -42,6 +48,7 @@ interface Cat {
   details: string;
   is_breeding: boolean;
   is_neutered: boolean;
+  is_own_breeding_cat: boolean; // Nový sloupec pro vlastní chovnou kočku
   status: string;
   father_id?: string | null;
   mother_id?: string | null;
@@ -89,7 +96,6 @@ const AdminCatsPage = () => {
   const itemsPerPage = 10;
 
   // Form state
-  // Form state
   const [formValues, setFormValues] = useState<Partial<Cat>>({
     name: "",
     birth_date: "",
@@ -98,6 +104,7 @@ const AdminCatsPage = () => {
     details: "",
     is_breeding: true,
     is_neutered: false,
+    is_own_breeding_cat: false, // Výchozí hodnota pro nový sloupec
     status: "alive",
     father_id: null,
     mother_id: null,
@@ -144,7 +151,8 @@ const AdminCatsPage = () => {
     const matchesTab =
       activeTab === "all" ||
       (activeTab === "male" && cat.gender === "male") ||
-      (activeTab === "female" && cat.gender === "female");
+      (activeTab === "female" && cat.gender === "female") ||
+      (activeTab === "own" && cat.is_own_breeding_cat); // Nový filtr pro vlastní chovné kočky
 
     return matchesSearch && matchesTab;
   });
@@ -362,6 +370,7 @@ const AdminCatsPage = () => {
       details: cat.details,
       is_breeding: cat.is_breeding,
       is_neutered: cat.is_neutered,
+      is_own_breeding_cat: cat.is_own_breeding_cat, // Nastavení hodnoty pro editaci
       status: cat.status,
       father_id: cat.father_id || null,
       mother_id: cat.mother_id || null,
@@ -392,6 +401,7 @@ const AdminCatsPage = () => {
         details: formValues.details,
         is_breeding: formValues.is_breeding,
         is_neutered: formValues.is_neutered,
+        is_own_breeding_cat: formValues.is_own_breeding_cat, // Aktualizace sloupce
         status: formValues.status,
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
@@ -562,6 +572,7 @@ const AdminCatsPage = () => {
       details: "",
       is_breeding: true,
       is_neutered: false,
+      is_own_breeding_cat: false, // Výchozí hodnota pro nový sloupec
       status: "alive",
       father_id: null,
       mother_id: null,
@@ -581,6 +592,7 @@ const AdminCatsPage = () => {
         details: formValues.details,
         is_breeding: formValues.is_breeding,
         is_neutered: formValues.is_neutered,
+        is_own_breeding_cat: formValues.is_own_breeding_cat, // Přidání hodnoty při vytváření
         status: formValues.status,
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
@@ -688,6 +700,9 @@ const AdminCatsPage = () => {
             <Tabs.Tab value="all">Všechny</Tabs.Tab>
             <Tabs.Tab value="male">Kocouři</Tabs.Tab>
             <Tabs.Tab value="female">Kočky</Tabs.Tab>
+            <Tabs.Tab value="own" leftSection={<IconPaw size={14} />}>
+              Moje chovné
+            </Tabs.Tab>
           </Tabs.List>
         </Tabs>
       </Flex>
@@ -714,6 +729,7 @@ const AdminCatsPage = () => {
                   <Table.Th>Varieta</Table.Th>
                   <Table.Th>Datum narození</Table.Th>
                   <Table.Th>Stav</Table.Th>
+                  <Table.Th>Vlastní</Table.Th> {/* Nový sloupec v tabulce */}
                   <Table.Th>Akce</Table.Th>
                 </Table.Tr>
               </Table.Thead>
@@ -767,6 +783,20 @@ const AdminCatsPage = () => {
                           ? "Rezervovaná"
                           : "Neživá"}
                       </Badge>
+                    </Table.Td>
+                    <Table.Td>
+                      {cat.is_own_breeding_cat ? (
+                        <Badge
+                          color="violet"
+                          leftSection={<IconPaw size={12} />}
+                        >
+                          Moje
+                        </Badge>
+                      ) : (
+                        <Text size="sm" color="dimmed">
+                          Ne
+                        </Text>
+                      )}
                     </Table.Td>
                     <Table.Td>
                       <Group gap="xs">
@@ -856,8 +886,8 @@ const AdminCatsPage = () => {
           <Select
             label="Barva"
             data={colorOptions}
-            value={formValues.color?.id || undefined}
-            onChange={(value) => handleInputChange("color", value)}
+            value={selectedColor || undefined}
+            onChange={(value) => setSelectedColor(value)}
             searchable
             clearable
           />
@@ -865,8 +895,8 @@ const AdminCatsPage = () => {
           <Select
             label="Varieta"
             data={varietyOptions}
-            value={formValues.variety?.id || undefined}
-            onChange={(value) => handleInputChange("variety", value)}
+            value={selectedVariety || undefined}
+            onChange={(value) => setSelectedVariety(value)}
             searchable
             clearable
           />
@@ -874,8 +904,8 @@ const AdminCatsPage = () => {
           <Select
             label="Krevní skupina"
             data={bloodTypeOptions}
-            value={formValues.blood_type?.id || undefined}
-            onChange={(value) => handleInputChange("blood_type", value)}
+            value={selectedBloodType || undefined}
+            onChange={(value) => setSelectedBloodType(value)}
             searchable
             clearable
           />
@@ -926,6 +956,17 @@ const AdminCatsPage = () => {
               checked={formValues.is_neutered || false}
               onChange={(e) =>
                 handleInputChange("is_neutered", e.currentTarget.checked)
+              }
+            />
+
+            <Switch
+              label="Moje vlastní chovná kočka"
+              checked={formValues.is_own_breeding_cat || false}
+              onChange={(e) =>
+                handleInputChange(
+                  "is_own_breeding_cat",
+                  e.currentTarget.checked
+                )
               }
             />
           </Group>

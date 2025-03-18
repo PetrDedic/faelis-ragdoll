@@ -934,7 +934,6 @@ const AdminLittersPage = () => {
                       )}
                       <Group mt="md" mb="xs">
                         <Text fw={700}>{kitten.name}</Text>
-                        <Text fw={700}>{kitten.name}</Text>
                         {kitten.gender === "male" ? (
                           <Badge color="blue">Kocour</Badge>
                         ) : (
