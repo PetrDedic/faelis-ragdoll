@@ -519,6 +519,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         maleCats,
         femaleCats,
       },
+      revalidate: 60,
     };
   } catch (error) {
     console.error("Error in getStaticProps:", error);
@@ -527,6 +528,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         maleCats: [],
         femaleCats: [],
       },
+      revalidate: 60,
     };
   }
 };

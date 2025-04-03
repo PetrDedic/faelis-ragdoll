@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { HeroImageBackground } from "../components/HeroImageBackground";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
+import { CatGalleryModal } from "../components/CatGalleryModal";
 import Link from "next/link";
 import { formatDate } from "../utils/catTranslations";
 
@@ -28,7 +29,12 @@ import { formatDate } from "../utils/catTranslations";
 import csTranslations from "../locales/cs/litters.json";
 import enTranslations from "../locales/en/litters.json";
 import deTranslations from "../locales/de/litters.json";
-import { IconCat, IconGenderFemale, IconGenderMale } from "@tabler/icons-react";
+import {
+  IconCat,
+  IconGenderFemale,
+  IconGenderMale,
+  IconLibraryPhoto,
+} from "@tabler/icons-react";
 
 // Define types for our litter data
 interface Litter {
@@ -94,6 +100,9 @@ export default function LittersPage({
 }: LittersPageProps) {
   const router = useRouter();
   const { locale } = router;
+  const [galleryOpened, setGalleryOpened] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<CatImage[]>([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   // Create a translations object with all locales
   const translations = {
@@ -126,6 +135,12 @@ export default function LittersPage({
 
     const primaryImage = cat.images.find((img) => img.is_primary);
     return primaryImage ? primaryImage.url : cat.images[0].url;
+  };
+
+  const handleOpenGallery = (images: CatImage[], initialIndex: number = 0) => {
+    setSelectedImages(images);
+    setSelectedImageIndex(initialIndex);
+    setGalleryOpened(true);
   };
 
   // Helper function to render a litter card
@@ -203,7 +218,7 @@ export default function LittersPage({
                     >
                       <Card
                         pb={24}
-                        style={{ position: "relative" }}
+                        style={{ position: "relative", cursor: "pointer" }}
                         padding="lg"
                         radius="lg"
                         bg="#d6e6f3"
@@ -259,6 +274,18 @@ export default function LittersPage({
                               ? t.commonLabels.male
                               : t.commonLabels.female}
                           </Text>
+                          {kitten.images.length > 0 && (
+                            <Button
+                              color="#47a3ee"
+                              variant="outline"
+                              size="xs"
+                              fullWidth
+                              leftSection={<IconLibraryPhoto size={16} />}
+                              onClick={() => handleOpenGallery(kitten.images)}
+                            >
+                              {t.commonLabels.gallery}
+                            </Button>
+                          )}
                           {kitten.status !== "sold" && (
                             <Button
                               color="#47a3ee"
@@ -295,7 +322,13 @@ export default function LittersPage({
               <Accordion.Panel>
                 <Grid gutter={32} w="100%">
                   <Grid.Col span={{ base: 12, sm: 6 }}>
-                    <Card padding="lg" radius="lg" bg="#d6e6f3">
+                    <Card
+                      padding="lg"
+                      radius="lg"
+                      bg="#d6e6f3"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleOpenGallery(litter.father.images)}
+                    >
                       <Stack gap="xs">
                         <AspectRatio ratio={16 / 9}>
                           <Image
@@ -325,7 +358,13 @@ export default function LittersPage({
                     </Card>
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6 }}>
-                    <Card padding="lg" radius="lg" bg="#d6e6f3">
+                    <Card
+                      padding="lg"
+                      radius="lg"
+                      bg="#d6e6f3"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleOpenGallery(litter.mother.images)}
+                    >
                       <Stack gap="xs">
                         <AspectRatio ratio={16 / 9}>
                           <Image
@@ -429,6 +468,13 @@ export default function LittersPage({
 
         <Form />
       </Stack>
+
+      <CatGalleryModal
+        images={selectedImages}
+        opened={galleryOpened}
+        onClose={() => setGalleryOpened(false)}
+        initialImageIndex={selectedImageIndex}
+      />
     </Stack>
   );
 }
@@ -634,6 +680,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
           (litter) => litter.mother && litter.father
         ),
       },
+      revalidate: 60,
     };
   } catch (error) {
     console.error("Error in getStaticProps:", error);
@@ -643,6 +690,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         upcomingLitters: [],
         pastLitters: [],
       },
+      revalidate: 60,
     };
   }
 };
