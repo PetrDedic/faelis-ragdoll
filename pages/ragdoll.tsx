@@ -83,7 +83,8 @@ export default function RagdollPage() {
               <AspectRatio ratio={4 / 3}>
                 <Image
                   radius="md"
-                  src="https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/bartholomew.jpg"
+                  style={{ objectFit: "contain" }}
                 />
               </AspectRatio>
             </Grid.Col>
@@ -91,7 +92,8 @@ export default function RagdollPage() {
               <AspectRatio ratio={4 / 3}>
                 <Image
                   radius="md"
-                  src="https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/w_4.jpg"
+                  style={{ objectFit: "contain" }}
                 />
               </AspectRatio>
             </Grid.Col>
@@ -99,7 +101,8 @@ export default function RagdollPage() {
               <AspectRatio ratio={4 / 3}>
                 <Image
                   radius="md"
-                  src="https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/wt_5.jpg"
+                  style={{ objectFit: "contain" }}
                 />
               </AspectRatio>
             </Grid.Col>

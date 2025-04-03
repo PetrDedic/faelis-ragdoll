@@ -218,7 +218,7 @@ export default function LittersPage({
                     >
                       <Card
                         pb={24}
-                        style={{ position: "relative", cursor: "pointer" }}
+                        style={{ position: "relative" }}
                         padding="lg"
                         radius="lg"
                         bg="#d6e6f3"
@@ -238,7 +238,9 @@ export default function LittersPage({
                                   position: "absolute",
                                   top: 4,
                                   right: 4,
+                                  cursor: "pointer",
                                 }}
+                                onClick={() => handleOpenGallery(kitten.images)}
                               >
                                 {kitten.gender === "male" ? (
                                   <IconGenderMale size={20} />
@@ -252,6 +254,8 @@ export default function LittersPage({
                               fit="cover"
                               radius="md"
                               alt={kitten.name}
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleOpenGallery(kitten.images)}
                             />
                           </AspectRatio>
                           <Badge color="blue">

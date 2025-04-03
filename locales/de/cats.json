@@ -8,6 +8,20 @@
     "litterInfo": "Wurf O geboren am 26.10.2024",
     "description": "Impfung, Entwurmung, Stammbaum, Kaufvertrag... das ist selbstverständlich, wir stehen mit den Besitzern unserer Kätzchen auch nach dem Verkauf in Kontakt. Die Eltern sind negativ auf HCM und PKD, FeLV und FIV getestet."
   },
+  "litters": {
+    "upcoming": "Kommende Würfe",
+    "current": "Aktuelle Würfe",
+    "past": "Vergangene Würfe",
+    "expectedKittens": "Erwartete Anzahl der Kätzchen",
+    "kittens": "Anzahl der Kätzchen",
+    "males": "Kater",
+    "females": "Katzen",
+    "mother": "Mutter",
+    "father": "Vater",
+    "meetKittens": "Lernen Sie unsere Kätzchen kennen",
+    "ourKittens": "Unsere Kätzchen",
+    "noLitters": "Derzeit haben wir keine Würfe"
+  },
   "cats": {
     "maleCats": "Ragdoll Kater",
     "femaleCats": "Ragdoll Katzen"
@@ -46,5 +60,42 @@
     "heading": "Ich interessiere mich für ein Kätzchen",
     "subtext": "Wenn Sie Interesse am Kauf eines unserer Kätzchen haben, kontaktieren Sie uns bitte telefonisch oder über das untenstehende Formular.",
     "button": "Mehr erfahren"
+  },
+  "gallery": {
+    "heading": "Galerie"
+  },
+  "upcomingLitters": {
+    "title": "Kommende Würfe",
+    "description": "Wir freuen uns, unsere geplanten Würfe mit Ihnen zu teilen. Kontaktieren Sie uns, um ein Kätzchen aus diesen kommenden Würfen zu reservieren.",
+    "expectedHeading": "Erwarteter Wurf",
+    "expectedDate": "Erwartetes Datum"
+  },
+  "currentLitters": {
+    "title": "Aktuelle Würfe",
+    "description": "Stöbern Sie durch unsere aktuellen Würfe, um unsere wunderschönen Kätzchen zu sehen."
+  },
+  "pastLitters": {
+    "title": "Vergangene Würfe",
+    "description": "Stöbern Sie durch unsere früheren Würfe, um die wunderschönen Kätzchen zu sehen, die wir gezüchtet haben.",
+    "litterHeading": "Wurf",
+    "birthDate": "Geburtsdatum",
+    "numberOfKittens": "Anzahl der Kätzchen",
+    "males": "Kater",
+    "females": "Katzen",
+    "kittens": "Kätzchen"
+  },
+  "commonLabels": {
+    "parents": "Eltern",
+    "father": "Vater",
+    "mother": "Mutter",
+    "male": "Kater",
+    "female": "Katze",
+    "available": "Verfügbar",
+    "reserved": "Reserviert",
+    "sold": "Verkauft",
+    "current": "Aktueller Wurf",
+    "planned": "Geplanter Wurf",
+    "viewProfile": "Profil anzeigen",
+    "gallery": "Galerie"
   }
 }

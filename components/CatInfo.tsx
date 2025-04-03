@@ -64,7 +64,7 @@ export function CatInfo({ images, name, info }: LeadGridProps) {
         <Title order={2} size="h1" c="black">
           {name}
         </Title>
-        <Text size="lg">{info}</Text>
+        {info}
       </Stack>
     </SimpleGrid>
   );

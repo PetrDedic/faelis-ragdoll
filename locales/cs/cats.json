@@ -8,6 +8,20 @@
     "litterInfo": "Vrh O narozen 26/10/2024",
     "description": "Očkování, odčervení, rodokmen, kupní smlouva... to je samozřejmostí, s majiteli našich koťátek jsme v kontaktu i po prodeji. Rodiče jsou negativně testovaní na HCM a PKD, FeLV a FIV."
   },
+  "litters": {
+    "upcoming": "Připravované vrhy",
+    "current": "Aktuální vrhy",
+    "past": "Minulé vrhy",
+    "expectedKittens": "Očekávaný počet koťat",
+    "kittens": "Počet koťat",
+    "males": "kocourů",
+    "females": "koček",
+    "mother": "Matka",
+    "father": "Otec",
+    "meetKittens": "Poznejte naše koťátka",
+    "ourKittens": "Naše koťátka",
+    "noLitters": "Momentálně nemáme žádné vrhy"
+  },
   "cats": {
     "maleCats": "Ragdoll kocouři",
     "femaleCats": "Ragdoll kočky"
@@ -46,5 +60,42 @@
     "heading": "Mám zájem o svou kočičku",
     "subtext": "Pokud máte zájem zakoupit jednu z našich kočiček, tak nás kontaktujte pomocí telefonního čísla a nebo na níže uvedeném formuláři.",
     "button": "Zjistit více"
+  },
+  "gallery": {
+    "heading": "Galerie"
+  },
+  "upcomingLitters": {
+    "title": "Plánované vrhy",
+    "description": "Těšíme se, že vám můžeme představit naše plánované vrhy. Kontaktujte nás pro rezervaci koťátka z těchto plánovaných vrhů.",
+    "expectedHeading": "Očekávaný vrh",
+    "expectedDate": "Očekávané datum"
+  },
+  "currentLitters": {
+    "title": "Aktuální vrhy",
+    "description": "Naše nejnovější vrhy s koťátky k dispozici. Kontaktujte nás pro rezervaci."
+  },
+  "pastLitters": {
+    "title": "Minulé vrhy",
+    "description": "Prohlédněte si naše předchozí vrhy a krásná koťátka, která jsme odchovali.",
+    "litterHeading": "Vrh",
+    "birthDate": "Datum narození",
+    "numberOfKittens": "Počet koťat",
+    "males": "Kocouři",
+    "females": "Kočky",
+    "kittens": "Koťata"
+  },
+  "commonLabels": {
+    "parents": "Rodiče",
+    "father": "Otec",
+    "mother": "Matka",
+    "male": "Kocour",
+    "female": "Kočka",
+    "available": "K dispozici",
+    "reserved": "Rezervováno",
+    "sold": "Prodáno",
+    "current": "Aktuální vrh",
+    "planned": "Plánovaný vrh",
+    "viewProfile": "Zobrazit profil",
+    "gallery": "Galerie"
   }
 }
