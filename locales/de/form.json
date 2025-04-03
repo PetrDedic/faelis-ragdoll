@@ -16,5 +16,11 @@
     "label": "Ihre Nachricht",
     "placeholder": "Schreiben Sie uns eine Nachricht"
   },
-  "submit": "Formular absenden"
+  "submit": "Formular absenden",
+  "error": {
+    "message": "Nicht möglich, Nachricht zu senden. Bitte versuchen Sie es erneut."
+  },
+  "success": {
+    "message": "Nachricht wurde erfolgreich gesendet!"
+  }
 }

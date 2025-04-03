@@ -16,5 +16,11 @@
     "label": "Vaše zpráva",
     "placeholder": "Napište nám zprávu"
   },
-  "submit": "Odeslat formulář"
+  "submit": "Odeslat formulář",
+  "error": {
+    "message": "Nepodařilo se odeslat zprávu. Prosím zkuste to znovu."
+  },
+  "success": {
+    "message": "Zpráva byla úspěšně odeslána!"
+  }
 }

@@ -16,5 +16,11 @@
     "label": "Your message",
     "placeholder": "Write us a message"
   },
-  "submit": "Submit form"
+  "submit": "Submit form",
+  "error": {
+    "message": "Failed to send message. Please try again."
+  },
+  "success": {
+    "message": "Message sent successfully!"
+  }
 }

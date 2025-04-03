@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Group,
+  Notification,
   SimpleGrid,
   Stack,
   Textarea,
@@ -15,10 +16,15 @@ import { useRouter } from "next/router";
 import csTranslations from "../locales/cs/form.json";
 import enTranslations from "../locales/en/form.json";
 import deTranslations from "../locales/de/form.json";
+import { useState } from "react";
 
 export function Form() {
   const router = useRouter();
   const { locale } = router;
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Create a translations object with all locales
   const translations = {
@@ -42,8 +48,36 @@ export function Form() {
       name: (value) => value.trim().length < 2,
       email: (value) => !/^\S+@\S+$/.test(value),
       subject: (value) => value.trim().length === 0,
+      message: (value) => value.trim().length === 0,
     },
   });
+
+  const handleSubmit = async (values: typeof form.values) => {
+    setIsSubmitting(true);
+    setError(null);
+    setShowSuccess(false);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setShowSuccess(true);
+      form.reset();
+    } catch (err) {
+      setError(t.error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Stack align="center" w="100%">
@@ -58,7 +92,17 @@ export function Form() {
         w="100%"
         maw={640}
       >
-        <form onSubmit={form.onSubmit(() => {})}>
+        {error && (
+          <Notification color="red" mb="md">
+            {error}
+          </Notification>
+        )}
+        {showSuccess && (
+          <Notification color="green" mb="md">
+            {t.success.message}
+          </Notification>
+        )}
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
             <TextInput
               styles={{ input: { border: "#47a3ee 1px solid" } }}
@@ -101,7 +145,7 @@ export function Form() {
           />
 
           <Group justify="center" mt="xl">
-            <Button type="submit" size="md">
+            <Button type="submit" size="md" loading={isSubmitting}>
               {t.submit}
             </Button>
           </Group>
