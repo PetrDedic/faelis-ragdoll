@@ -9,6 +9,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import Head from "next/head";
 
 interface HeroButton {
   label: string;
@@ -37,79 +38,95 @@ export function HeroImageBackground({
   const smallWindow = useMediaQuery("(max-width: 1200px)");
 
   return (
-    <BackgroundImage
-      src={backgroundImage}
-      h={{ base: 500, xs: 600 }}
-      style={{ position: "relative" }}
-      styles={{ root: { backgroundPosition } }}
-    >
-      <Overlay color="#000" opacity={1} zIndex={1} />
-
-      <Stack
-        justify="center"
-        align="center"
-        h="100%"
-        pos="relative"
-        style={{ zIndex: 2 }}
-        px="md"
+    <>
+      <Head>
+        <title>Faelis | {heading}</title>
+        <meta name="description" content={`Faelis - ${heading} - ${subtext}`} />
+        <meta property="og:title" content={`Faelis - ${heading}`} />
+        <meta
+          property="og:description"
+          content={`Faelis - ${heading} - ${subtext}`}
+        />
+        <meta property="og:image" content={backgroundImage} />
+        <meta property="og:type" content="website" />
+        <link rel="preload" href={backgroundImage} as="image" />
+      </Head>
+      <BackgroundImage
+        src={backgroundImage}
+        h={{ base: 500, xs: 600 }}
+        style={{ position: "relative" }}
+        styles={{ root: { backgroundPosition } }}
       >
-        <Title
-          px={16}
-          order={1}
-          size={smallWindow ? 32 : 48}
-          fw={800}
-          ta={{ base: "left", sm: "center" }}
-          c="white"
-          style={{ letterSpacing: 1 }}
-          maw={1024}
+        <Overlay color="#000" opacity={1} zIndex={1} />
+
+        <Stack
+          justify="center"
+          align="center"
+          h="100%"
+          pos="relative"
+          style={{ zIndex: 2 }}
+          px="md"
         >
-          {heading}{" "}
-          {highlightedText && (
-            <Text span inherit c="primary.4">
-              {highlightedText}
-            </Text>
-          )}
-        </Title>
-
-        <Container size={560}>
-          <Text fz={24} c="gray.0" ta={{ base: "left", sm: "center" }}>
-            {subtext}
-          </Text>
-        </Container>
-
-        {buttons && (
-          <Flex
-            gap="md"
-            justify="center"
-            direction={{ base: "column", sm: "row" }}
-            mt="xl"
-            w={{ base: "100%", sm: "auto" }}
+          <Title
+            px={16}
+            order={1}
+            size={smallWindow ? 32 : 48}
+            fw={800}
+            ta={{ base: "left", sm: "center" }}
+            c="white"
+            style={{ letterSpacing: 1 }}
+            maw={1024}
           >
-            {buttons.map((button, index) => (
-              <Button
-                key={index}
-                variant={button.variant || (index === 0 ? "white" : "default")}
-                size="lg"
-                w={{ base: "100%", sm: "auto" }}
-                onClick={button.onClick}
-                style={
-                  index !== 0
-                    ? (theme) => ({
-                        color: theme.white,
-                        backgroundColor: "rgba(255, 255, 255, 0.4)",
-                        "&:hover": {
-                          backgroundColor: "rgba(255, 255, 255, 0.45)",
-                        },
-                      })
-                    : undefined
-                }
-              >
-                {button.label}
-              </Button>
-            ))}
-          </Flex>
-        )}
-      </Stack>
-    </BackgroundImage>
+            {heading}{" "}
+            {highlightedText && (
+              <Text span inherit c="primary.4">
+                {highlightedText}
+              </Text>
+            )}
+          </Title>
+
+          <Container size={560}>
+            <Text fz={24} c="gray.0" ta={{ base: "left", sm: "center" }}>
+              {subtext}
+            </Text>
+          </Container>
+
+          {buttons && (
+            <Flex
+              gap="md"
+              justify="center"
+              direction={{ base: "column", sm: "row" }}
+              mt="xl"
+              w={{ base: "100%", sm: "auto" }}
+            >
+              {buttons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={
+                    button.variant || (index === 0 ? "white" : "default")
+                  }
+                  size="lg"
+                  w={{ base: "100%", sm: "auto" }}
+                  onClick={button.onClick}
+                  style={
+                    index !== 0
+                      ? (theme) => ({
+                          color: theme.white,
+                          backgroundColor: "rgba(255, 255, 255, 0.4)",
+                          "&:hover": {
+                            backgroundColor: "rgba(255, 255, 255, 0.45)",
+                          },
+                        })
+                      : undefined
+                  }
+                >
+                  {button.label}
+                </Button>
+              ))}
+            </Flex>
+          )}
+        </Stack>
+      </BackgroundImage>
+    </>
   );
 }
