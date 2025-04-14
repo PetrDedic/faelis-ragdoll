@@ -54,7 +54,7 @@ export default function IndexPage() {
         <HeroImageBackground
           heading={t.hero.heading}
           subtext={t.hero.subtext}
-          backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/002.webp"
+          backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_6363.jpg"
         />
         <Stack
           px={32}

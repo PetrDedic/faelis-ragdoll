@@ -123,7 +123,7 @@ const Footer = () => {
                 {t.contact.moreContacts}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
-                    href={locale === "cs" ? "/kontakt" : "/contact"}
+                    href="/contact"
                     style={{
                       color: "inherit",
                       whiteSpace: "nowrap",

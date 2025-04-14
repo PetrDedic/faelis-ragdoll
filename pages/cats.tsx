@@ -35,6 +35,7 @@ import deTranslations from "../locales/de/cats.json";
 import Link from "next/link";
 import {
   IconCat,
+  IconFileInfo,
   IconGenderFemale,
   IconGenderMale,
   IconLibraryPhoto,
@@ -69,6 +70,7 @@ interface Cat {
     genetic_code: string;
   };
   genetic_code: string;
+  pedigree_link: string;
 }
 
 interface CatImage {
@@ -482,19 +484,36 @@ export default function CatsPage({
                     <Text mt="md" span>
                       {cat.details}
                     </Text>
-                    {cat.images.length > 0 && (
-                      <Button
-                        w="max-content"
-                        px={16}
-                        color="#47a3ee"
-                        variant="outline"
-                        size="xs"
-                        leftSection={<IconLibraryPhoto size={16} />}
-                        onClick={() => handleOpenGallery(cat.images)}
-                      >
-                        {t.gallery.heading}
-                      </Button>
-                    )}
+                    <Flex align="center" gap={8}>
+                      {cat.images.length > 0 && (
+                        <Button
+                          w="max-content"
+                          px={16}
+                          color="#47a3ee"
+                          variant="outline"
+                          size="xs"
+                          leftSection={<IconLibraryPhoto size={16} />}
+                          onClick={() => handleOpenGallery(cat.images)}
+                        >
+                          {t.gallery.heading}
+                        </Button>
+                      )}
+                      {cat.pedigree_link && (
+                        <Button
+                          component={Link}
+                          href={cat.pedigree_link}
+                          target="_blank"
+                          w="max-content"
+                          px={16}
+                          color="#47a3ee"
+                          variant="outline"
+                          size="xs"
+                          leftSection={<IconFileInfo size={16} />}
+                        >
+                          {t.pedigree.heading}
+                        </Button>
+                      )}
+                    </Flex>
                   </Stack>
                 }
               />
@@ -624,19 +643,36 @@ export default function CatsPage({
                   <Text mt="md" span>
                     {cat.details}
                   </Text>
-                  {cat.images.length > 0 && (
-                    <Button
-                      w="max-content"
-                      px={16}
-                      color="#47a3ee"
-                      variant="outline"
-                      size="xs"
-                      leftSection={<IconLibraryPhoto size={16} />}
-                      onClick={() => handleOpenGallery(cat.images)}
-                    >
-                      {t.gallery.heading}
-                    </Button>
-                  )}
+                  <Flex align="center" gap={8}>
+                    {cat.images.length > 0 && (
+                      <Button
+                        w="max-content"
+                        px={16}
+                        color="#47a3ee"
+                        variant="outline"
+                        size="xs"
+                        leftSection={<IconLibraryPhoto size={16} />}
+                        onClick={() => handleOpenGallery(cat.images)}
+                      >
+                        {t.gallery.heading}
+                      </Button>
+                    )}
+                    {cat.pedigree_link && (
+                      <Button
+                        component={Link}
+                        href={cat.pedigree_link}
+                        target="_blank"
+                        w="max-content"
+                        px={16}
+                        color="#47a3ee"
+                        variant="outline"
+                        size="xs"
+                        leftSection={<IconFileInfo size={16} />}
+                      >
+                        {t.pedigree.heading}
+                      </Button>
+                    )}
+                  </Flex>
                 </Stack>
               }
             />

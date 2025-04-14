@@ -11,6 +11,16 @@ const nextConfig = {
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: "cs",
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "tcdwmbbmqgeuzzubnjmg.supabase.co",
+      },
+      {
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

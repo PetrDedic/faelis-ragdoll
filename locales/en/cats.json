@@ -64,7 +64,10 @@
   "gallery": {
     "heading": "Gallery"
   },
-    "upcomingLitters": {
+  "pedigree": {
+    "heading": "Pedigree"
+  },
+  "upcomingLitters": {
     "title": "Upcoming Litters",
     "description": "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters.",
     "expectedHeading": "Expected Litter",

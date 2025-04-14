@@ -68,6 +68,7 @@ interface Cat {
     genetic_code: string;
   };
   images: CatImage[];
+  pedigree_link: string;
 }
 
 interface CatImage {
@@ -108,6 +109,7 @@ const AdminCatsPage = () => {
     status: "alive",
     father_id: null,
     mother_id: null,
+    pedigree_link: "",
   });
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedVariety, setSelectedVariety] = useState<string | null>(null);
@@ -374,6 +376,7 @@ const AdminCatsPage = () => {
       status: cat.status,
       father_id: cat.father_id || null,
       mother_id: cat.mother_id || null,
+      pedigree_link: cat.pedigree_link || "",
     });
     setSelectedColor(cat.color?.id || null);
     setSelectedVariety(cat.variety?.id || null);
@@ -405,6 +408,7 @@ const AdminCatsPage = () => {
         status: formValues.status,
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
+        pedigree_link: formValues.pedigree_link,
       })
       .eq("id", editingCat.id)
       .then(({ error }) => {
@@ -596,6 +600,7 @@ const AdminCatsPage = () => {
         status: formValues.status,
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
+        pedigree_link: formValues.pedigree_link,
       })
       .select()
       .single()
@@ -970,6 +975,14 @@ const AdminCatsPage = () => {
               }
             />
           </Group>
+
+          <TextInput
+            label="Rodokmen"
+            value={formValues.pedigree_link || ""}
+            onChange={(e) =>
+              handleInputChange("pedigree_link", e.currentTarget.value)
+            }
+          />
 
           <Textarea
             label="Podrobnosti"

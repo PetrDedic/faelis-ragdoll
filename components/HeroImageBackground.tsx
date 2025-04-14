@@ -1,8 +1,10 @@
 import {
   BackgroundImage,
+  Box,
   Button,
   Container,
   Flex,
+  Image,
   Overlay,
   Stack,
   Text,
@@ -10,6 +12,7 @@ import {
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Head from "next/head";
+import NextImage from "next/image";
 
 interface HeroButton {
   label: string;
@@ -51,12 +54,16 @@ export function HeroImageBackground({
         <meta property="og:type" content="website" />
         <link rel="preload" href={backgroundImage} as="image" />
       </Head>
-      <BackgroundImage
-        src={backgroundImage}
-        h={{ base: 500, xs: 600 }}
-        style={{ position: "relative" }}
-        styles={{ root: { backgroundPosition } }}
-      >
+      <Box h={{ base: 500, xs: 600 }} style={{ position: "relative" }} w="100%">
+        <Image
+          component={NextImage}
+          alt={heading + "background image"}
+          src={backgroundImage}
+          fill
+          sizes="100vw"
+          style={{ objectFit: "cover", backgroundPosition }}
+          priority
+        />
         <Overlay color="#000" opacity={1} zIndex={1} />
 
         <Stack
@@ -85,7 +92,7 @@ export function HeroImageBackground({
             )}
           </Title>
 
-          <Container size={560}>
+          <Container size={720}>
             <Text fz={24} c="gray.0" ta={{ base: "left", sm: "center" }}>
               {subtext}
             </Text>
@@ -126,7 +133,7 @@ export function HeroImageBackground({
             </Flex>
           )}
         </Stack>
-      </BackgroundImage>
+      </Box>
     </>
   );
 }

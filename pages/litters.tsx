@@ -316,7 +316,12 @@ export default function LittersPage({
             </Stack>
           )}
 
-          <Accordion variant="contained" radius="md" w="100%">
+          <Accordion
+            variant="contained"
+            radius="md"
+            w="100%"
+            defaultValue={type === "upcoming" ? "parent" : undefined}
+          >
             <Accordion.Item value="parent">
               <Accordion.Control>
                 <Title order={3} size="h3">
@@ -423,6 +428,22 @@ export default function LittersPage({
         mx="auto"
         w="100%"
       >
+        {/* Upcoming Litters Section */}
+        {upcomingLitters.length > 0 && (
+          <Stack w="100%" align="center" gap={32}>
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.upcomingLitters.title}
+            </Title>
+            <Text size="lg" c="black" ta="center">
+              {t.upcomingLitters.description}
+            </Text>
+
+            {upcomingLitters.map((litter) =>
+              renderLitterCard(litter, "upcoming")
+            )}
+          </Stack>
+        )}
+
         {/* Current Litters Section */}
         {currentLitters.length > 0 && (
           <Stack w="100%" align="center" gap={32}>
@@ -436,22 +457,6 @@ export default function LittersPage({
 
             {currentLitters.map((litter) =>
               renderLitterCard(litter, "current")
-            )}
-          </Stack>
-        )}
-
-        {/* Upcoming Litters Section */}
-        {upcomingLitters.length > 0 && (
-          <Stack w="100%" align="center" gap={32}>
-            <Title order={2} size="h1" c="#47a3ee" ta="center">
-              {t.upcomingLitters.title}
-            </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.upcomingLitters.description}
-            </Text>
-
-            {upcomingLitters.map((litter) =>
-              renderLitterCard(litter, "upcoming")
             )}
           </Stack>
         )}
