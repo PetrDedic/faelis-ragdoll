@@ -23,6 +23,7 @@ import {
   Alert,
   Flex,
   Switch,
+  MultiSelect,
 } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
@@ -69,6 +70,7 @@ interface Cat {
   };
   images: CatImage[];
   pedigree_link: string;
+  litters?: Litter[];
 }
 
 interface CatImage {
@@ -82,6 +84,12 @@ interface Option {
   label: string;
 }
 
+interface Litter {
+  id: string;
+  name: string;
+  birth_date: string;
+}
+
 const AdminCatsPage = () => {
   const router = useRouter();
   const [cats, setCats] = useState<Cat[]>([]);
@@ -91,6 +99,8 @@ const AdminCatsPage = () => {
   const [colorOptions, setColorOptions] = useState<Option[]>([]);
   const [varietyOptions, setVarietyOptions] = useState<Option[]>([]);
   const [bloodTypeOptions, setBloodTypeOptions] = useState<Option[]>([]);
+  const [litterOptions, setLitterOptions] = useState<Option[]>([]);
+  const [selectedLitters, setSelectedLitters] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState<string | null>("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -141,9 +151,37 @@ const AdminCatsPage = () => {
   useEffect(() => {
     fetchCats();
     fetchReferenceData();
+    fetchLitters();
   }, []);
 
-  // Filter cats based on active tab and search term
+  // Fetch litters for filtering
+  const fetchLitters = () => {
+    supabase
+      .from("litters")
+      .select("id, name, birth_date")
+      .order("name")
+      .then(({ data: litters, error }) => {
+        if (error) {
+          console.error("Error fetching litters:", error);
+          return;
+        }
+
+        if (litters) {
+          setLitterOptions(
+            litters.map((litter) => ({
+              value: litter.id,
+              label:
+                litter.name ||
+                `Vrh z ${new Date(litter.birth_date).toLocaleDateString(
+                  "cs-CZ"
+                )}`,
+            }))
+          );
+        }
+      });
+  };
+
+  // Filter cats based on active tab, search term, and selected litters
   const filteredCats = cats.filter((cat) => {
     const matchesSearch =
       searchTerm === "" ||
@@ -154,9 +192,14 @@ const AdminCatsPage = () => {
       activeTab === "all" ||
       (activeTab === "male" && cat.gender === "male") ||
       (activeTab === "female" && cat.gender === "female") ||
-      (activeTab === "own" && cat.is_own_breeding_cat); // Nový filtr pro vlastní chovné kočky
+      (activeTab === "own" && cat.is_own_breeding_cat);
 
-    return matchesSearch && matchesTab;
+    // Filter by selected litters
+    const matchesLitters =
+      selectedLitters.length === 0 ||
+      cat.litters?.some((litter) => selectedLitters.includes(litter.id));
+
+    return matchesSearch && matchesTab && matchesLitters;
   });
 
   // Calculate pagination
@@ -202,6 +245,7 @@ const AdminCatsPage = () => {
           supabase.from("cat_colors").select("*").in("cat_id", catIds),
           supabase.from("cat_varieties").select("*").in("cat_id", catIds),
           supabase.from("cat_blood_types").select("*").in("cat_id", catIds),
+          supabase.from("cat_litters").select("*").in("cat_id", catIds),
         ])
           .then(
             ([
@@ -209,8 +253,9 @@ const AdminCatsPage = () => {
               catColorsResponse,
               catVarietiesResponse,
               catBloodTypesResponse,
+              catLittersResponse,
             ]) => {
-              // Get color, variety, and blood type IDs
+              // Get color, variety, blood type, and litter IDs
               const colorIds =
                 catColorsResponse.data?.map((cc) => cc.color_id) || [];
               const varietyIds =
@@ -218,15 +263,23 @@ const AdminCatsPage = () => {
               const bloodTypeIds =
                 catBloodTypesResponse.data?.map((cbt) => cbt.blood_type_id) ||
                 [];
+              const litterIds =
+                catLittersResponse.data?.map((cl) => cl.litter_id) || [];
 
               // Fetch reference data
               Promise.all([
                 supabase.from("colors").select("*").in("id", colorIds),
                 supabase.from("varieties").select("*").in("id", varietyIds),
                 supabase.from("blood_types").select("*").in("id", bloodTypeIds),
+                supabase.from("litters").select("*").in("id", litterIds),
               ])
                 .then(
-                  ([colorsResponse, varietiesResponse, bloodTypesResponse]) => {
+                  ([
+                    colorsResponse,
+                    varietiesResponse,
+                    bloodTypesResponse,
+                    littersResponse,
+                  ]) => {
                     // Map data to cats
                     const enrichedCats = cats.map((cat) => {
                       // Get images for this cat
@@ -261,12 +314,25 @@ const AdminCatsPage = () => {
                         (bt) => bt.id === catBloodTypeRelation?.blood_type_id
                       );
 
+                      // Get litters for this cat
+                      const catLitterRelations =
+                        catLittersResponse.data?.filter(
+                          (cl) => cl.cat_id === cat.id
+                        ) || [];
+                      const litters =
+                        littersResponse.data?.filter((litter) =>
+                          catLitterRelations.some(
+                            (relation) => relation.litter_id === litter.id
+                          )
+                        ) || [];
+
                       return {
                         ...cat,
                         images: catImages,
                         color,
                         variety,
                         blood_type: bloodType,
+                        litters,
                       };
                     });
 
@@ -274,18 +340,18 @@ const AdminCatsPage = () => {
                     setLoading(false);
                   }
                 )
-                .catch((err) => {
+                .catch((err: Error) => {
                   console.error("Error fetching reference data:", err);
                   setLoading(false);
                 });
             }
           )
-          .catch((err) => {
+          .catch((err: Error) => {
             console.error("Error fetching related data:", err);
             setLoading(false);
           });
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.error("Error in fetchCats:", err);
         setLoading(false);
       });
@@ -691,13 +757,23 @@ const AdminCatsPage = () => {
         </Button>
       </Group>
 
-      <Flex gap="md" align="center">
+      <Flex gap="md" align="center" wrap="wrap">
         <TextInput
           placeholder="Hledat kočky..."
           leftSection={<IconSearch size={16} />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.currentTarget.value)}
           style={{ flexGrow: 1 }}
+        />
+
+        <MultiSelect
+          placeholder="Filtrovat podle vrhu..."
+          data={litterOptions}
+          value={selectedLitters}
+          onChange={setSelectedLitters}
+          searchable
+          clearable
+          style={{ minWidth: 200 }}
         />
 
         <Tabs value={activeTab} onChange={setActiveTab}>

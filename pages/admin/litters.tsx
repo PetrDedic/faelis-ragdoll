@@ -71,6 +71,7 @@ interface CatImage {
 
 interface Litter {
   id: string;
+  name: string;
   mother_id: string;
   father_id: string;
   birth_date: string;
@@ -108,6 +109,7 @@ const AdminLittersPage = () => {
 
   // Form state
   const [formValues, setFormValues] = useState<Partial<Litter>>({
+    name: "",
     birth_date: "",
     number_of_kittens: 0,
     number_of_males: 0,
@@ -419,6 +421,7 @@ const AdminLittersPage = () => {
   const handleEdit = (litter: Litter) => {
     setEditingLitter(litter);
     setFormValues({
+      name: litter.name,
       birth_date: litter.birth_date,
       number_of_kittens: litter.number_of_kittens,
       number_of_males: litter.number_of_males,
@@ -454,6 +457,7 @@ const AdminLittersPage = () => {
     supabase
       .from("litters")
       .update({
+        name: formValues.name,
         mother_id: selectedMother,
         father_id: selectedFather,
         birth_date: formValues.birth_date,
@@ -574,6 +578,7 @@ const AdminLittersPage = () => {
   const handleCreateNew = () => {
     setEditingLitter(null);
     setFormValues({
+      name: "",
       birth_date: new Date().toISOString().split("T")[0],
       number_of_kittens: 0,
       number_of_males: 0,
@@ -603,6 +608,7 @@ const AdminLittersPage = () => {
     supabase
       .from("litters")
       .insert({
+        name: formValues.name,
         mother_id: selectedMother,
         father_id: selectedFather,
         birth_date: formValues.birth_date,
@@ -728,6 +734,7 @@ const AdminLittersPage = () => {
             <Table striped highlightOnHover>
               <Table.Thead>
                 <Table.Tr>
+                  <Table.Th>Název</Table.Th>
                   <Table.Th>Datum narození</Table.Th>
                   <Table.Th>Matka</Table.Th>
                   <Table.Th>Otec</Table.Th>
@@ -741,6 +748,15 @@ const AdminLittersPage = () => {
               <Table.Tbody>
                 {paginatedLitters.map((litter) => (
                   <Table.Tr key={litter.id}>
+                    <Table.Td>
+                      {litter.name ? (
+                        <Text>{litter.name}</Text>
+                      ) : (
+                        <Text size="sm" color="dimmed">
+                          Bez názvu
+                        </Text>
+                      )}
+                    </Table.Td>
                     <Table.Td>
                       {new Date(litter.birth_date).toLocaleDateString("cs-CZ")}
                     </Table.Td>
@@ -823,9 +839,10 @@ const AdminLittersPage = () => {
         onClose={closeView}
         title={
           viewLitter
-            ? `Vrh: ${new Date(viewLitter.birth_date).toLocaleDateString(
-                "cs-CZ"
-              )}`
+            ? `Vrh: ${
+                viewLitter.name ||
+                new Date(viewLitter.birth_date).toLocaleDateString("cs-CZ")
+              }`
             : "Detail vrhu"
         }
         size="xl"
@@ -999,14 +1016,24 @@ const AdminLittersPage = () => {
         onClose={close}
         title={
           editingLitter
-            ? `Upravit vrh z ${new Date(
-                editingLitter.birth_date
-              ).toLocaleDateString("cs-CZ")}`
+            ? `Upravit vrh ${
+                editingLitter.name ||
+                `z ${new Date(editingLitter.birth_date).toLocaleDateString(
+                  "cs-CZ"
+                )}`
+              }`
             : "Vytvořit nový vrh"
         }
         size="lg"
       >
         <Stack gap="md">
+          <TextInput
+            label="Název vrhu"
+            value={formValues.name || ""}
+            onChange={(e) => handleInputChange("name", e.currentTarget.value)}
+            placeholder="Zadejte název vrhu..."
+          />
+
           <Select
             label="Matka"
             required

@@ -134,7 +134,7 @@ const Footer = () => {
                 </Text>
               </Text>
               <Link
-                href="http://cs-cz.facebook.com/MartaVrabelova"
+                href="https://www.facebook.com/FaelisRagdolls/"
                 target="_blank"
                 style={{
                   fontFamily: "'lucida grande',tahoma,verdana,arial,sans-serif",

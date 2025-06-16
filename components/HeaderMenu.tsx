@@ -137,7 +137,18 @@ export function HeaderMenu() {
   });
 
   return (
-    <Paper component="nav" shadow="sm" py="xs">
+    <Paper
+      component="nav"
+      shadow="sm"
+      py="xs"
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 5,
+        backgroundColor: "white",
+      }}
+      radius={0}
+    >
       <Container size="md">
         <Flex justify="space-between" align="center">
           <Link href="/">

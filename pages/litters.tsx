@@ -39,6 +39,7 @@ import {
 // Define types for our litter data
 interface Litter {
   id: string;
+  name: string;
   mother_id: string;
   father_id: string;
   birth_date: string;
@@ -156,7 +157,7 @@ export default function LittersPage({
         <Stack align="center">
           <Stack w="100%">
             <Title order={3} size="h1" ta="center">
-              {litter.description}
+              {litter.name}
             </Title>
             <Flex wrap="wrap" gap={16}>
               <Badge size="lg">
@@ -418,9 +419,31 @@ export default function LittersPage({
         subtext={t.hero.subtext}
         backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_1271.webp"
       />
+      <Flex
+        w="100%"
+        justify="center"
+        gap={16}
+        align="center"
+        my={32}
+        wrap="wrap"
+      >
+        {currentLitters.length > 0 && (
+          <Button color="#47a3ee" size="lg" component={Link} href="#current">
+            {t.currentLitters.title}
+          </Button>
+        )}
+        {upcomingLitters.length > 0 && (
+          <Button color="#47a3ee" size="lg" component={Link} href="#upcoming">
+            {t.upcomingLitters.title}
+          </Button>
+        )}
+        <Button color="#47a3ee" size="lg" component={Link} href="#past">
+          {t.pastLitters.title}
+        </Button>
+      </Flex>
       <Stack
         px={32}
-        py={128}
+        pb={128}
         justify="center"
         align="center"
         gap={64}
@@ -431,7 +454,14 @@ export default function LittersPage({
         {/* Upcoming Litters Section */}
         {upcomingLitters.length > 0 && (
           <Stack w="100%" align="center" gap={32}>
-            <Title order={2} size="h1" c="#47a3ee" ta="center">
+            <Title
+              order={2}
+              size="h1"
+              c="#47a3ee"
+              ta="center"
+              id="upcoming"
+              style={{ scrollMarginTop: 100 }}
+            >
               {t.upcomingLitters.title}
             </Title>
             <Text size="lg" c="black" ta="center">
@@ -447,7 +477,14 @@ export default function LittersPage({
         {/* Current Litters Section */}
         {currentLitters.length > 0 && (
           <Stack w="100%" align="center" gap={32}>
-            <Title order={2} size="h1" c="#47a3ee" ta="center">
+            <Title
+              order={2}
+              size="h1"
+              c="#47a3ee"
+              ta="center"
+              id="current"
+              style={{ scrollMarginTop: 100 }}
+            >
               {t.currentLitters?.title || "Current Litters"}
             </Title>
             <Text size="lg" c="black" ta="center">
@@ -464,7 +501,14 @@ export default function LittersPage({
         {/* Past Litters Section */}
         {pastLitters.length > 0 && (
           <Stack w="100%" align="center" gap={32}>
-            <Title order={2} size="h1" c="#47a3ee" ta="center">
+            <Title
+              order={2}
+              size="h1"
+              c="#47a3ee"
+              ta="center"
+              id="past"
+              style={{ scrollMarginTop: 100 }}
+            >
               {t.pastLitters.title}
             </Title>
             <Text size="lg" c="black" ta="center">
