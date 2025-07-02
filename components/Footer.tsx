@@ -114,12 +114,6 @@ const Footer = () => {
                 </Text>
               </Text>{" "}
               <Text>
-                {t.contact.skype}{" "}
-                <Text span fw={700} td="underline">
-                  ragdoll.faelis
-                </Text>
-              </Text>
-              <Text>
                 {t.contact.moreContacts}{" "}
                 <Text span fw={700} td="underlline">
                   <Link

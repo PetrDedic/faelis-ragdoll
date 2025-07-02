@@ -91,14 +91,6 @@ export default function ContactPage() {
                     </Link>
                   </Text>
                 </Text>
-                <Text fz={20}>
-                  {t.section1.skype}{" "}
-                  <Text span fw={700} td="underlline" fz={20}>
-                    <Text span fw={900} fz={20} td="underline">
-                      {t.section1.skypeId}
-                    </Text>
-                  </Text>
-                </Text>
               </Stack>
             }
           />
