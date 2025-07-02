@@ -560,6 +560,55 @@ const GalleryManagementPage = () => {
     }
   };
 
+  // Update image URLs in database after folder rename
+  const updateImageUrlsAfterFolderRename = async (
+    oldPath: string,
+    newPath: string
+  ): Promise<number> => {
+    try {
+      // Get the base URL for the gallery storage
+      const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery/`;
+
+      // Find all images in the database that have URLs containing the old path
+      const { data: affectedImages, error: fetchError } = await supabase
+        .from("images")
+        .select("id, url")
+        .like("url", `%${oldPath}%`);
+
+      if (fetchError) throw fetchError;
+
+      if (affectedImages && affectedImages.length > 0) {
+        // Update each affected image URL
+        for (const image of affectedImages) {
+          if (image.url) {
+            // Replace the old path with the new path in the URL
+            const newUrl = image.url.replace(oldPath, newPath);
+
+            const { error: updateError } = await supabase
+              .from("images")
+              .update({ url: newUrl })
+              .eq("id", image.id);
+
+            if (updateError) {
+              console.error(`Error updating image ${image.id}:`, updateError);
+            }
+          }
+        }
+
+        console.log(
+          `Updated ${affectedImages.length} image URLs after folder rename`
+        );
+        return affectedImages.length;
+      }
+      return 0;
+    } catch (error) {
+      console.error("Error updating image URLs after folder rename:", error);
+      // Don't throw here - we don't want to fail the entire rename operation
+      // Just log the error so we can investigate later
+      return 0;
+    }
+  };
+
   // Rename item
   const handleRenameConfirm = async () => {
     if (!selectedItem || !newItemName.trim()) return;
@@ -571,6 +620,8 @@ const GalleryManagementPage = () => {
       const pathParts = oldPath.split("/");
       pathParts[pathParts.length - 1] = newItemName;
       const newPath = pathParts.join("/");
+
+      let updatedCount = 0; // Declare updatedCount at function scope
 
       if (selectedItem.type === "folder") {
         // For folders, create new folder and move contents
@@ -615,6 +666,12 @@ const GalleryManagementPage = () => {
         await supabase.storage
           .from("gallery")
           .remove([`${oldPath}/.emptyFolderPlaceholder`]);
+
+        // Update all image URLs in the database that were affected by the folder rename
+        const updatedCount = await updateImageUrlsAfterFolderRename(
+          oldPath,
+          newPath
+        );
       } else {
         // For images, download and reupload with new name
         const { data: fileData, error: downloadError } = await supabase.storage
@@ -650,11 +707,20 @@ const GalleryManagementPage = () => {
 
           if (dbError) throw dbError;
         }
+
+        // For individual images, no additional URLs to update
+        updatedCount = 0;
       }
 
       notifications.show({
         title: "Úspěch",
-        message: `'${selectedItem.name}' byl(a) přejmenován(a) na '${newItemName}'`,
+        message: `'${
+          selectedItem.name
+        }' byl(a) přejmenován(a) na '${newItemName}'${
+          selectedItem.type === "folder" && updatedCount > 0
+            ? ` (aktualizováno ${updatedCount} obrázků v databázi)`
+            : ""
+        }`,
         color: "green",
       });
 

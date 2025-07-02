@@ -60,7 +60,7 @@ export function HeroImageBackground({
           alt={heading + "background image"}
           src={backgroundImage}
           fill
-          sizes="100vw"
+          sizes="100vw, (max-width: 1200px) 75vw, (max-width: 768px) 50vw"
           style={{ objectFit: "cover", backgroundPosition }}
           priority
         />

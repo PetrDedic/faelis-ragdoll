@@ -107,7 +107,7 @@ export default function IndexPage() {
                 <Grid w="100%" gutter={32}>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
-                      href="/cats#cats"
+                      href="/cats#female-cats"
                       style={{ textDecoration: "inherit", color: "inherit" }}
                     >
                       <Card padding="lg" radius="lg" bg="#d6e6f3">
@@ -129,7 +129,7 @@ export default function IndexPage() {
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
-                      href="/cats#maleCats"
+                      href="/cats#male-cats"
                       style={{ textDecoration: "inherit", color: "inherit" }}
                     >
                       <Card padding="lg" radius="lg" bg="#d6e6f3">

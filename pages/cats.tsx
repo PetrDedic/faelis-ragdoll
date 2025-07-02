@@ -419,7 +419,13 @@ export default function CatsPage({
           </Stack>
         </FullscreenBackroundSection>
 
-        <Stack w="100%" align="center" gap={32}>
+        <Stack
+          w="100%"
+          align="center"
+          gap={32}
+          id="male-cats"
+          style={{ scrollMargin: "100px" }}
+        >
           <Title order={2} size="h1" c="#47a3ee" ta="center">
             {t.cats.maleCats}
           </Title>
@@ -585,7 +591,13 @@ export default function CatsPage({
           </Stack>
         </FullscreenBackroundSection>
 
-        <Stack w="100%" align="center" gap={32}>
+        <Stack
+          w="100%"
+          align="center"
+          gap={32}
+          id="female-cats"
+          style={{ scrollMargin: "100px" }}
+        >
           <Title order={2} size="h1" c="#47a3ee" ta="center">
             {t.cats.femaleCats}
           </Title>

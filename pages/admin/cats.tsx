@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import "dayjs/locale/cs";
 import { useRouter } from "next/router";
 import {
   Title,
@@ -934,6 +935,7 @@ const AdminCatsPage = () => {
           />
 
           <DatePickerInput
+            locale="cs"
             label="Datum narození"
             required
             value={

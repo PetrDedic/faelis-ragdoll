@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import "dayjs/locale/cs";
 import { useRouter } from "next/router";
 import {
   Title,
@@ -75,11 +76,13 @@ interface Litter {
   mother_id: string;
   father_id: string;
   birth_date: string;
+  expected_date?: string;
   number_of_kittens: number;
   number_of_males: number;
   number_of_females: number;
   description: string;
   details: string;
+  status: "planned" | "current" | "past";
   mother?: Cat;
   father?: Cat;
   kittens: Cat[];
@@ -111,11 +114,13 @@ const AdminLittersPage = () => {
   const [formValues, setFormValues] = useState<Partial<Litter>>({
     name: "",
     birth_date: "",
+    expected_date: "",
     number_of_kittens: 0,
     number_of_males: 0,
     number_of_females: 0,
     description: "",
     details: "",
+    status: "past",
   });
   const [selectedMother, setSelectedMother] = useState<string | null>(null);
   const [selectedFather, setSelectedFather] = useState<string | null>(null);
@@ -140,12 +145,9 @@ const AdminLittersPage = () => {
 
     const matchesTab =
       activeTab === "all" ||
-      (activeTab === "recent" &&
-        new Date(litter.birth_date) >=
-          new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)) ||
-      (activeTab === "older" &&
-        new Date(litter.birth_date) <
-          new Date(Date.now() - 365 * 24 * 60 * 60 * 1000));
+      (activeTab === "planned" && litter.status === "planned") ||
+      (activeTab === "current" && litter.status === "current") ||
+      (activeTab === "past" && litter.status === "past");
 
     return matchesSearch && matchesTab;
   });
@@ -188,7 +190,7 @@ const AdminLittersPage = () => {
         const litterIds = littersData.map((litter) => litter.id);
         const motherIds = littersData.map((litter) => litter.mother_id);
         const fatherIds = littersData.map((litter) => litter.father_id);
-        const parentIds = [...new Set([...motherIds, ...fatherIds])];
+        const parentIds = Array.from(new Set([...motherIds, ...fatherIds]));
 
         // Fetch related data
         Promise.all([
@@ -310,7 +312,7 @@ const AdminLittersPage = () => {
             setLoading(false);
           });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error("Error in fetchLitters:", err);
         setLoading(false);
       });
@@ -366,7 +368,7 @@ const AdminLittersPage = () => {
   };
 
   // Fetch available kittens that aren't assigned to any litter
-  const fetchAvailableKittens = (litterId = null) => {
+  const fetchAvailableKittens = (litterId: string | null = null) => {
     // First get all cats
     supabase
       .from("cats")
@@ -423,16 +425,18 @@ const AdminLittersPage = () => {
     setFormValues({
       name: litter.name,
       birth_date: litter.birth_date,
+      expected_date: litter.expected_date || "",
       number_of_kittens: litter.number_of_kittens,
       number_of_males: litter.number_of_males,
       number_of_females: litter.number_of_females,
       description: litter.description,
       details: litter.details,
+      status: litter.status,
     });
     setSelectedMother(litter.mother_id);
     setSelectedFather(litter.father_id);
     setSelectedKittens(litter.kittens.map((kitten) => kitten.id));
-    fetchAvailableKittens(litter.id);
+    fetchAvailableKittens(litter.id || null);
     open();
   };
 
@@ -453,6 +457,28 @@ const AdminLittersPage = () => {
       return;
     }
 
+    // Validate status-specific requirements
+    if (formValues.status === "planned" && !formValues.expected_date) {
+      notifications.show({
+        title: "Chyba",
+        message: "Plánované vrhy musí mít očekávané datum",
+        color: "red",
+      });
+      return;
+    }
+
+    if (
+      (formValues.status === "current" || formValues.status === "past") &&
+      !formValues.birth_date
+    ) {
+      notifications.show({
+        title: "Chyba",
+        message: "Aktuální a minulé vrhy musí mít datum narození",
+        color: "red",
+      });
+      return;
+    }
+
     // Update the litter record
     supabase
       .from("litters")
@@ -461,11 +487,13 @@ const AdminLittersPage = () => {
         mother_id: selectedMother,
         father_id: selectedFather,
         birth_date: formValues.birth_date,
+        expected_date: formValues.expected_date || null,
         number_of_kittens: formValues.number_of_kittens,
         number_of_males: formValues.number_of_males,
         number_of_females: formValues.number_of_females,
         description: formValues.description,
         details: formValues.details,
+        status: formValues.status,
         updated_at: new Date().toISOString(),
       })
       .eq("id", editingLitter.id)
@@ -580,11 +608,13 @@ const AdminLittersPage = () => {
     setFormValues({
       name: "",
       birth_date: new Date().toISOString().split("T")[0],
+      expected_date: "",
       number_of_kittens: 0,
       number_of_males: 0,
       number_of_females: 0,
       description: "",
       details: "",
+      status: "past",
     });
     setSelectedMother(null);
     setSelectedFather(null);
@@ -604,6 +634,28 @@ const AdminLittersPage = () => {
       return;
     }
 
+    // Validate status-specific requirements
+    if (formValues.status === "planned" && !formValues.expected_date) {
+      notifications.show({
+        title: "Chyba",
+        message: "Plánované vrhy musí mít očekávané datum",
+        color: "red",
+      });
+      return;
+    }
+
+    if (
+      (formValues.status === "current" || formValues.status === "past") &&
+      !formValues.birth_date
+    ) {
+      notifications.show({
+        title: "Chyba",
+        message: "Aktuální a minulé vrhy musí mít datum narození",
+        color: "red",
+      });
+      return;
+    }
+
     // Create new litter record
     supabase
       .from("litters")
@@ -612,11 +664,13 @@ const AdminLittersPage = () => {
         mother_id: selectedMother,
         father_id: selectedFather,
         birth_date: formValues.birth_date,
+        expected_date: formValues.expected_date || null,
         number_of_kittens: formValues.number_of_kittens,
         number_of_males: formValues.number_of_males,
         number_of_females: formValues.number_of_females,
         description: formValues.description,
         details: formValues.details,
+        status: formValues.status,
       })
       .select()
       .single()
@@ -712,8 +766,9 @@ const AdminLittersPage = () => {
         <Tabs value={activeTab} onChange={setActiveTab}>
           <Tabs.List>
             <Tabs.Tab value="all">Všechny</Tabs.Tab>
-            <Tabs.Tab value="recent">Posledních 12 měsíců</Tabs.Tab>
-            <Tabs.Tab value="older">Starší</Tabs.Tab>
+            <Tabs.Tab value="planned">Plánované</Tabs.Tab>
+            <Tabs.Tab value="current">Aktuální</Tabs.Tab>
+            <Tabs.Tab value="past">Minulé</Tabs.Tab>
           </Tabs.List>
         </Tabs>
       </Flex>
@@ -735,7 +790,9 @@ const AdminLittersPage = () => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Název</Table.Th>
+                  <Table.Th>Status</Table.Th>
                   <Table.Th>Datum narození</Table.Th>
+                  <Table.Th>Očekávané datum</Table.Th>
                   <Table.Th>Matka</Table.Th>
                   <Table.Th>Otec</Table.Th>
                   <Table.Th>Počet koťat</Table.Th>
@@ -758,7 +815,35 @@ const AdminLittersPage = () => {
                       )}
                     </Table.Td>
                     <Table.Td>
-                      {new Date(litter.birth_date).toLocaleDateString("cs-CZ")}
+                      <Badge
+                        color={
+                          litter.status === "planned"
+                            ? "orange"
+                            : litter.status === "current"
+                            ? "green"
+                            : "gray"
+                        }
+                      >
+                        {litter.status === "planned"
+                          ? "Plánovaný"
+                          : litter.status === "current"
+                          ? "Aktuální"
+                          : "Minulý"}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>
+                      {litter.birth_date
+                        ? new Date(litter.birth_date).toLocaleDateString(
+                            "cs-CZ"
+                          )
+                        : "-"}
+                    </Table.Td>
+                    <Table.Td>
+                      {litter.expected_date
+                        ? new Date(litter.expected_date).toLocaleDateString(
+                            "cs-CZ"
+                          )
+                        : "-"}
                     </Table.Td>
                     <Table.Td>
                       {litter.mother ? (
@@ -874,13 +959,43 @@ const AdminLittersPage = () => {
                 </Title>
                 <Stack gap="md">
                   <Group>
+                    <Text fw={700}>Status:</Text>
+                    <Badge
+                      color={
+                        viewLitter.status === "planned"
+                          ? "orange"
+                          : viewLitter.status === "current"
+                          ? "green"
+                          : "gray"
+                      }
+                    >
+                      {viewLitter.status === "planned"
+                        ? "Plánovaný"
+                        : viewLitter.status === "current"
+                        ? "Aktuální"
+                        : "Minulý"}
+                    </Badge>
+                  </Group>
+                  <Group>
                     <Text fw={700}>Datum narození:</Text>
                     <Text>
-                      {new Date(viewLitter.birth_date).toLocaleDateString(
-                        "cs-CZ"
-                      )}
+                      {viewLitter.birth_date
+                        ? new Date(viewLitter.birth_date).toLocaleDateString(
+                            "cs-CZ"
+                          )
+                        : "Nenastaveno"}
                     </Text>
                   </Group>
+                  {viewLitter.expected_date && (
+                    <Group>
+                      <Text fw={700}>Očekávané datum:</Text>
+                      <Text>
+                        {new Date(viewLitter.expected_date).toLocaleDateString(
+                          "cs-CZ"
+                        )}
+                      </Text>
+                    </Group>
+                  )}
                   <Group>
                     <Text fw={700}>Celkem koťat:</Text>
                     <Text>{viewLitter.number_of_kittens || 0}</Text>
@@ -1035,6 +1150,19 @@ const AdminLittersPage = () => {
           />
 
           <Select
+            label="Status"
+            required
+            data={[
+              { value: "planned", label: "Plánovaný" },
+              { value: "current", label: "Aktuální" },
+              { value: "past", label: "Minulý" },
+            ]}
+            value={formValues.status}
+            onChange={(value) => handleInputChange("status", value)}
+            placeholder="Vyberte status..."
+          />
+
+          <Select
             label="Matka"
             required
             data={motherOptions}
@@ -1055,8 +1183,11 @@ const AdminLittersPage = () => {
           />
 
           <DatePickerInput
+            locale="cs"
             label="Datum narození"
-            required
+            required={
+              formValues.status === "current" || formValues.status === "past"
+            }
             value={
               formValues.birth_date ? new Date(formValues.birth_date) : null
             }
@@ -1064,6 +1195,24 @@ const AdminLittersPage = () => {
               handleInputChange("birth_date", date?.toISOString().split("T")[0])
             }
             placeholder="Vyberte datum narození..."
+          />
+
+          <DatePickerInput
+            locale="cs"
+            label="Očekávané datum (pro plánované vrhy)"
+            required={formValues.status === "planned"}
+            value={
+              formValues.expected_date
+                ? new Date(formValues.expected_date)
+                : null
+            }
+            onChange={(date) =>
+              handleInputChange(
+                "expected_date",
+                date?.toISOString().split("T")[0]
+              )
+            }
+            placeholder="Vyberte očekávané datum..."
           />
 
           <SimpleGrid cols={3}>
