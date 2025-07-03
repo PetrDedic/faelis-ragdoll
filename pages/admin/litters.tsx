@@ -43,6 +43,7 @@ import {
 } from "@tabler/icons-react";
 import supabase from "../../utils/supabase/client";
 import { AdminNav } from "../../components/AdminLinks";
+import { formatDateToLocalString } from "../../utils/dateUtils";
 
 // Define types
 interface Cat {
@@ -1192,7 +1193,7 @@ const AdminLittersPage = () => {
               formValues.birth_date ? new Date(formValues.birth_date) : null
             }
             onChange={(date) =>
-              handleInputChange("birth_date", date?.toISOString().split("T")[0])
+              handleInputChange("birth_date", formatDateToLocalString(date))
             }
             placeholder="Vyberte datum narození..."
           />
@@ -1207,10 +1208,7 @@ const AdminLittersPage = () => {
                 : null
             }
             onChange={(date) =>
-              handleInputChange(
-                "expected_date",
-                date?.toISOString().split("T")[0]
-              )
+              handleInputChange("expected_date", formatDateToLocalString(date))
             }
             placeholder="Vyberte očekávané datum..."
           />
