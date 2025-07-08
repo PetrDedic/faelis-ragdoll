@@ -1,12 +1,14 @@
-import { Card, Flex, Overlay } from "@mantine/core";
+import { Card, Flex, MantineStyleProp, Overlay } from "@mantine/core";
 import { ReactNode } from "react";
 
 export function FullscreenBackroundSection({
   children,
   image,
+  flexStyles,
 }: {
   children: ReactNode;
   image?: string;
+  flexStyles?: MantineStyleProp;
 }) {
   return (
     <Card
@@ -30,7 +32,7 @@ export function FullscreenBackroundSection({
       c="white"
     >
       {image && <Overlay color="#000" backgroundOpacity={0.65} zIndex={0} />}
-      <Flex style={{ zIndex: 1 }}>{children}</Flex>
+      <Flex style={{ zIndex: 1, ...flexStyles }}>{children}</Flex>
     </Card>
   );
 }

@@ -4,7 +4,6 @@ import {
   Card,
   Flex,
   Grid,
-  Image,
   SimpleGrid,
   Stack,
   Text,
@@ -16,6 +15,7 @@ import { LeftImageSection } from "../components/LeftImageSection";
 import Link from "next/link";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
+import Image from "next/image";
 
 // Import translations
 import csTranslations from "../locales/cs/about.json";
@@ -63,16 +63,28 @@ export default function AboutPage() {
             {t.section1.paragraph1}
           </Text>
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <AspectRatio ratio={16 / 9}>
+            <AspectRatio
+              ratio={16 / 9}
+              style={{ position: "relative", aspectRatio: "16/9" }}
+              w="100%"
+            >
               <Image
-                radius="lg"
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/P8050026.webp"
                 alt="Faelis cattery"
               />
             </AspectRatio>
-            <AspectRatio ratio={16 / 9}>
+            <AspectRatio
+              ratio={16 / 9}
+              style={{ position: "relative", aspectRatio: "16/9" }}
+              w="100%"
+            >
               <Image
-                radius="lg"
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_0043.webp"
                 alt="Faelis cattery"
               />

@@ -69,6 +69,7 @@ interface CatImage {
   id: string;
   url: string;
   is_primary: boolean;
+  display_order?: number;
 }
 
 interface Litter {
@@ -83,6 +84,7 @@ interface Litter {
   number_of_females: number;
   description: string;
   details: string;
+  pedigree_link: string;
   status: "planned" | "current" | "past";
   mother?: Cat;
   father?: Cat;
@@ -121,6 +123,7 @@ const AdminLittersPage = () => {
     number_of_females: 0,
     description: "",
     details: "",
+    pedigree_link: "",
     status: "past",
   });
   const [selectedMother, setSelectedMother] = useState<string | null>(null);
@@ -247,6 +250,7 @@ const AdminLittersPage = () => {
                       ...cat,
                       color,
                       variety,
+                      images: sortImagesByOrder(cat.images || []),
                     };
                   }) || [];
 
@@ -269,6 +273,7 @@ const AdminLittersPage = () => {
                       ...kitten,
                       color,
                       variety,
+                      images: sortImagesByOrder(kitten.images || []),
                     };
                   }) || [];
 
@@ -317,6 +322,24 @@ const AdminLittersPage = () => {
         console.error("Error in fetchLitters:", err);
         setLoading(false);
       });
+  };
+
+  // Utility function to sort images by display_order
+  const sortImagesByOrder = (images: CatImage[]) => {
+    return images.sort((a, b) => {
+      // If both have display_order, sort by it
+      if (a.display_order !== undefined && b.display_order !== undefined) {
+        return a.display_order - b.display_order;
+      }
+      // If only one has display_order, prioritize the one with order
+      if (a.display_order !== undefined) return -1;
+      if (b.display_order !== undefined) return 1;
+      // If neither has display_order, sort by is_primary first, then by creation date
+      if (a.is_primary !== b.is_primary) {
+        return a.is_primary ? -1 : 1;
+      }
+      return 0;
+    });
   };
 
   // Fetch parent options for dropdowns
@@ -432,6 +455,7 @@ const AdminLittersPage = () => {
       number_of_females: litter.number_of_females,
       description: litter.description,
       details: litter.details,
+      pedigree_link: litter.pedigree_link,
       status: litter.status,
     });
     setSelectedMother(litter.mother_id);
@@ -494,6 +518,7 @@ const AdminLittersPage = () => {
         number_of_females: formValues.number_of_females,
         description: formValues.description,
         details: formValues.details,
+        pedigree_link: formValues.pedigree_link,
         status: formValues.status,
         updated_at: new Date().toISOString(),
       })
@@ -615,6 +640,7 @@ const AdminLittersPage = () => {
       number_of_females: 0,
       description: "",
       details: "",
+      pedigree_link: "",
       status: "past",
     });
     setSelectedMother(null);
@@ -671,6 +697,7 @@ const AdminLittersPage = () => {
         number_of_females: formValues.number_of_females,
         description: formValues.description,
         details: formValues.details,
+        pedigree_link: formValues.pedigree_link,
         status: formValues.status,
       })
       .select()
@@ -800,6 +827,7 @@ const AdminLittersPage = () => {
                   <Table.Th>Počet samců</Table.Th>
                   <Table.Th>Počet samic</Table.Th>
                   <Table.Th>Popis</Table.Th>
+                  <Table.Th>Rodokmen</Table.Th>
                   <Table.Th>Akce</Table.Th>
                 </Table.Tr>
               </Table.Thead>
@@ -875,6 +903,27 @@ const AdminLittersPage = () => {
                       ) : (
                         <Text size="sm" color="dimmed">
                           Bez popisu
+                        </Text>
+                      )}
+                    </Table.Td>
+                    <Table.Td>
+                      {litter.pedigree_link ? (
+                        <Text truncate maw={150}>
+                          <a
+                            href={litter.pedigree_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              color: "inherit",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            Zobrazit
+                          </a>
+                        </Text>
+                      ) : (
+                        <Text size="sm" color="dimmed">
+                          Není k dispozici
                         </Text>
                       )}
                     </Table.Td>
@@ -1013,8 +1062,10 @@ const AdminLittersPage = () => {
               </Card>
             </SimpleGrid>
 
-            {/* Description and Details */}
-            {(viewLitter.description || viewLitter.details) && (
+            {/* Description, Details and Pedigree */}
+            {(viewLitter.description ||
+              viewLitter.details ||
+              viewLitter.pedigree_link) && (
               <Card withBorder shadow="sm" padding="md" radius="md">
                 <Stack gap="md">
                   {viewLitter.description && (
@@ -1027,6 +1078,24 @@ const AdminLittersPage = () => {
                     <>
                       <Text fw={700}>Podrobnosti:</Text>
                       <Text>{viewLitter.details}</Text>
+                    </>
+                  )}
+                  {viewLitter.pedigree_link && (
+                    <>
+                      <Text fw={700}>Rodokmen:</Text>
+                      <Text>
+                        <a
+                          href={viewLitter.pedigree_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            color: "inherit",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          Zobrazit rodokmen
+                        </a>
+                      </Text>
                     </>
                   )}
                 </Stack>
@@ -1257,6 +1326,15 @@ const AdminLittersPage = () => {
             }
             minRows={3}
             placeholder="Další podrobnosti o vrhu..."
+          />
+
+          <TextInput
+            label="Odkaz na rodokmen"
+            value={formValues.pedigree_link || ""}
+            onChange={(e) =>
+              handleInputChange("pedigree_link", e.currentTarget.value)
+            }
+            placeholder="URL nebo odkaz na rodokmen..."
           />
 
           <MultiSelect

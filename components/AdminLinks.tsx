@@ -4,6 +4,7 @@ import {
   IconCat,
   IconMoodKid,
   IconPhoto,
+  IconMedicalCross,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
@@ -27,6 +28,12 @@ export const AdminNav = ({ activePage = "dashboard" }) => {
       label: "Galerie",
       icon: <IconPhoto size={18} />,
       path: "gallery",
+    },
+    {
+      id: "medical-tests",
+      label: "Lékařské testy",
+      icon: <IconMedicalCross size={18} />,
+      path: "medical-tests",
     },
   ];
 

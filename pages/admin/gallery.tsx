@@ -442,6 +442,7 @@ const GalleryManagementPage = () => {
           url: urlData.publicUrl, // Use the full public URL instead of just the path
           title: file.name,
           is_primary: false,
+          display_order: 1, // Default order for new images
         });
 
         if (dbError) throw dbError;

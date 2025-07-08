@@ -1,4 +1,5 @@
-import { Card, Container, Flex, Image, SimpleGrid, Text } from "@mantine/core";
+import { Card, Container, Flex, SimpleGrid, Text } from "@mantine/core";
+import Image from "next/image";
 
 interface FeaturesCardsProps {
   icon: string;
@@ -20,9 +21,10 @@ export function FeaturesCards({ cards }: { cards: FeaturesCardsProps[] }) {
       <Flex w="100%" gap={16} align="center">
         <Image
           src={card.icon}
-          w={48}
           alt={card.icon}
           style={{ objectFit: "contain" }}
+          width={48}
+          height={48}
         />
         <Text fz={20}>{card.text}</Text>
       </Flex>

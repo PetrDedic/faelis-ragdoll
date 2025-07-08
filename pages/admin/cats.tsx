@@ -79,6 +79,7 @@ interface CatImage {
   id: string;
   url: string;
   is_primary: boolean;
+  display_order?: number;
 }
 
 interface Option {
@@ -243,7 +244,13 @@ const AdminCatsPage = () => {
 
         // Fetch related data
         Promise.all([
-          supabase.from("images").select("*").in("cat_id", catIds),
+          supabase
+            .from("images")
+            .select("*")
+            .in("cat_id", catIds)
+            .order("display_order", { ascending: true })
+            .order("is_primary", { ascending: false })
+            .order("created_at", { ascending: false }),
           supabase.from("cat_colors").select("*").in("cat_id", catIds),
           supabase.from("cat_varieties").select("*").in("cat_id", catIds),
           supabase.from("cat_blood_types").select("*").in("cat_id", catIds),
@@ -330,7 +337,7 @@ const AdminCatsPage = () => {
 
                       return {
                         ...cat,
-                        images: catImages,
+                        images: sortImagesByOrder(catImages),
                         color,
                         variety,
                         blood_type: bloodType,
@@ -357,6 +364,24 @@ const AdminCatsPage = () => {
         console.error("Error in fetchCats:", err);
         setLoading(false);
       });
+  };
+
+  // Utility function to sort images by display_order
+  const sortImagesByOrder = (images: CatImage[]) => {
+    return images.sort((a, b) => {
+      // If both have display_order, sort by it
+      if (a.display_order !== undefined && b.display_order !== undefined) {
+        return a.display_order - b.display_order;
+      }
+      // If only one has display_order, prioritize the one with order
+      if (a.display_order !== undefined) return -1;
+      if (b.display_order !== undefined) return 1;
+      // If neither has display_order, sort by is_primary first, then by creation date
+      if (a.is_primary !== b.is_primary) {
+        return a.is_primary ? -1 : 1;
+      }
+      return 0;
+    });
   };
 
   // Fetch reference data for dropdowns

@@ -7,7 +7,6 @@ import {
   Card,
   Flex,
   Grid,
-  Image,
   SimpleGrid,
   Stack,
   Text,
@@ -41,6 +40,7 @@ import {
   IconLibraryPhoto,
 } from "@tabler/icons-react";
 import { CatGalleryModal } from "../components/CatGalleryModal";
+import Image from "next/image";
 
 // Define types for our cat data
 interface Cat {
@@ -230,7 +230,13 @@ export default function CatsPage({
                         <Stack gap="xs">
                           <AspectRatio
                             ratio={4 / 3}
-                            style={{ position: "relative" }}
+                            style={{
+                              position: "relative",
+                              alignItems: "center",
+                              aspectRatio: "4/3",
+                            }}
+                            w="100%"
+                            h="100%"
                           >
                             {kitten.gender && (
                               <Badge
@@ -255,10 +261,14 @@ export default function CatsPage({
                             )}
                             <Image
                               src={getCatImage(kitten)}
-                              fit="cover"
-                              radius="md"
+                              fill
+                              style={{
+                                objectFit: "cover",
+                                borderRadius: 16,
+                                cursor: "pointer",
+                              }}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               alt={kitten.name}
-                              style={{ cursor: "pointer" }}
                               onClick={() => handleOpenGallery(kitten.images)}
                             />
                           </AspectRatio>
@@ -746,7 +756,10 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
       const { data: images } = await supabase
         .from("images")
         .select("*")
-        .in("cat_id", catIds);
+        .in("cat_id", catIds)
+        .order("display_order", { ascending: true })
+        .order("is_primary", { ascending: false })
+        .order("created_at", { ascending: false });
 
       // Fetch cat_colors for all cats
       const { data: catColors } = await supabase
@@ -879,7 +892,10 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
       const { data: images } = await supabase
         .from("images")
         .select("*")
-        .eq("cat_id", catId);
+        .eq("cat_id", catId)
+        .order("display_order", { ascending: true })
+        .order("is_primary", { ascending: false })
+        .order("created_at", { ascending: false });
 
       // Get cat color
       const { data: catColors } = await supabase

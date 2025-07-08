@@ -4,7 +4,6 @@ import {
   Card,
   Flex,
   Grid,
-  Image,
   SimpleGrid,
   Stack,
   Text,
@@ -16,6 +15,7 @@ import { FeaturesCards } from "../components/FeaturesCards";
 import { LeadGrid } from "../components/LeadGrid";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
+import Image from "next/image";
 
 // Import translations
 import csTranslations from "../locales/cs/index.json";
@@ -96,7 +96,13 @@ export default function IndexPage() {
           </Flex>
 
           <Stack gap={0}>
-            <FullscreenBackroundSection>
+            <FullscreenBackroundSection
+              flexStyles={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Stack align="center" w="100%" maw={960}>
                 <Title order={2} size="h1" c="#47a3ee" ta="center">
                   {t.cats.heading}
@@ -108,12 +114,31 @@ export default function IndexPage() {
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
                       href="/cats#female-cats"
-                      style={{ textDecoration: "inherit", color: "inherit" }}
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                        width: "100%",
+                      }}
                     >
-                      <Card padding="lg" radius="lg" bg="#d6e6f3">
-                        <AspectRatio ratio={3 / 4}>
+                      <Card
+                        padding="lg"
+                        radius="lg"
+                        bg="#d6e6f3"
+                        w="100%"
+                        h="100%"
+                      >
+                        <AspectRatio
+                          ratio={3 / 4}
+                          style={{
+                            position: "relative",
+                            aspectRatio: "3/4",
+                            width: "100%",
+                          }}
+                        >
                           <Image
-                            radius="md"
+                            fill
+                            style={{ objectFit: "cover", borderRadius: 8 }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Juliet/Juliet.webp"
                             alt="Julinka"
                           />
@@ -130,12 +155,31 @@ export default function IndexPage() {
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
                       href="/cats#male-cats"
-                      style={{ textDecoration: "inherit", color: "inherit" }}
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                        width: "100%",
+                      }}
                     >
-                      <Card padding="lg" radius="lg" bg="#d6e6f3">
-                        <AspectRatio ratio={3 / 4}>
+                      <Card
+                        padding="lg"
+                        radius="lg"
+                        bg="#d6e6f3"
+                        w="100%"
+                        h="100%"
+                      >
+                        <AspectRatio
+                          ratio={3 / 4}
+                          style={{
+                            position: "relative",
+                            aspectRatio: "3/4",
+                            width: "100%",
+                          }}
+                        >
                           <Image
-                            radius="md"
+                            fill
+                            style={{ objectFit: "cover", borderRadius: 8 }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/George/George3.webp"
                             alt="George"
                           />
@@ -152,12 +196,31 @@ export default function IndexPage() {
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
                       href="/litters"
-                      style={{ textDecoration: "inherit", color: "inherit" }}
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                        width: "100%",
+                      }}
                     >
-                      <Card padding="lg" radius="lg" bg="#d6e6f3">
-                        <AspectRatio ratio={3 / 4}>
+                      <Card
+                        padding="lg"
+                        radius="lg"
+                        bg="#d6e6f3"
+                        w="100%"
+                        h="100%"
+                      >
+                        <AspectRatio
+                          ratio={3 / 4}
+                          style={{
+                            position: "relative",
+                            aspectRatio: "3/4",
+                            width: "100%",
+                          }}
+                        >
                           <Image
-                            radius="md"
+                            fill
+                            style={{ objectFit: "cover", borderRadius: 8 }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Ori.webp"
                             alt="Ori"
                           />

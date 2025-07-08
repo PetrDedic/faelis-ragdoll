@@ -9,7 +9,6 @@ import {
   Flex,
   Grid,
   Group,
-  Image,
   Paper,
   Stack,
   Text,
@@ -24,6 +23,7 @@ import { Form } from "../components/Form";
 import { CatGalleryModal } from "../components/CatGalleryModal";
 import Link from "next/link";
 import { formatDate } from "../utils/catTranslations";
+import Image from "next/image";
 
 // Import translations
 import csTranslations from "../locales/cs/litters.json";
@@ -48,6 +48,7 @@ interface Litter {
   number_of_females: number;
   description: string;
   details: string;
+  pedigree_link: string;
   mother: Cat;
   father: Cat;
   kittens: Cat[];
@@ -63,6 +64,7 @@ interface Cat {
   description: string;
   status: string;
   images: CatImage[];
+  pedigree_link: string;
   color: {
     code: string;
     name_cs: string;
@@ -144,6 +146,28 @@ export default function LittersPage({
     setGalleryOpened(true);
   };
 
+  // Helper function to get season from date
+  const getSeasonFromDate = (dateString: string, locale: string): string => {
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1; // getMonth() returns 0-11
+
+    let season: string;
+    if (month >= 3 && month <= 5) {
+      season =
+        locale === "cs" ? "Jaro" : locale === "de" ? "Frühling" : "Spring";
+    } else if (month >= 6 && month <= 8) {
+      season = locale === "cs" ? "Léto" : locale === "de" ? "Sommer" : "Summer";
+    } else if (month >= 9 && month <= 11) {
+      season =
+        locale === "cs" ? "Podzim" : locale === "de" ? "Herbst" : "Autumn";
+    } else {
+      season = locale === "cs" ? "Zima" : locale === "de" ? "Winter" : "Winter";
+    }
+
+    const year = date.getFullYear();
+    return `${season} ${year}`;
+  };
+
   // Helper function to render a litter card
   const renderLitterCard = (
     litter: Litter,
@@ -165,12 +189,14 @@ export default function LittersPage({
                   ? t.upcomingLitters.expectedDate
                   : t.pastLitters.birthDate}
                 :{" "}
-                {formatDate(
-                  type === "upcoming"
-                    ? litter.expected_date!
-                    : litter.birth_date,
-                  locale as string
-                )}
+                {type === "upcoming" && litter.expected_date
+                  ? getSeasonFromDate(litter.expected_date, locale as string)
+                  : formatDate(
+                      type === "upcoming"
+                        ? litter.expected_date!
+                        : litter.birth_date,
+                      locale as string
+                    )}
               </Badge>
               {isPlanned && (
                 <Badge color="orange" size="lg">
@@ -227,7 +253,13 @@ export default function LittersPage({
                         <Stack gap="xs">
                           <AspectRatio
                             ratio={4 / 3}
-                            style={{ position: "relative" }}
+                            style={{
+                              position: "relative",
+                              alignItems: "center",
+                              aspectRatio: "4/3",
+                            }}
+                            w="100%"
+                            h="100%"
                           >
                             {kitten.gender && (
                               <Badge
@@ -252,10 +284,14 @@ export default function LittersPage({
                             )}
                             <Image
                               src={getCatImage(kitten)}
-                              fit="cover"
-                              radius="md"
+                              fill
+                              style={{
+                                objectFit: "cover",
+                                borderRadius: 8,
+                                cursor: "pointer",
+                              }}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               alt={kitten.name}
-                              style={{ cursor: "pointer" }}
                               onClick={() => handleOpenGallery(kitten.images)}
                             />
                           </AspectRatio>
@@ -291,10 +327,38 @@ export default function LittersPage({
                               {t.commonLabels.gallery}
                             </Button>
                           )}
+                          <Button
+                            color="#47a3ee"
+                            variant="light"
+                            size="xs"
+                            fullWidth
+                            component={Link}
+                            href={kitten.pedigree_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {t.commonLabels.pedigree}
+                          </Button>
                           {kitten.status !== "sold" && (
                             <Button
-                              color="#47a3ee"
-                              variant="light"
+                              component={
+                                kitten.status !== "reserved" ? Link : undefined
+                              }
+                              href={`#form`}
+                              color={
+                                kitten.status === "reserved"
+                                  ? "orange"
+                                  : kitten.status === "sold"
+                                  ? "red"
+                                  : "green"
+                              }
+                              variant={
+                                kitten.status === "reserved"
+                                  ? "light"
+                                  : kitten.status === "sold"
+                                  ? "light"
+                                  : "filled"
+                              }
                               size="xs"
                               fullWidth
                             >
@@ -314,6 +378,26 @@ export default function LittersPage({
           {litter.details && (
             <Stack w="100%" gap={8}>
               <Text>{litter.details}</Text>
+            </Stack>
+          )}
+
+          {litter.pedigree_link && (
+            <Stack w="100%" gap={8}>
+              <Button
+                component="a"
+                href={litter.pedigree_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                color="blue"
+                size="sm"
+              >
+                {locale === "cs"
+                  ? "Zobrazit rodokmen"
+                  : locale === "de"
+                  ? "Stammbaum anzeigen"
+                  : "View Pedigree"}
+              </Button>
             </Stack>
           )}
 
@@ -340,11 +424,25 @@ export default function LittersPage({
                       onClick={() => handleOpenGallery(litter.father.images)}
                     >
                       <Stack gap="xs">
-                        <AspectRatio ratio={16 / 9}>
+                        <AspectRatio
+                          ratio={16 / 9}
+                          style={{
+                            position: "relative",
+                            alignItems: "center",
+                            aspectRatio: "16/9",
+                          }}
+                          w="100%"
+                          h="100%"
+                        >
                           <Image
                             src={getCatImage(litter.father)}
-                            fit="cover"
-                            radius="md"
+                            fill
+                            style={{
+                              objectFit: "cover",
+                              borderRadius: 8,
+                              cursor: "pointer",
+                            }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             alt={litter.father.name}
                           />
                         </AspectRatio>
@@ -376,11 +474,25 @@ export default function LittersPage({
                       onClick={() => handleOpenGallery(litter.mother.images)}
                     >
                       <Stack gap="xs">
-                        <AspectRatio ratio={16 / 9}>
+                        <AspectRatio
+                          ratio={16 / 9}
+                          style={{
+                            position: "relative",
+                            alignItems: "center",
+                            aspectRatio: "16/9",
+                          }}
+                          w="100%"
+                          h="100%"
+                        >
                           <Image
                             src={getCatImage(litter.mother)}
-                            fit="cover"
-                            radius="md"
+                            fill
+                            style={{
+                              objectFit: "cover",
+                              borderRadius: 8,
+                              cursor: "pointer",
+                            }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             alt={litter.mother.name}
                           />
                         </AspectRatio>
@@ -555,7 +667,10 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
       const { data: images } = await supabase
         .from("images")
         .select("*")
-        .eq("cat_id", catId);
+        .eq("cat_id", catId)
+        .order("display_order", { ascending: true })
+        .order("is_primary", { ascending: false })
+        .order("created_at", { ascending: false });
 
       // Get cat color
       const { data: catColors } = await supabase

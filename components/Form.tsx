@@ -80,7 +80,7 @@ export function Form() {
   };
 
   return (
-    <Stack align="center" w="100%">
+    <Stack align="center" w="100%" id="form" style={{ scrollMarginTop: 100 }}>
       <Title order={2} size="h1" c="#47a3ee" ta="center">
         {t.title}
       </Title>

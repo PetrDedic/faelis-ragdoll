@@ -40,6 +40,8 @@ import {
   IconFolderPlus,
   IconSearch,
   IconFolder,
+  IconArrowUp,
+  IconArrowDown,
 } from "@tabler/icons-react";
 import supabase from "../utils/supabase/client";
 
@@ -50,6 +52,7 @@ interface CatImage {
   title?: string;
   description?: string;
   created_at?: string;
+  display_order?: number;
 }
 
 interface GalleryItem {
@@ -125,20 +128,70 @@ const CatImagesModal: React.FC<CatImagesModalProps> = ({
     }
   }, [currentPath, currentPage, sortBy, activeTab]);
 
+  // Initialize display_order for images that don't have it
+  const initializeDisplayOrder = async (images: CatImage[]) => {
+    const imagesWithoutOrder = images.filter(
+      (img) => img.display_order === undefined || img.display_order === null
+    );
+
+    if (imagesWithoutOrder.length > 0) {
+      // Get the highest existing order
+      const imagesWithOrder = images.filter(
+        (img) => img.display_order !== undefined && img.display_order !== null
+      );
+      const maxOrder =
+        imagesWithOrder.length > 0
+          ? Math.max(...imagesWithOrder.map((img) => img.display_order!))
+          : 0;
+
+      // Assign sequential orders starting from maxOrder + 1
+      const updatePromises = imagesWithoutOrder.map((img, index) =>
+        supabase
+          .from("images")
+          .update({ display_order: maxOrder + index + 1 })
+          .eq("id", img.id)
+      );
+
+      await Promise.all(updatePromises);
+    }
+  };
+
   // Fetch images assigned to this cat
   const fetchAssignedImages = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
         .from("images")
-        .select("id, url, title, description, is_primary, created_at")
+        .select(
+          "id, url, title, description, is_primary, created_at, display_order"
+        )
         .eq("cat_id", catId)
+        .order("display_order", { ascending: true })
         .order("is_primary", { ascending: false })
         .order("created_at", { ascending: false });
 
       if (error) throw error;
 
-      setAssignedImages(data || []);
+      // Initialize display_order for images that don't have it
+      if (data && data.length > 0) {
+        await initializeDisplayOrder(data);
+
+        // Fetch again to get the updated data
+        const { data: updatedData, error: updateError } = await supabase
+          .from("images")
+          .select(
+            "id, url, title, description, is_primary, created_at, display_order"
+          )
+          .eq("cat_id", catId)
+          .order("display_order", { ascending: true })
+          .order("is_primary", { ascending: false })
+          .order("created_at", { ascending: false });
+
+        if (updateError) throw updateError;
+        setAssignedImages(updatedData || []);
+      } else {
+        setAssignedImages(data || []);
+      }
     } catch (error) {
       console.error("Error fetching cat images:", error);
       notifications.show({
@@ -353,11 +406,26 @@ const CatImagesModal: React.FC<CatImagesModalProps> = ({
         // Image doesn't exist in database, create it
         const fileName = url.split("/").pop() || "image";
 
+        // Get the next display_order value
+        const { data: existingImages } = await supabase
+          .from("images")
+          .select("display_order")
+          .eq("cat_id", catId)
+          .not("display_order", "is", null)
+          .order("display_order", { ascending: false })
+          .limit(1);
+
+        const nextOrder =
+          existingImages && existingImages.length > 0
+            ? (existingImages[0].display_order || 0) + 1
+            : 1;
+
         const { error } = await supabase.from("images").insert({
           url: url,
           title: fileName,
           cat_id: catId,
           is_primary: false,
+          display_order: nextOrder,
         });
 
         if (error) throw error;
@@ -379,6 +447,56 @@ const CatImagesModal: React.FC<CatImagesModalProps> = ({
       notifications.show({
         title: "Chyba",
         message: "Nepodařilo se přiřadit obrázek",
+        color: "red",
+      });
+    }
+  };
+
+  // Handle reordering images
+  const handleMoveImage = async (imageId: string, direction: "up" | "down") => {
+    try {
+      const currentIndex = assignedImages.findIndex(
+        (img) => img.id === imageId
+      );
+      if (currentIndex === -1) return;
+
+      const targetIndex =
+        direction === "up" ? currentIndex - 1 : currentIndex + 1;
+      if (targetIndex < 0 || targetIndex >= assignedImages.length) return;
+
+      const currentImage = assignedImages[currentIndex];
+      const targetImage = assignedImages[targetIndex];
+
+      // Calculate new positions (starting from 1)
+      const newCurrentPosition = targetIndex + 1;
+      const newTargetPosition = currentIndex + 1;
+
+      // Update the display orders
+      const { error: error1 } = await supabase
+        .from("images")
+        .update({ display_order: newCurrentPosition })
+        .eq("id", currentImage.id);
+
+      const { error: error2 } = await supabase
+        .from("images")
+        .update({ display_order: newTargetPosition })
+        .eq("id", targetImage.id);
+
+      if (error1 || error2) throw error1 || error2;
+
+      notifications.show({
+        title: "Úspěch",
+        message: "Pořadí obrázků bylo změněno",
+        color: "green",
+      });
+
+      // Refresh images
+      fetchAssignedImages();
+    } catch (error) {
+      console.error("Error reordering images:", error);
+      notifications.show({
+        title: "Chyba",
+        message: "Nepodařilo se změnit pořadí obrázků",
         color: "red",
       });
     }
@@ -414,11 +532,26 @@ const CatImagesModal: React.FC<CatImagesModalProps> = ({
         // Image doesn't exist in database, create it
         const fileName = url.split("/").pop() || "image";
 
+        // Get the next display_order value
+        const { data: existingImages } = await supabase
+          .from("images")
+          .select("display_order")
+          .eq("cat_id", catId)
+          .not("display_order", "is", null)
+          .order("display_order", { ascending: false })
+          .limit(1);
+
+        const nextOrder =
+          existingImages && existingImages.length > 0
+            ? (existingImages[0].display_order || 0) + 1
+            : 1;
+
         const { error } = await supabase.from("images").insert({
           url: url,
           title: fileName,
           cat_id: catId,
           is_primary: true,
+          display_order: nextOrder,
         });
 
         if (error) throw error;
@@ -547,6 +680,23 @@ const CatImagesModal: React.FC<CatImagesModalProps> = ({
                     disabled={image.is_primary}
                   >
                     Nastavit jako primární
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={<IconArrowUp size={14} />}
+                    disabled={assignedImages.indexOf(image) === 0}
+                    onClick={() => handleMoveImage(image.id, "up")}
+                  >
+                    Přesunout nahoru
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={<IconArrowDown size={14} />}
+                    disabled={
+                      assignedImages.indexOf(image) ===
+                      assignedImages.length - 1
+                    }
+                    onClick={() => handleMoveImage(image.id, "down")}
+                  >
+                    Přesunout dolů
                   </Menu.Item>
                   <Menu.Item
                     leftSection={<IconPhotoOff size={14} />}
