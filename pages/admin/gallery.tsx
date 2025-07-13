@@ -53,6 +53,18 @@ import {
 import supabase from "../../utils/supabase/client";
 import { AdminNav } from "../../components/AdminLinks";
 
+// Utility function to safely encode paths for Supabase storage
+const encodeStoragePath = (path: string): string => {
+  // Supabase storage handles most encoding automatically, but we need to be careful
+  // with certain characters that might cause issues
+  return path.replace(/[^\w\-./]/g, (char) => {
+    // Keep forward slashes and dots as they are important for paths
+    if (char === "/" || char === ".") return char;
+    // Encode other special characters
+    return encodeURIComponent(char);
+  });
+};
+
 // Define types
 interface GalleryItem {
   id: string;
@@ -576,37 +588,175 @@ const GalleryManagementPage = () => {
         .select("id, url")
         .like("url", `%${oldPath}%`);
 
-      if (fetchError) throw fetchError;
+      if (fetchError) {
+        console.error("Error fetching affected images:", fetchError);
+        return 0;
+      }
 
-      if (affectedImages && affectedImages.length > 0) {
-        // Update each affected image URL
-        for (const image of affectedImages) {
-          if (image.url) {
-            // Replace the old path with the new path in the URL
-            const newUrl = image.url.replace(oldPath, newPath);
+      if (!affectedImages || affectedImages.length === 0) {
+        console.log("No images found to update after folder rename");
+        return 0;
+      }
 
-            const { error: updateError } = await supabase
-              .from("images")
-              .update({ url: newUrl })
-              .eq("id", image.id);
+      console.log(
+        `Found ${affectedImages.length} images to update for path change: ${oldPath} -> ${newPath}`
+      );
 
-            if (updateError) {
-              console.error(`Error updating image ${image.id}:`, updateError);
+      let updatedCount = 0;
+      let errorCount = 0;
+
+      // Update each affected image URL
+      for (const image of affectedImages) {
+        if (image.url) {
+          try {
+            // Extract the file path from the full URL
+            const urlPath = image.url.replace(baseUrl, "");
+
+            // Check if this URL contains the old path
+            if (urlPath.startsWith(oldPath)) {
+              // Replace the old path with the new path
+              const newUrlPath = urlPath.replace(oldPath, newPath);
+              const newUrl = baseUrl + newUrlPath;
+
+              console.log(`Updating URL: ${image.url} -> ${newUrl}`);
+
+              const { error: updateError } = await supabase
+                .from("images")
+                .update({ url: newUrl })
+                .eq("id", image.id);
+
+              if (updateError) {
+                console.error(`Error updating image ${image.id}:`, updateError);
+                errorCount++;
+              } else {
+                updatedCount++;
+              }
+            } else {
+              console.log(
+                `Skipping image ${image.id} - URL doesn't match expected pattern: ${image.url}`
+              );
             }
+          } catch (imageError) {
+            console.error(`Error processing image ${image.id}:`, imageError);
+            errorCount++;
           }
         }
-
-        console.log(
-          `Updated ${affectedImages.length} image URLs after folder rename`
-        );
-        return affectedImages.length;
       }
-      return 0;
+
+      console.log(
+        `Updated ${updatedCount} image URLs after folder rename (${errorCount} errors)`
+      );
+
+      if (errorCount > 0) {
+        console.warn(
+          `${errorCount} images failed to update during folder rename`
+        );
+      }
+
+      return updatedCount;
     } catch (error) {
       console.error("Error updating image URLs after folder rename:", error);
       // Don't throw here - we don't want to fail the entire rename operation
       // Just log the error so we can investigate later
       return 0;
+    }
+  };
+
+  // Recursive function to move all contents of a folder
+  const moveFolderContents = async (
+    oldFolderPath: string,
+    newFolderPath: string
+  ): Promise<{ movedItems: number; failedItems: number }> => {
+    let movedItems = 0;
+    let failedItems = 0;
+
+    try {
+      // List all contents of the current folder
+      const { data: contents, error: listError } = await supabase.storage
+        .from("gallery")
+        .list(oldFolderPath);
+
+      if (listError) {
+        console.error(`Error listing contents of ${oldFolderPath}:`, listError);
+        return { movedItems, failedItems };
+      }
+
+      if (!contents) {
+        return { movedItems, failedItems };
+      }
+
+      // Process each item in the folder
+      for (const item of contents) {
+        if (item.name === ".emptyFolderPlaceholder") continue;
+
+        const oldItemPath = `${oldFolderPath}/${item.name}`;
+        const newItemPath = `${newFolderPath}/${item.name}`;
+
+        try {
+          // Check if this is a folder (no file extension and no size metadata)
+          const isSubfolder = !item.metadata?.size && !item.name.includes(".");
+
+          if (isSubfolder) {
+            // This is a subfolder, recursively move its contents
+            const subResult = await moveFolderContents(
+              oldItemPath,
+              newItemPath
+            );
+            movedItems += subResult.movedItems;
+            failedItems += subResult.failedItems;
+          } else {
+            // This is a file, move it directly
+            const { error: moveError } = await supabase.storage
+              .from("gallery")
+              .move(oldItemPath, newItemPath);
+
+            if (moveError) {
+              console.error(`Error moving file ${item.name}:`, moveError);
+              failedItems++;
+            } else {
+              movedItems++;
+            }
+          }
+        } catch (itemError) {
+          console.error(`Error processing item ${item.name}:`, itemError);
+          failedItems++;
+        }
+      }
+
+      // After moving all contents, check if the old folder is now empty and remove it
+      if (failedItems === 0) {
+        try {
+          const { data: remainingContents, error: checkError } =
+            await supabase.storage.from("gallery").list(oldFolderPath);
+
+          if (!checkError && remainingContents) {
+            // Filter out the placeholder file
+            const realContents = remainingContents.filter(
+              (item) => item.name !== ".emptyFolderPlaceholder"
+            );
+
+            // If only the placeholder remains (or nothing), remove the placeholder
+            if (realContents.length === 0) {
+              await supabase.storage
+                .from("gallery")
+                .remove([`${oldFolderPath}/.emptyFolderPlaceholder`]);
+
+              console.log(`Removed empty folder: ${oldFolderPath}`);
+            }
+          }
+        } catch (cleanupError) {
+          console.error(
+            `Error cleaning up empty folder ${oldFolderPath}:`,
+            cleanupError
+          );
+          // Don't fail the entire operation for cleanup errors
+        }
+      }
+
+      return { movedItems, failedItems };
+    } catch (error) {
+      console.error(`Error in moveFolderContents for ${oldFolderPath}:`, error);
+      return { movedItems, failedItems };
     }
   };
 
@@ -616,114 +766,128 @@ const GalleryManagementPage = () => {
 
     setLoading(true);
     try {
-      // For rename, we need to copy and delete due to Supabase storage limitations
       const oldPath = selectedItem.path || "";
       const pathParts = oldPath.split("/");
       pathParts[pathParts.length - 1] = newItemName;
       const newPath = pathParts.join("/");
 
-      let updatedCount = 0; // Declare updatedCount at function scope
+      console.log("Renaming item:", { oldPath, newPath, newItemName });
+
+      let updatedCount = 0;
 
       if (selectedItem.type === "folder") {
-        // For folders, create new folder and move contents
-        // Create the new folder first
-        await supabase.storage
-          .from("gallery")
-          .upload(`${newPath}/.emptyFolderPlaceholder`, new Blob([""]), {
-            contentType: "text/plain",
-          });
-
-        // List the contents of the old folder
-        const { data: contents, error: listError } = await supabase.storage
-          .from("gallery")
-          .list(oldPath);
-
-        if (listError) throw listError;
-
-        // Move each item to the new folder
-        for (const item of contents) {
-          if (item.name === ".emptyFolderPlaceholder") continue;
-
-          // Download the file
-          const { data: fileData, error: downloadError } =
-            await supabase.storage
-              .from("gallery")
-              .download(`${oldPath}/${item.name}`);
-
-          if (downloadError) throw downloadError;
-
-          // Upload to new location
-          await supabase.storage
-            .from("gallery")
-            .upload(`${newPath}/${item.name}`, fileData);
-
-          // Delete from old location
-          await supabase.storage
-            .from("gallery")
-            .remove([`${oldPath}/${item.name}`]);
-        }
-
-        // Delete the old folder
-        await supabase.storage
-          .from("gallery")
-          .remove([`${oldPath}/.emptyFolderPlaceholder`]);
-
-        // Update all image URLs in the database that were affected by the folder rename
-        const updatedCount = await updateImageUrlsAfterFolderRename(
+        // Use recursive function to move all folder contents
+        const { movedItems, failedItems } = await moveFolderContents(
           oldPath,
           newPath
         );
+
+        // Only proceed with URL updates if all files were moved successfully
+        if (failedItems === 0) {
+          // Create the new folder structure by adding a placeholder
+          await supabase.storage
+            .from("gallery")
+            .upload(`${newPath}/.emptyFolderPlaceholder`, new Blob([""]), {
+              contentType: "text/plain",
+            });
+
+          // Update all image URLs in the database that were affected by the folder rename
+          updatedCount = await updateImageUrlsAfterFolderRename(
+            oldPath,
+            newPath
+          );
+
+          notifications.show({
+            title: "Úspěch",
+            message: `'${
+              selectedItem.name
+            }' byl(a) přejmenován(a) na '${newItemName}' (${movedItems} položek přesunuto${
+              updatedCount > 0
+                ? `, aktualizováno ${updatedCount} obrázků v databázi`
+                : ""
+            })`,
+            color: "green",
+          });
+        } else {
+          // If some files failed to move, show warning and don't update URLs
+          notifications.show({
+            title: "Varování",
+            message: `Přejmenování složky částečně selhalo. ${movedItems} položek přesunuto, ${failedItems} selhalo. URL adresy nebyly aktualizovány.`,
+            color: "yellow",
+          });
+        }
       } else {
-        // For images, download and reupload with new name
-        const { data: fileData, error: downloadError } = await supabase.storage
+        // For individual images, use the move operation
+        const { error: moveError } = await supabase.storage
           .from("gallery")
-          .download(oldPath);
+          .move(oldPath, newPath);
 
-        if (downloadError) throw downloadError;
-
-        // Upload to new location
-        const { error: uploadError } = await supabase.storage
-          .from("gallery")
-          .upload(newPath, fileData);
-
-        if (uploadError) throw uploadError;
-
-        // Delete from old location
-        await supabase.storage.from("gallery").remove([oldPath]);
+        if (moveError) throw moveError;
 
         // Get new public URL
         const { data: urlData } = supabase.storage
           .from("gallery")
           .getPublicUrl(newPath);
 
-        // Update database record if it exists
-        if (selectedItem.id) {
+        // Update database record - try to find by old URL first, then by ID
+        let dbUpdated = false;
+
+        if (selectedItem.url) {
+          // Try to update by matching the old URL
           const { error: dbError } = await supabase
             .from("images")
             .update({
-              url: urlData.publicUrl, // Update with the full public URL
+              url: urlData.publicUrl,
+              title: newItemName,
+            })
+            .eq("url", selectedItem.url);
+
+          if (!dbError) {
+            dbUpdated = true;
+            console.log(
+              `Updated image in database by URL: ${selectedItem.url} -> ${urlData.publicUrl}`
+            );
+          }
+        }
+
+        // If not updated by URL and we have an ID, try by ID
+        if (
+          !dbUpdated &&
+          selectedItem.id &&
+          selectedItem.id !== selectedItem.name
+        ) {
+          const { error: dbError } = await supabase
+            .from("images")
+            .update({
+              url: urlData.publicUrl,
               title: newItemName,
             })
             .eq("id", selectedItem.id);
 
-          if (dbError) throw dbError;
+          if (!dbError) {
+            dbUpdated = true;
+            console.log(`Updated image in database by ID: ${selectedItem.id}`);
+          }
         }
 
-        // For individual images, no additional URLs to update
-        updatedCount = 0;
-      }
+        if (!dbUpdated) {
+          console.warn(
+            `Could not update database record for image: ${selectedItem.name}`
+          );
+        }
 
-      notifications.show({
-        title: "Úspěch",
-        message: `'${
-          selectedItem.name
-        }' byl(a) přejmenován(a) na '${newItemName}'${
-          selectedItem.type === "folder" && updatedCount > 0
-            ? ` (aktualizováno ${updatedCount} obrázků v databázi)`
-            : ""
-        }`,
-        color: "green",
-      });
+        notifications.show({
+          title: "Úspěch",
+          message: `'${
+            selectedItem.name
+          }' byl(a) přejmenován(a) na '${newItemName}'${
+            dbUpdated
+              ? " (databáze aktualizována)"
+              : " (databáze nebyla aktualizována)"
+          }`,
+          color: "green",
+        });
+      }
 
       setSelectedItem(null);
       setNewItemName("");

@@ -576,7 +576,6 @@ const AdminMedicalTestsPage = () => {
             onChange={(date) =>
               handleInputChange("test_date", date?.toISOString().split("T")[0])
             }
-            required
             locale="cs"
             clearable
           />
@@ -590,7 +589,6 @@ const AdminMedicalTestsPage = () => {
             onChange={(date) =>
               handleInputChange("valid_from", date?.toISOString().split("T")[0])
             }
-            required
             locale="cs"
             clearable
           />

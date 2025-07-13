@@ -96,6 +96,8 @@
     "available": "Available",
     "reserved": "Reserved",
     "sold": "Sold",
+    "underBreedingEvaluation": "Under breeding evaluation",
+    "preliminarilyReserved": "Preliminarily reserved",
     "current": "Current litter",
     "planned": "Planned litter",
     "viewProfile": "View Profile",

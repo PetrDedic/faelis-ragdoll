@@ -8,6 +8,8 @@ import {
   Title,
   Box,
   Center,
+  UnstyledButton,
+  Group,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
@@ -18,7 +20,10 @@ import { useRouter } from "next/router";
 import csTranslations from "../locales/cs/footer.json";
 import enTranslations from "../locales/en/footer.json";
 import deTranslations from "../locales/de/footer.json";
-import { IconBrandFacebookFilled } from "@tabler/icons-react";
+import {
+  IconBrandFacebookFilled,
+  IconBrandInstagramFilled,
+} from "@tabler/icons-react";
 
 const Footer = () => {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
@@ -66,11 +71,12 @@ const Footer = () => {
             </Text>
             <AspectRatio ratio={16 / 9}>
               <iframe
-                src="https://frame.mapy.cz/s/lulolovofa"
                 width="100%"
                 height="100%"
+                style={{ borderRadius: 32 }}
                 frameBorder="0"
-                style={{ borderRadius: 16 }}
+                src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=Nad%20N%C3%A1dr%C5%BE%C3%AD%20433/16%20%7C%20103%2000%20Praha%2010+(Faelis)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                allowFullScreen
               />
             </AspectRatio>
           </Stack>
@@ -127,22 +133,56 @@ const Footer = () => {
                   </Link>
                 </Text>
               </Text>
-              <Link
-                href="https://www.facebook.com/FaelisRagdolls/"
-                target="_blank"
-                style={{
-                  fontFamily: "'lucida grande',tahoma,verdana,arial,sans-serif",
-                  textDecoration: "none",
-                  marginTop: 32,
-                }}
-              >
-                <Image
-                  src="/images/Facebook.svg"
-                  alt="Facebook"
-                  width={64}
-                  height={64}
-                />
-              </Link>
+              <Group>
+                <Link
+                  href="https://www.facebook.com/FaelisRagdolls/"
+                  target="_blank"
+                  style={{
+                    fontFamily:
+                      "'lucida grande',tahoma,verdana,arial,sans-serif",
+                    textDecoration: "none",
+                    marginTop: 32,
+                  }}
+                >
+                  <UnstyledButton
+                    w={64}
+                    h={64}
+                    bg="#47a3ee"
+                    style={{
+                      borderRadius: 16,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <IconBrandFacebookFilled size={42} color="#fff" />
+                  </UnstyledButton>
+                </Link>
+                <Link
+                  href="https://www.instagram.com/martafaelis/"
+                  target="_blank"
+                  style={{
+                    fontFamily:
+                      "'lucida grande',tahoma,verdana,arial,sans-serif",
+                    textDecoration: "none",
+                    marginTop: 32,
+                  }}
+                >
+                  <UnstyledButton
+                    w={64}
+                    h={64}
+                    bg="#47a3ee"
+                    style={{
+                      borderRadius: 16,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <IconBrandInstagramFilled size={42} color="#fff" />
+                  </UnstyledButton>
+                </Link>
+              </Group>
             </Stack>
           </Stack>
         </Flex>

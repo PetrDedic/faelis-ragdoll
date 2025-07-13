@@ -32,6 +32,8 @@
     "available": "Verfügbar",
     "reserved": "Reserviert",
     "sold": "Verkauft",
+    "underBreedingEvaluation": "In Zuchtbewertung",
+    "preliminarilyReserved": "Vorläufig reserviert",
     "current": "Aktueller Wurf",
     "planned": "Geplanter Wurf",
     "viewProfile": "Profil anzeigen",

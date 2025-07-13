@@ -15,7 +15,8 @@ import {
 import { createClient } from "@supabase/supabase-js";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { HeroImageBackground } from "../components/HeroImageBackground";
+import { HeroImageBackgroundWithData } from "../components/HeroImageBackgroundWithData";
+import { getHeroImage } from "../utils/heroImagesServer";
 import { FeaturesCards } from "../components/FeaturesCards";
 import { LeadGrid } from "../components/LeadGrid";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
@@ -71,6 +72,7 @@ interface Cat {
   };
   genetic_code: string;
   pedigree_link: string;
+  youtube_video_link?: string;
 }
 
 interface CatImage {
@@ -101,6 +103,7 @@ interface CatsPageProps {
   currentLitters: Litter[];
   upcomingLitters: Litter[];
   pastLitters: Litter[];
+  heroImage: string | null;
 }
 
 // Supabase client initialization
@@ -113,6 +116,7 @@ export default function CatsPage({
   currentLitters,
   upcomingLitters,
   pastLitters,
+  heroImage,
 }: CatsPageProps) {
   const router = useRouter();
   const { locale } = router;
@@ -150,7 +154,30 @@ export default function CatsPage({
       if (cat.images && cat.images.length > 0) {
         return cat.images[0].url;
       }
-      return "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      return "/images/placeholder.svg";
+    };
+
+    const getSeasonFromDate = (dateString: string, locale: string): string => {
+      const date = new Date(dateString);
+      const month = date.getMonth() + 1; // getMonth() returns 0-11
+
+      let season: string;
+      if (month >= 3 && month <= 5) {
+        season =
+          locale === "cs" ? "Jaro" : locale === "de" ? "Frühling" : "Spring";
+      } else if (month >= 6 && month <= 8) {
+        season =
+          locale === "cs" ? "Léto" : locale === "de" ? "Sommer" : "Summer";
+      } else if (month >= 9 && month <= 11) {
+        season =
+          locale === "cs" ? "Podzim" : locale === "de" ? "Herbst" : "Autumn";
+      } else {
+        season =
+          locale === "cs" ? "Zima" : locale === "de" ? "Winter" : "Winter";
+      }
+
+      const year = date.getFullYear();
+      return `${season} ${year}`;
     };
 
     return (
@@ -166,12 +193,9 @@ export default function CatsPage({
                   ? t.upcomingLitters?.expectedDate || "Expected date"
                   : t.pastLitters?.birthDate || "Birth date"}
                 :{" "}
-                {formatDate(
-                  type === "upcoming"
-                    ? litter.expected_date!
-                    : litter.birth_date,
-                  locale as string
-                )}
+                {type === "upcoming"
+                  ? getSeasonFromDate(litter.expected_date!, locale as string)
+                  : formatDate(litter.birth_date, locale as string)}
               </Badge>
               {isPlanned && (
                 <Badge color="orange" size="lg">
@@ -313,6 +337,12 @@ export default function CatsPage({
                             >
                               {kitten.status === "reserved"
                                 ? t.commonLabels?.reserved || "Reserved"
+                                : kitten.status === "under_breeding_evaluation"
+                                ? t.commonLabels?.underBreedingEvaluation ||
+                                  "Under breeding evaluation"
+                                : kitten.status === "preliminarily_reserved"
+                                ? t.commonLabels?.preliminarilyReserved ||
+                                  "Preliminarily reserved"
                                 : t.commonLabels?.available || "Available"}
                             </Button>
                           )}
@@ -329,6 +359,21 @@ export default function CatsPage({
               <Text>{litter.details}</Text>
             </Stack>
           )}
+
+          <Link
+            href="/litters"
+            style={{ textDecoration: "inherit", color: "inherit" }}
+          >
+            <Button
+              color="#47a3ee"
+              size="compact-lg"
+              fw={400}
+              px={24}
+              w={{ base: "100%", sm: "fit-content" }}
+            >
+              {t.contact.button}
+            </Button>
+          </Link>
         </Stack>
       </Card>
     );
@@ -336,10 +381,10 @@ export default function CatsPage({
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground
+      <HeroImageBackgroundWithData
         heading={t.hero.heading}
         subtext={t.hero.subtext}
-        backgroundImage="https://images.unsplash.com/photo-1583399704033-3db671c65f5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage={heroImage || undefined}
       />
       <Stack
         px={32}
@@ -972,6 +1017,9 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
   };
 
   try {
+    // Fetch hero image
+    const heroImage = await getHeroImage("cats");
+
     // Fetch male and female cats
     const maleCats = await fetchCatsWithDetails("male");
     const femaleCats = await fetchCatsWithDetails("female");
@@ -991,6 +1039,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
           currentLitters: [],
           upcomingLitters: [],
           pastLitters: [],
+          heroImage,
         },
         revalidate: 60,
       };
@@ -1012,6 +1061,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
           currentLitters: [],
           upcomingLitters: [],
           pastLitters: [],
+          heroImage,
         },
         revalidate: 60,
       };
@@ -1033,6 +1083,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
           currentLitters: [],
           upcomingLitters: [],
           pastLitters: [],
+          heroImage,
         },
         revalidate: 60,
       };
@@ -1079,6 +1130,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         currentLitters,
         upcomingLitters,
         pastLitters,
+        heroImage,
       },
       revalidate: 60,
     };
@@ -1091,6 +1143,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         currentLitters: [],
         upcomingLitters: [],
         pastLitters: [],
+        heroImage: null,
       },
       revalidate: 60,
     };

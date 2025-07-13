@@ -4,13 +4,16 @@ import {
   Card,
   Flex,
   Grid,
+  Group,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { HeroImageBackground } from "../components/HeroImageBackground";
+import { HeroImageBackgroundWithData } from "../components/HeroImageBackgroundWithData";
+import { getHeroImage } from "../utils/heroImagesServer";
+import { GetStaticProps } from "next";
 import { LeftImageSection } from "../components/LeftImageSection";
 import Link from "next/link";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
@@ -22,7 +25,11 @@ import csTranslations from "../locales/cs/about.json";
 import enTranslations from "../locales/en/about.json";
 import deTranslations from "../locales/de/about.json";
 
-export default function AboutPage() {
+interface AboutPageProps {
+  heroImage: string | null;
+}
+
+export default function AboutPage({ heroImage }: AboutPageProps) {
   const router = useRouter();
   const { locale } = router;
 
@@ -39,8 +46,8 @@ export default function AboutPage() {
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground
-        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/017.webp"
+      <HeroImageBackgroundWithData
+        backgroundImage={heroImage || undefined}
         backgroundPosition="center 75%"
         heading={t.hero.heading}
         subtext={t.hero.subtext}
@@ -95,6 +102,88 @@ export default function AboutPage() {
           </Text>
         </Stack>
 
+        <Grid w="100%" gutter={32} maw={960} mx="auto">
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <AspectRatio
+              ratio={12 / 16}
+              style={{ position: "relative", aspectRatio: "12/16" }}
+              w="100%"
+            >
+              <Image
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                src="/images/balkon.jpg"
+                alt="Balkon"
+              />
+            </AspectRatio>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <AspectRatio
+              ratio={12 / 16}
+              style={{ position: "relative", aspectRatio: "12/16" }}
+              w="100%"
+            >
+              <Image
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                src="/images/pokoj.jpg"
+                alt="Pokoj"
+              />
+            </AspectRatio>
+          </Grid.Col>
+        </Grid>
+
+        <Stack w="100%" align="center" gap={32}>
+          <Title order={2} size="h1" c="#47a3ee" ta="center">
+            {t.section3.title}
+          </Title>
+          <Stack w="100%" align="center" gap={8}>
+            <Text size="lg" c="black" ta="center">
+              {t.section3.paragraph1}
+            </Text>
+            <Text size="lg" c="black" ta="center">
+              {t.section3.paragraph2}
+            </Text>
+            <Text size="lg" c="black" ta="center">
+              {t.section3.paragraph3}
+            </Text>
+            <Text size="lg" c="black" ta="center">
+              {t.section3.paragraph4}
+            </Text>
+          </Stack>
+        </Stack>
+
+        <Grid w="100%" gutter={32} maw={960} mx="auto">
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <AspectRatio
+              ratio={12 / 16}
+              style={{ position: "relative", aspectRatio: "12/16" }}
+              w="100%"
+            >
+              <Image
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                src="/images/obyvak1.jpg"
+                alt="Obývák"
+              />
+            </AspectRatio>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <AspectRatio
+              ratio={12 / 16}
+              style={{ position: "relative", aspectRatio: "12/16" }}
+              w="100%"
+            >
+              <Image
+                fill
+                style={{ objectFit: "cover", borderRadius: 16 }}
+                src="/images/obyvak2.jpg"
+                alt="Obývák 2"
+              />
+            </AspectRatio>
+          </Grid.Col>
+        </Grid>
+
         <FullscreenBackroundSection>
           <Stack align="center" w="100%" maw={720} py={32}>
             <Title order={2} size="h1" c="dark" ta="center">
@@ -139,3 +228,24 @@ export default function AboutPage() {
     </Stack>
   );
 }
+
+export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
+  try {
+    const heroImage = await getHeroImage("about");
+
+    return {
+      props: {
+        heroImage,
+      },
+      revalidate: 60, // Revalidate every 60 seconds
+    };
+  } catch (error) {
+    console.error("Error in getStaticProps:", error);
+    return {
+      props: {
+        heroImage: null,
+      },
+      revalidate: 60,
+    };
+  }
+};

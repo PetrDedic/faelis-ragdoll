@@ -5,6 +5,7 @@ import {
   IconMoodKid,
   IconPhoto,
   IconMedicalCross,
+  IconPhotoPlus,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
@@ -28,6 +29,12 @@ export const AdminNav = ({ activePage = "dashboard" }) => {
       label: "Galerie",
       icon: <IconPhoto size={18} />,
       path: "gallery",
+    },
+    {
+      id: "hero-images",
+      label: "Hero Obrázky",
+      icon: <IconPhotoPlus size={18} />,
+      path: "hero-images",
     },
     {
       id: "medical-tests",

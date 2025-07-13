@@ -4,14 +4,18 @@ import {
   Card,
   Flex,
   Grid,
+  Group,
   Image,
   SimpleGrid,
   Stack,
   Text,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { HeroImageBackground } from "../components/HeroImageBackground";
+import { HeroImageBackgroundWithData } from "../components/HeroImageBackgroundWithData";
+import { getHeroImage } from "../utils/heroImagesServer";
+import { GetStaticProps } from "next";
 import { LeftImageSection } from "../components/LeftImageSection";
 import Link from "next/link";
 
@@ -19,8 +23,16 @@ import Link from "next/link";
 import csTranslations from "../locales/cs/contact.json";
 import enTranslations from "../locales/en/contact.json";
 import deTranslations from "../locales/de/contact.json";
+import {
+  IconBrandFacebookFilled,
+  IconBrandInstagramFilled,
+} from "@tabler/icons-react";
 
-export default function ContactPage() {
+interface ContactPageProps {
+  heroImage: string | null;
+}
+
+export default function ContactPage({ heroImage }: ContactPageProps) {
   const router = useRouter();
   const { locale } = router;
 
@@ -37,8 +49,8 @@ export default function ContactPage() {
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground
-        backgroundImage="https://images.unsplash.com/photo-1472491235688-bdc81a63246e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      <HeroImageBackgroundWithData
+        backgroundImage={heroImage || undefined}
         heading={t.hero.heading}
       />
       <Stack
@@ -56,7 +68,7 @@ export default function ContactPage() {
             {t.section1.title}
           </Title>
           <LeftImageSection
-            image="https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            image="/img/efikaja.jpg"
             heading={t.section1.name}
             subtext={
               <Stack gap={0} align="start" justify="start">
@@ -96,6 +108,55 @@ export default function ContactPage() {
           />
         </Stack>
 
+        <Group>
+          <Link
+            href="https://www.facebook.com/FaelisRagdolls/"
+            target="_blank"
+            style={{
+              fontFamily: "'lucida grande',tahoma,verdana,arial,sans-serif",
+              textDecoration: "none",
+              marginTop: 32,
+            }}
+          >
+            <UnstyledButton
+              w={64}
+              h={64}
+              bg="#47a3ee"
+              style={{
+                borderRadius: 16,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconBrandFacebookFilled size={42} color="#fff" />
+            </UnstyledButton>
+          </Link>
+          <Link
+            href="https://www.instagram.com/martafaelis/"
+            target="_blank"
+            style={{
+              fontFamily: "'lucida grande',tahoma,verdana,arial,sans-serif",
+              textDecoration: "none",
+              marginTop: 32,
+            }}
+          >
+            <UnstyledButton
+              w={64}
+              h={64}
+              bg="#47a3ee"
+              style={{
+                borderRadius: 16,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconBrandInstagramFilled size={42} color="#fff" />
+            </UnstyledButton>
+          </Link>
+        </Group>
+
         <Stack w="100%" align="center" gap={16}>
           <Title order={2} size="h1" c="#47a3ee" ta="center">
             {t.section2.title}
@@ -105,11 +166,12 @@ export default function ContactPage() {
           </Text>
           <AspectRatio ratio={21 / 9} w="100%">
             <iframe
-              src="https://frame.mapy.cz/s/lulolovofa"
               width="100%"
               height="100%"
+              style={{ borderRadius: 32 }}
               frameBorder="0"
-              style={{ borderRadius: 16 }}
+              src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=Nad%20N%C3%A1dr%C5%BE%C3%AD%20433/16%20%7C%20103%2000%20Praha%2010+(Faelis)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              allowFullScreen
             />
           </AspectRatio>
         </Stack>
@@ -117,3 +179,24 @@ export default function ContactPage() {
     </Stack>
   );
 }
+
+export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
+  try {
+    const heroImage = await getHeroImage("contact");
+
+    return {
+      props: {
+        heroImage,
+      },
+      revalidate: 60, // Revalidate every 60 seconds
+    };
+  } catch (error) {
+    console.error("Error in getStaticProps:", error);
+    return {
+      props: {
+        heroImage: null,
+      },
+      revalidate: 60,
+    };
+  }
+};

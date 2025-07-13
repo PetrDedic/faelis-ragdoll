@@ -25,6 +25,7 @@ import {
   Flex,
   Switch,
   MultiSelect,
+  Box,
 } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
@@ -40,6 +41,12 @@ import supabase from "../../utils/supabase/client";
 import { AdminNav } from "../../components/AdminLinks";
 import CatImagesButton from "../../components/AdminCatImagesButton";
 import { formatDateToLocalString } from "../../utils/dateUtils";
+import dynamic from "next/dynamic";
+
+const LiteYouTubeEmbed = dynamic(
+  () => import("react-lite-youtube-embed").then((module) => module.default),
+  { ssr: false }
+);
 
 // Define types
 interface Cat {
@@ -72,6 +79,7 @@ interface Cat {
   };
   images: CatImage[];
   pedigree_link: string;
+  youtube_video_link?: string;
   litters?: Litter[];
 }
 
@@ -123,12 +131,30 @@ const AdminCatsPage = () => {
     father_id: null,
     mother_id: null,
     pedigree_link: "",
+    youtube_video_link: "",
   });
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedVariety, setSelectedVariety] = useState<string | null>(null);
   const [selectedBloodType, setSelectedBloodType] = useState<string | null>(
     null
   );
+
+  // Helper function to extract YouTube video ID from URL
+  const getYouTubeVideoId = (url: string): string | null => {
+    if (!url) return null;
+
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+
+    return null;
+  };
 
   // Compute parent options from existing cats
   const fatherOptions = cats
@@ -359,10 +385,6 @@ const AdminCatsPage = () => {
             console.error("Error fetching related data:", err);
             setLoading(false);
           });
-      })
-      .catch((err: Error) => {
-        console.error("Error in fetchCats:", err);
-        setLoading(false);
       });
   };
 
@@ -470,6 +492,7 @@ const AdminCatsPage = () => {
       father_id: cat.father_id || null,
       mother_id: cat.mother_id || null,
       pedigree_link: cat.pedigree_link || "",
+      youtube_video_link: cat.youtube_video_link || "",
     });
     setSelectedColor(cat.color?.id || null);
     setSelectedVariety(cat.variety?.id || null);
@@ -502,6 +525,7 @@ const AdminCatsPage = () => {
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
         pedigree_link: formValues.pedigree_link,
+        youtube_video_link: formValues.youtube_video_link || null,
       })
       .eq("id", editingCat.id)
       .then(({ error }) => {
@@ -673,6 +697,8 @@ const AdminCatsPage = () => {
       status: "alive",
       father_id: null,
       mother_id: null,
+      pedigree_link: "",
+      youtube_video_link: "",
     });
     open();
   };
@@ -694,6 +720,7 @@ const AdminCatsPage = () => {
         father_id: formValues.father_id,
         mother_id: formValues.mother_id,
         pedigree_link: formValues.pedigree_link,
+        youtube_video_link: formValues.youtube_video_link || null,
       })
       .select()
       .single()
@@ -880,6 +907,10 @@ const AdminCatsPage = () => {
                             ? "blue"
                             : cat.status === "reserved"
                             ? "yellow"
+                            : cat.status === "under_breeding_evaluation"
+                            ? "orange"
+                            : cat.status === "preliminarily_reserved"
+                            ? "cyan"
                             : "gray"
                         }
                       >
@@ -889,6 +920,10 @@ const AdminCatsPage = () => {
                           ? "Prodaná"
                           : cat.status === "reserved"
                           ? "Rezervovaná"
+                          : cat.status === "under_breeding_evaluation"
+                          ? "V posouzení do chovu"
+                          : cat.status === "preliminarily_reserved"
+                          ? "Předběžně zamluveno"
                           : "Neživá"}
                       </Badge>
                     </Table.Td>
@@ -1045,6 +1080,14 @@ const AdminCatsPage = () => {
               { value: "alive", label: "Aktivní" },
               { value: "sold", label: "Prodaná" },
               { value: "reserved", label: "Rezervovaná" },
+              {
+                value: "under_breeding_evaluation",
+                label: "V posouzení do chovu",
+              },
+              {
+                value: "preliminarily_reserved",
+                label: "Předběžně zamluveno",
+              },
               { value: "deceased", label: "Neživá" },
             ]}
             value={formValues.status}
@@ -1087,6 +1130,30 @@ const AdminCatsPage = () => {
               handleInputChange("pedigree_link", e.currentTarget.value)
             }
           />
+
+          <TextInput
+            label="YouTube video odkaz"
+            value={formValues.youtube_video_link || ""}
+            onChange={(e) =>
+              handleInputChange("youtube_video_link", e.currentTarget.value)
+            }
+            placeholder="https://www.youtube.com/watch?v=VIDEO_ID..."
+          />
+
+          {formValues.youtube_video_link &&
+            getYouTubeVideoId(formValues.youtube_video_link) && (
+              <Box>
+                <Text size="sm" fw={500} mb="xs">
+                  Náhled videa:
+                </Text>
+                <LiteYouTubeEmbed
+                  id={getYouTubeVideoId(formValues.youtube_video_link)!}
+                  title="YouTube video preview"
+                  wrapperClass="yt-lite"
+                  style={{ width: "100%", maxWidth: "100%" }}
+                />
+              </Box>
+            )}
 
           <Textarea
             label="Podrobnosti"

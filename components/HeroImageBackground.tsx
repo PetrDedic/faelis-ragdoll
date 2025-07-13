@@ -28,6 +28,7 @@ interface HeroImageBackgroundProps {
   buttons?: HeroButton[];
   backgroundImage?: string;
   backgroundPosition?: string;
+  pageName?: string; // New prop for database lookup
 }
 
 export function HeroImageBackground({
@@ -35,10 +36,16 @@ export function HeroImageBackground({
   highlightedText,
   subtext,
   buttons,
-  backgroundImage = "https://images.unsplash.com/photo-1620933288385-b2f6f1931d9e?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  backgroundImage,
   backgroundPosition = "center",
+  pageName,
 }: HeroImageBackgroundProps) {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
+
+  // Use provided backgroundImage or fallback to default
+  const imageUrl =
+    backgroundImage ||
+    "https://images.unsplash.com/photo-1620933288385-b2f6f1931d9e?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   return (
     <>
@@ -50,15 +57,15 @@ export function HeroImageBackground({
           property="og:description"
           content={`Faelis - ${heading} - ${subtext}`}
         />
-        <meta property="og:image" content={backgroundImage} />
+        <meta property="og:image" content={imageUrl} />
         <meta property="og:type" content="website" />
-        <link rel="preload" href={backgroundImage} as="image" />
+        <link rel="preload" href={imageUrl} as="image" />
       </Head>
       <Box h={{ base: 500, xs: 600 }} style={{ position: "relative" }} w="100%">
         <Image
           component={NextImage}
           alt={heading + "background image"}
-          src={backgroundImage}
+          src={imageUrl}
           fill
           sizes="100vw, (max-width: 1200px) 75vw, (max-width: 768px) 50vw"
           style={{ objectFit: "cover", backgroundPosition }}

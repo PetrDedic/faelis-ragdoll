@@ -13,17 +13,25 @@ import {
   Stack,
   Text,
   Title,
+  Modal,
+  Box,
 } from "@mantine/core";
 import { createClient } from "@supabase/supabase-js";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { HeroImageBackground } from "../components/HeroImageBackground";
+import { HeroImageBackgroundWithData } from "../components/HeroImageBackgroundWithData";
+import { getHeroImage } from "../utils/heroImagesServer";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
 import { CatGalleryModal } from "../components/CatGalleryModal";
 import Link from "next/link";
 import { formatDate } from "../utils/catTranslations";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const LiteYouTubeEmbed = dynamic(
+  () => import("react-lite-youtube-embed").then((module) => module.default),
+  { ssr: false }
+);
 
 // Import translations
 import csTranslations from "../locales/cs/litters.json";
@@ -34,6 +42,8 @@ import {
   IconGenderFemale,
   IconGenderMale,
   IconLibraryPhoto,
+  IconPaw,
+  IconVideo,
 } from "@tabler/icons-react";
 
 // Define types for our litter data
@@ -49,6 +59,7 @@ interface Litter {
   description: string;
   details: string;
   pedigree_link: string;
+  youtube_video_link?: string;
   mother: Cat;
   father: Cat;
   kittens: Cat[];
@@ -65,6 +76,7 @@ interface Cat {
   status: string;
   images: CatImage[];
   pedigree_link: string;
+  youtube_video_link?: string;
   color: {
     code: string;
     name_cs: string;
@@ -90,6 +102,7 @@ interface LittersPageProps {
   currentLitters: Litter[];
   upcomingLitters: Litter[];
   pastLitters: Litter[];
+  heroImage: string | null;
 }
 
 // Supabase client initialization
@@ -100,12 +113,15 @@ export default function LittersPage({
   currentLitters,
   upcomingLitters,
   pastLitters,
+  heroImage,
 }: LittersPageProps) {
   const router = useRouter();
   const { locale } = router;
   const [galleryOpened, setGalleryOpened] = useState(false);
   const [selectedImages, setSelectedImages] = useState<CatImage[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [videoModalOpened, setVideoModalOpened] = useState(false);
+  const [videoId, setVideoId] = useState<string | null>(null);
 
   // Create a translations object with all locales
   const translations = {
@@ -133,7 +149,7 @@ export default function LittersPage({
   // Helper function to get the primary image for a cat or fallback
   const getCatImage = (cat: Cat) => {
     if (!cat || !cat.images || cat.images.length === 0) {
-      return "https://images.unsplash.com/photo-1583399704033-3db671c65f5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      return "/images/placeholder.svg";
     }
 
     const primaryImage = cat.images.find((img) => img.is_primary);
@@ -166,6 +182,20 @@ export default function LittersPage({
 
     const year = date.getFullYear();
     return `${season} ${year}`;
+  };
+
+  // Helper to extract YouTube video ID
+  const getYouTubeVideoId = (url: string): string | null => {
+    if (!url) return null;
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+    ];
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+    return null;
   };
 
   // Helper function to render a litter card
@@ -208,6 +238,24 @@ export default function LittersPage({
                   {t.commonLabels.current || "Current litter"}
                 </Badge>
               )}
+              {litter.youtube_video_link &&
+                getYouTubeVideoId(litter.youtube_video_link ?? "") && (
+                  <Badge
+                    color="#47a3ee"
+                    size="lg"
+                    variant="outline"
+                    leftSection={<IconVideo size={16} />}
+                    onClick={() => {
+                      setVideoId(
+                        getYouTubeVideoId(litter.youtube_video_link ?? "")!
+                      );
+                      setVideoModalOpened(true);
+                    }}
+                    style={{ minWidth: 100, cursor: "pointer" }}
+                  >
+                    Video
+                  </Badge>
+                )}
             </Flex>
 
             {type !== "upcoming" && (
@@ -327,6 +375,28 @@ export default function LittersPage({
                               {t.commonLabels.gallery}
                             </Button>
                           )}
+                          {kitten.youtube_video_link &&
+                            getYouTubeVideoId(
+                              kitten.youtube_video_link ?? ""
+                            ) && (
+                              <Button
+                                color="#47a3ee"
+                                size="xs"
+                                variant="outline"
+                                leftSection={<IconVideo size={16} />}
+                                onClick={() => {
+                                  setVideoId(
+                                    getYouTubeVideoId(
+                                      kitten.youtube_video_link ?? ""
+                                    )!
+                                  );
+                                  setVideoModalOpened(true);
+                                }}
+                                style={{ minWidth: 80 }}
+                              >
+                                Video
+                              </Button>
+                            )}
                           <Button
                             color="#47a3ee"
                             variant="light"
@@ -342,18 +412,29 @@ export default function LittersPage({
                           {kitten.status !== "sold" && (
                             <Button
                               component={
-                                kitten.status !== "reserved" ? Link : undefined
+                                kitten.status !== "reserved" &&
+                                kitten.status !== "under_breeding_evaluation" &&
+                                kitten.status !== "preliminarily_reserved"
+                                  ? Link
+                                  : undefined
                               }
                               href={`#form`}
                               color={
                                 kitten.status === "reserved"
                                   ? "orange"
+                                  : kitten.status ===
+                                    "under_breeding_evaluation"
+                                  ? "yellow"
+                                  : kitten.status === "preliminarily_reserved"
+                                  ? "cyan"
                                   : kitten.status === "sold"
                                   ? "red"
                                   : "green"
                               }
                               variant={
-                                kitten.status === "reserved"
+                                kitten.status === "reserved" ||
+                                kitten.status === "under_breeding_evaluation" ||
+                                kitten.status === "preliminarily_reserved"
                                   ? "light"
                                   : kitten.status === "sold"
                                   ? "light"
@@ -364,6 +445,10 @@ export default function LittersPage({
                             >
                               {kitten.status === "reserved"
                                 ? t.commonLabels.reserved
+                                : kitten.status === "under_breeding_evaluation"
+                                ? t.commonLabels.underBreedingEvaluation
+                                : kitten.status === "preliminarily_reserved"
+                                ? t.commonLabels.preliminarilyReserved
                                 : t.commonLabels.available}
                             </Button>
                           )}
@@ -526,10 +611,10 @@ export default function LittersPage({
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground
+      <HeroImageBackgroundWithData
         heading={t.hero.heading}
         subtext={t.hero.subtext}
-        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/IMG_1271.webp"
+        backgroundImage={heroImage || undefined}
       />
       <Flex
         w="100%"
@@ -640,6 +725,25 @@ export default function LittersPage({
         onClose={() => setGalleryOpened(false)}
         initialImageIndex={selectedImageIndex}
       />
+
+      <Modal
+        opened={videoModalOpened}
+        onClose={() => setVideoModalOpened(false)}
+        title="Video vrhu"
+        centered
+        size="lg"
+      >
+        {videoId && (
+          <Box style={{ aspectRatio: "16/9", width: "100%" }}>
+            <LiteYouTubeEmbed
+              id={videoId}
+              title="YouTube video preview"
+              wrapperClass="yt-lite"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </Box>
+        )}
+      </Modal>
     </Stack>
   );
 }
@@ -747,6 +851,9 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
   };
 
   try {
+    // Fetch hero image
+    const heroImage = await getHeroImage("litters");
+
     // Fetch current litters
     const { data: currentLittersData, error: currentError } = await supabase
       .from("litters")
@@ -757,7 +864,12 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
     if (currentError) {
       console.error("Error fetching current litters:", currentError);
       return {
-        props: { currentLitters: [], upcomingLitters: [], pastLitters: [] },
+        props: {
+          currentLitters: [],
+          upcomingLitters: [],
+          pastLitters: [],
+          heroImage,
+        },
       };
     }
 
@@ -771,7 +883,12 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
     if (upcomingError) {
       console.error("Error fetching upcoming litters:", upcomingError);
       return {
-        props: { currentLitters: [], upcomingLitters: [], pastLitters: [] },
+        props: {
+          currentLitters: [],
+          upcomingLitters: [],
+          pastLitters: [],
+          heroImage,
+        },
       };
     }
 
@@ -785,7 +902,12 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
     if (pastError) {
       console.error("Error fetching past litters:", pastError);
       return {
-        props: { currentLitters: [], upcomingLitters: [], pastLitters: [] },
+        props: {
+          currentLitters: [],
+          upcomingLitters: [],
+          pastLitters: [],
+          heroImage,
+        },
       };
     }
 
@@ -847,6 +969,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         pastLitters: pastLitters.filter(
           (litter) => litter.mother && litter.father
         ),
+        heroImage,
       },
       revalidate: 60,
     };
@@ -857,6 +980,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         currentLitters: [],
         upcomingLitters: [],
         pastLitters: [],
+        heroImage: null,
       },
       revalidate: 60,
     };

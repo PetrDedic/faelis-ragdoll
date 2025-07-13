@@ -44,6 +44,12 @@ import {
 import supabase from "../../utils/supabase/client";
 import { AdminNav } from "../../components/AdminLinks";
 import { formatDateToLocalString } from "../../utils/dateUtils";
+import dynamic from "next/dynamic";
+
+const LiteYouTubeEmbed = dynamic(
+  () => import("react-lite-youtube-embed").then((module) => module.default),
+  { ssr: false }
+);
 
 // Define types
 interface Cat {
@@ -85,6 +91,7 @@ interface Litter {
   description: string;
   details: string;
   pedigree_link: string;
+  youtube_video_link?: string;
   status: "planned" | "current" | "past";
   mother?: Cat;
   father?: Cat;
@@ -124,11 +131,29 @@ const AdminLittersPage = () => {
     description: "",
     details: "",
     pedigree_link: "",
+    youtube_video_link: "",
     status: "past",
   });
   const [selectedMother, setSelectedMother] = useState<string | null>(null);
   const [selectedFather, setSelectedFather] = useState<string | null>(null);
   const [selectedKittens, setSelectedKittens] = useState<string[]>([]);
+
+  // Helper function to extract YouTube video ID from URL
+  const getYouTubeVideoId = (url: string): string | null => {
+    if (!url) return null;
+
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+
+    return null;
+  };
 
   // Fetch litters and reference data on component mount
   useEffect(() => {
@@ -230,7 +255,7 @@ const AdminLittersPage = () => {
                       .in("id", kittenIds)
                   : Promise.resolve({ data: [], error: null });
 
-              kittensPromise.then(({ data: kittensData }) => {
+              return kittensPromise.then(({ data: kittensData }) => {
                 // Process cats to add color and variety information
                 const processedCats =
                   catsResponse.data?.map((cat) => {
@@ -456,6 +481,7 @@ const AdminLittersPage = () => {
       description: litter.description,
       details: litter.details,
       pedigree_link: litter.pedigree_link,
+      youtube_video_link: litter.youtube_video_link || "",
       status: litter.status,
     });
     setSelectedMother(litter.mother_id);
@@ -519,6 +545,7 @@ const AdminLittersPage = () => {
         description: formValues.description,
         details: formValues.details,
         pedigree_link: formValues.pedigree_link,
+        youtube_video_link: formValues.youtube_video_link || null,
         status: formValues.status,
         updated_at: new Date().toISOString(),
       })
@@ -641,6 +668,7 @@ const AdminLittersPage = () => {
       description: "",
       details: "",
       pedigree_link: "",
+      youtube_video_link: "",
       status: "past",
     });
     setSelectedMother(null);
@@ -698,6 +726,7 @@ const AdminLittersPage = () => {
         description: formValues.description,
         details: formValues.details,
         pedigree_link: formValues.pedigree_link,
+        youtube_video_link: formValues.youtube_video_link || null,
         status: formValues.status,
       })
       .select()
@@ -1098,6 +1127,22 @@ const AdminLittersPage = () => {
                       </Text>
                     </>
                   )}
+                  {viewLitter.youtube_video_link &&
+                    getYouTubeVideoId(viewLitter.youtube_video_link) && (
+                      <>
+                        <Text fw={700}>YouTube video:</Text>
+                        <Box mt="xs">
+                          <LiteYouTubeEmbed
+                            id={
+                              getYouTubeVideoId(viewLitter.youtube_video_link)!
+                            }
+                            title="YouTube video"
+                            wrapperClass="yt-lite"
+                            style={{ width: "100%", maxWidth: "100%" }}
+                          />
+                        </Box>
+                      </>
+                    )}
                 </Stack>
               </Card>
             )}
@@ -1336,6 +1381,30 @@ const AdminLittersPage = () => {
             }
             placeholder="URL nebo odkaz na rodokmen..."
           />
+
+          <TextInput
+            label="YouTube video odkaz"
+            value={formValues.youtube_video_link || ""}
+            onChange={(e) =>
+              handleInputChange("youtube_video_link", e.currentTarget.value)
+            }
+            placeholder="https://www.youtube.com/watch?v=VIDEO_ID..."
+          />
+
+          {formValues.youtube_video_link &&
+            getYouTubeVideoId(formValues.youtube_video_link) && (
+              <Box>
+                <Text size="sm" fw={500} mb="xs">
+                  Náhled videa:
+                </Text>
+                <LiteYouTubeEmbed
+                  id={getYouTubeVideoId(formValues.youtube_video_link)!}
+                  title="YouTube video preview"
+                  wrapperClass="yt-lite"
+                  style={{ width: "100%", maxWidth: "100%" }}
+                />
+              </Box>
+            )}
 
           <MultiSelect
             label="Koťata v tomto vrhu"

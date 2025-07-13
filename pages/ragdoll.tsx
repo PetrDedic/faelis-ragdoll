@@ -12,7 +12,9 @@ import {
   Title,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { HeroImageBackground } from "../components/HeroImageBackground";
+import { HeroImageBackgroundWithData } from "../components/HeroImageBackgroundWithData";
+import { getHeroImage } from "../utils/heroImagesServer";
+import { GetStaticProps } from "next";
 import { FeaturesCards } from "../components/FeaturesCards";
 import { LeadGrid } from "../components/LeadGrid";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
@@ -39,7 +41,11 @@ const images = {
     "https://images.unsplash.com/photo-1629068136524-f467f8efa109?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 };
 
-export default function RagdollPage() {
+interface RagdollPageProps {
+  heroImage: string | null;
+}
+
+export default function RagdollPage({ heroImage }: RagdollPageProps) {
   const router = useRouter();
   const { locale } = router;
 
@@ -56,10 +62,10 @@ export default function RagdollPage() {
 
   return (
     <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackground
+      <HeroImageBackgroundWithData
         heading={t.hero.heading}
         subtext={t.hero.subtext}
-        backgroundImage="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/P1040182.webp"
+        backgroundImage={heroImage || undefined}
       />
       <Stack
         px={32}
@@ -243,3 +249,24 @@ export default function RagdollPage() {
     </Stack>
   );
 }
+
+export const getStaticProps: GetStaticProps<RagdollPageProps> = async () => {
+  try {
+    const heroImage = await getHeroImage("ragdoll");
+
+    return {
+      props: {
+        heroImage,
+      },
+      revalidate: 60, // Revalidate every 60 seconds
+    };
+  } catch (error) {
+    console.error("Error in getStaticProps:", error);
+    return {
+      props: {
+        heroImage: null,
+      },
+      revalidate: 60,
+    };
+  }
+};
