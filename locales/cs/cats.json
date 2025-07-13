@@ -67,6 +67,21 @@
   "pedigree": {
     "heading": "Rodokmen"
   },
+  "medicalTests": {
+    "heading": "Lékařské testy",
+    "noTests": "Pro tuto kočku nejsou k dispozici žádné lékařské testy.",
+    "testDate": "Datum testu",
+    "validFrom": "Platné od",
+    "validUntil": "Platné do",
+    "laboratory": "Laboratoř",
+    "certificate": "Certifikát",
+    "notes": "Poznámky",
+    "daysLeft": "dní zbývá",
+    "daysExpired": "dní vypršelo",
+    "permanent": "Trvalý",
+    "valid": "Platný",
+    "expired": "Expirovaný"
+  },
   "upcomingLitters": {
     "title": "Plánované vrhy",
     "description": "Těšíme se, že vám můžeme představit naše plánované vrhy. Kontaktujte nás pro rezervaci koťátka z těchto plánovaných vrhů.",

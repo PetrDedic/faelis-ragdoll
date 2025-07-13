@@ -67,6 +67,21 @@
   "pedigree": {
     "heading": "Pedigree"
   },
+  "medicalTests": {
+    "heading": "Medical Tests",
+    "noTests": "No medical tests available for this cat.",
+    "testDate": "Test Date",
+    "validFrom": "Valid From",
+    "validUntil": "Valid Until",
+    "laboratory": "Laboratory",
+    "certificate": "Certificate",
+    "notes": "Notes",
+    "daysLeft": "days left",
+    "daysExpired": "days expired",
+    "permanent": "Permanent",
+    "valid": "Valid",
+    "expired": "Expired"
+  },
   "upcomingLitters": {
     "title": "Upcoming Litters",
     "description": "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters.",

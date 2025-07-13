@@ -409,6 +409,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                 <Flex w="100%" gap={32} mr={32} align="stretch">
                   {reviews.map((review) => (
                     <Card
+                      key={review.id}
                       radius="lg"
                       padding="lg"
                       bg="#d6e6f3"

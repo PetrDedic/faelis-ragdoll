@@ -28,6 +28,7 @@ import Link from "next/link";
 import { formatDate } from "../utils/catTranslations";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { MedicalTestsModal } from "../components/MedicalTestsModal";
 const LiteYouTubeEmbed = dynamic(
   () => import("react-lite-youtube-embed").then((module) => module.default),
   { ssr: false }
@@ -37,6 +38,9 @@ const LiteYouTubeEmbed = dynamic(
 import csTranslations from "../locales/cs/litters.json";
 import enTranslations from "../locales/en/litters.json";
 import deTranslations from "../locales/de/litters.json";
+import csCatsTranslations from "../locales/cs/cats.json";
+import enCatsTranslations from "../locales/en/cats.json";
+import deCatsTranslations from "../locales/de/cats.json";
 import {
   IconCat,
   IconGenderFemale,
@@ -89,6 +93,19 @@ interface Cat {
     name_en?: string;
     name_de?: string;
   };
+  medical_tests?: MedicalTest[];
+}
+
+interface MedicalTest {
+  id: string;
+  test_name: string;
+  test_result: string;
+  test_date: string;
+  valid_from: string;
+  valid_until: string | null;
+  laboratory: string;
+  certificate_number: string;
+  notes: string;
 }
 
 interface CatImage {
@@ -122,6 +139,12 @@ export default function LittersPage({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [videoModalOpened, setVideoModalOpened] = useState(false);
   const [videoId, setVideoId] = useState<string | null>(null);
+  // Medical tests modal state
+  const [medicalTestsOpened, setMedicalTestsOpened] = useState(false);
+  const [selectedMedicalTests, setSelectedMedicalTests] = useState<
+    MedicalTest[]
+  >([]);
+  const [selectedCatName, setSelectedCatName] = useState("");
 
   // Create a translations object with all locales
   const translations = {
@@ -133,6 +156,14 @@ export default function LittersPage({
   // Use the current locale from router or fallback to Czech
   const t =
     translations[locale as keyof typeof translations] || translations.cs;
+  const catsTranslations = {
+    cs: csCatsTranslations,
+    en: enCatsTranslations,
+    de: deCatsTranslations,
+  };
+  const catsT =
+    catsTranslations[locale as keyof typeof catsTranslations] ||
+    catsTranslations.cs;
 
   // Helper function to get the localized cat property (color, variety)
   const getLocalizedCatProperty = (
@@ -160,6 +191,12 @@ export default function LittersPage({
     setSelectedImages(images);
     setSelectedImageIndex(initialIndex);
     setGalleryOpened(true);
+  };
+
+  const handleOpenMedicalTests = (tests: MedicalTest[], catName: string) => {
+    setSelectedMedicalTests(tests);
+    setSelectedCatName(catName);
+    setMedicalTestsOpened(true);
   };
 
   // Helper function to get season from date
@@ -395,6 +432,25 @@ export default function LittersPage({
                                 style={{ minWidth: 80 }}
                               >
                                 Video
+                              </Button>
+                            )}
+                          {kitten.medical_tests &&
+                            kitten.medical_tests.length > 0 && (
+                              <Button
+                                w="max-content"
+                                px={16}
+                                color="#47a3ee"
+                                variant="outline"
+                                size="xs"
+                                mt={4}
+                                onClick={() =>
+                                  handleOpenMedicalTests(
+                                    kitten.medical_tests!,
+                                    kitten.name
+                                  )
+                                }
+                              >
+                                {catsT.medicalTests?.heading || "Medical Tests"}
                               </Button>
                             )}
                           <Button
@@ -744,6 +800,15 @@ export default function LittersPage({
           </Box>
         )}
       </Modal>
+
+      <MedicalTestsModal
+        opened={medicalTestsOpened}
+        onClose={() => setMedicalTestsOpened(false)}
+        tests={selectedMedicalTests}
+        catName={selectedCatName}
+        locale={locale as string}
+        translations={catsT}
+      />
     </Stack>
   );
 }
@@ -813,11 +878,19 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         variety = varietyData;
       }
 
+      // Get medical tests for the cat
+      const { data: medicalTests } = await supabase
+        .from("medical_tests")
+        .select("*")
+        .eq("cat_id", catId)
+        .order("test_date", { ascending: false });
+
       return {
         ...cat,
         images: images || [],
         color: color || null,
         variety: variety || null,
+        medical_tests: medicalTests || [],
       };
     } catch (error) {
       console.error("Error fetching cat details:", error);

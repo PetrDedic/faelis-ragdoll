@@ -39,8 +39,10 @@ import {
   IconGenderFemale,
   IconGenderMale,
   IconLibraryPhoto,
+  IconStethoscope,
 } from "@tabler/icons-react";
 import { CatGalleryModal } from "../components/CatGalleryModal";
+import { MedicalTestsModal } from "../components/MedicalTestsModal";
 import Image from "next/image";
 
 // Define types for our cat data
@@ -73,6 +75,19 @@ interface Cat {
   genetic_code: string;
   pedigree_link: string;
   youtube_video_link?: string;
+  medical_tests?: MedicalTest[];
+}
+
+interface MedicalTest {
+  id: string;
+  test_name: string;
+  test_result: string;
+  test_date: string;
+  valid_from: string;
+  valid_until: string | null;
+  laboratory: string;
+  certificate_number: string;
+  notes: string;
 }
 
 interface CatImage {
@@ -124,11 +139,22 @@ export default function CatsPage({
   const [galleryOpened, setGalleryOpened] = useState(false);
   const [selectedImages, setSelectedImages] = useState<CatImage[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [medicalTestsOpened, setMedicalTestsOpened] = useState(false);
+  const [selectedMedicalTests, setSelectedMedicalTests] = useState<
+    MedicalTest[]
+  >([]);
+  const [selectedCatName, setSelectedCatName] = useState("");
 
   const handleOpenGallery = (images: CatImage[], initialIndex: number = 0) => {
     setSelectedImages(images);
     setSelectedImageIndex(initialIndex);
     setGalleryOpened(true);
+  };
+
+  const handleOpenMedicalTests = (tests: MedicalTest[], catName: string) => {
+    setSelectedMedicalTests(tests);
+    setSelectedCatName(catName);
+    setMedicalTestsOpened(true);
   };
 
   // Create a translations object with all locales
@@ -489,6 +515,21 @@ export default function CatsPage({
                         {t.pedigree.heading}
                       </Button>
                     )}
+                    {cat.medical_tests && cat.medical_tests.length > 0 && (
+                      <Button
+                        w="max-content"
+                        px={16}
+                        color="#47a3ee"
+                        variant="outline"
+                        size="xs"
+                        leftSection={<IconStethoscope size={16} />}
+                        onClick={() =>
+                          handleOpenMedicalTests(cat.medical_tests!, cat.name)
+                        }
+                      >
+                        {t.medicalTests?.heading || "Medical Tests"}
+                      </Button>
+                    )}
                   </Flex>
                 </Stack>
               }
@@ -660,6 +701,21 @@ export default function CatsPage({
                           {t.pedigree.heading}
                         </Button>
                       )}
+                      {cat.medical_tests && cat.medical_tests.length > 0 && (
+                        <Button
+                          w="max-content"
+                          px={16}
+                          color="#47a3ee"
+                          variant="outline"
+                          size="xs"
+                          leftSection={<IconStethoscope size={16} />}
+                          onClick={() =>
+                            handleOpenMedicalTests(cat.medical_tests!, cat.name)
+                          }
+                        >
+                          {t.medicalTests?.heading || "Medical Tests"}
+                        </Button>
+                      )}
                     </Flex>
                   </Stack>
                 }
@@ -755,6 +811,15 @@ export default function CatsPage({
         onClose={() => setGalleryOpened(false)}
         initialImageIndex={selectedImageIndex}
       />
+
+      <MedicalTestsModal
+        opened={medicalTestsOpened}
+        onClose={() => setMedicalTestsOpened(false)}
+        tests={selectedMedicalTests}
+        catName={selectedCatName}
+        locale={locale as string}
+        translations={t}
+      />
     </Stack>
   );
 }
@@ -830,6 +895,13 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         .select("*")
         .in("cat_id", catIds);
 
+      // Fetch medical_tests for all cats
+      const { data: medicalTests } = await supabase
+        .from("medical_tests")
+        .select("*")
+        .in("cat_id", catIds)
+        .order("test_date", { ascending: false });
+
       // Get unique IDs for colors, varieties, and blood types
       const colorIds = Array.from(
         new Set(catColors?.map((cc) => cc.color_id) || [])
@@ -903,6 +975,11 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         );
         const geneticCode = getGeneticCodeFromTests(catGeneticTests);
 
+        // Get medical tests for this cat
+        const catMedicalTests = (medicalTests || []).filter(
+          (mt) => mt.cat_id === cat.id
+        );
+
         return {
           ...cat,
           images: catImages || [],
@@ -910,6 +987,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
           variety: variety || null,
           blood_type: bloodType || null,
           genetic_code: geneticCode,
+          medical_tests: catMedicalTests,
         };
       });
     } catch (error) {
@@ -956,6 +1034,13 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         .eq("cat_id", catId)
         .eq("is_phenotype", true);
 
+      // Get medical tests for the cat
+      const { data: medicalTests } = await supabase
+        .from("medical_tests")
+        .select("*")
+        .eq("cat_id", catId)
+        .order("test_date", { ascending: false });
+
       let color = null;
       let variety = null;
 
@@ -984,6 +1069,7 @@ export const getStaticProps: GetStaticProps<CatsPageProps> = async () => {
         images: images || [],
         color: color || null,
         variety: variety || null,
+        medical_tests: medicalTests || [],
       };
     } catch (error) {
       console.error("Error fetching cat details:", error);

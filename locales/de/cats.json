@@ -67,6 +67,21 @@
   "pedigree": {
     "heading": "Stammbaum"
   },
+  "medicalTests": {
+    "heading": "Medizinische Tests",
+    "noTests": "Für diese Katze sind keine medizinischen Tests verfügbar.",
+    "testDate": "Testdatum",
+    "validFrom": "Gültig ab",
+    "validUntil": "Gültig bis",
+    "laboratory": "Labor",
+    "certificate": "Zertifikat",
+    "notes": "Notizen",
+    "daysLeft": "Tage übrig",
+    "daysExpired": "Tage abgelaufen",
+    "permanent": "Permanent",
+    "valid": "Gültig",
+    "expired": "Abgelaufen"
+  },
   "upcomingLitters": {
     "title": "Kommende Würfe",
     "description": "Wir freuen uns, unsere geplanten Würfe mit Ihnen zu teilen. Kontaktieren Sie uns, um ein Kätzchen aus diesen kommenden Würfen zu reservieren.",
