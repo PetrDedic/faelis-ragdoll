@@ -68,7 +68,7 @@ export default function ContactPage({ heroImage }: ContactPageProps) {
             {t.section1.title}
           </Title>
           <LeftImageSection
-            image="/img/efikaja.jpg"
+            image="/images/kontakt.jpg"
             heading={t.section1.name}
             subtext={
               <Stack gap={0} align="start" justify="start">
