@@ -30,7 +30,7 @@ export function CatInfo({ images, name, info }: LeadGridProps) {
       <Flex gap="md" align="stretch" w="100%">
         <Stack w="100%" h="100%" gap="md">
           <BackgroundImage
-            src={images.top}
+            src={new URL(images.top).toString()}
             w="100%"
             h="100%"
             radius="lg"
@@ -39,7 +39,7 @@ export function CatInfo({ images, name, info }: LeadGridProps) {
             <Box w="100%" h="100%" />
           </BackgroundImage>
           <BackgroundImage
-            src={images.right}
+            src={new URL(images.right).toString()}
             w="100%"
             h="100%"
             radius="lg"
@@ -50,7 +50,7 @@ export function CatInfo({ images, name, info }: LeadGridProps) {
         </Stack>
         <BackgroundImage
           mih={360}
-          src={images.middle}
+          src={new URL(images.middle).toString()}
           w="100%"
           h="100%"
           radius="lg"

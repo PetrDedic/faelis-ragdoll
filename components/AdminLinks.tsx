@@ -6,6 +6,7 @@ import {
   IconPhoto,
   IconMedicalCross,
   IconPhotoPlus,
+  IconTrophy,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
@@ -29,6 +30,12 @@ export const AdminNav = ({ activePage = "dashboard" }) => {
       label: "Galerie",
       icon: <IconPhoto size={18} />,
       path: "gallery",
+    },
+    {
+      id: "achievements",
+      label: "Výstavní úspěchy",
+      icon: <IconTrophy size={18} />,
+      path: "achievements",
     },
     {
       id: "hero-images",

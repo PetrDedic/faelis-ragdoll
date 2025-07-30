@@ -328,6 +328,7 @@ const GalleryManagementPage = () => {
   // Fetch cats for dropdown
   const fetchCats = async () => {
     try {
+      console.log("Fetching cats...");
       const { data: cats, error } = await supabase
         .from("cats")
         .select("id, name")
@@ -335,13 +336,14 @@ const GalleryManagementPage = () => {
 
       if (error) throw error;
 
+      console.log("Cats fetched:", cats);
       if (cats) {
-        setCatOptions(
-          cats.map((cat) => ({
-            value: cat.id,
-            label: cat.name,
-          }))
-        );
+        const options = cats.map((cat) => ({
+          value: cat.id,
+          label: cat.name,
+        }));
+        console.log("Cat options set:", options);
+        setCatOptions(options);
       }
     } catch (error) {
       console.error("Error fetching cats:", error);
@@ -541,14 +543,31 @@ const GalleryManagementPage = () => {
 
         if (storageError) throw storageError;
 
-        // Delete from database if it has an ID
-        if (selectedItem.id) {
+        // Delete from database - try by ID first, then by URL
+        let dbDeleted = false;
+
+        if (selectedItem.id && selectedItem.id !== selectedItem.name) {
+          // Try to delete by ID first (if it's a valid database ID)
           const { error: dbError } = await supabase
             .from("images")
             .delete()
             .eq("id", selectedItem.id);
 
-          if (dbError) throw dbError;
+          if (!dbError) {
+            dbDeleted = true;
+          }
+        }
+
+        // If delete by ID failed or we don't have a valid ID, try by URL
+        if (!dbDeleted && selectedItem.url) {
+          const { error: dbError } = await supabase
+            .from("images")
+            .delete()
+            .eq("url", selectedItem.url);
+
+          if (dbError) {
+            console.warn("Could not delete image from database:", dbError);
+          }
         }
       }
 
@@ -941,35 +960,120 @@ const GalleryManagementPage = () => {
     catId: string,
     makePrimary: boolean
   ) => {
-    if (!item.id) {
+    console.log("=== handleAssignAndSetPrimary START ===");
+    console.log("Parameters:", { item, catId, makePrimary });
+
+    if (!item.url) {
+      console.log("ERROR: No URL found for item");
       notifications.show({
         title: "Chyba",
-        message: "Tento obrázek nemá ID v databázi",
+        message: "Tento obrázek nemá platnou URL",
         color: "red",
       });
       return;
     }
 
     try {
-      // If setting as primary, first clear any existing primary images
+      // Step 1: If setting as primary, first clear any existing primary images
       if (makePrimary) {
-        await supabase
+        console.log("Step 1: Clearing existing primary images for cat:", catId);
+        const clearPrimaryResult = await supabase
           .from("images")
           .update({ is_primary: false })
           .eq("cat_id", catId)
           .eq("is_primary", true);
+
+        console.log("Clear primary result:", clearPrimaryResult);
+        if (clearPrimaryResult.error) {
+          console.error(
+            "Error clearing primary images:",
+            clearPrimaryResult.error
+          );
+        }
       }
 
-      // Update the image with cat_id and primary status
-      const { error } = await supabase
+      // Step 2: First, let's check if the image exists in the database
+      console.log(
+        "Step 2: Checking if image exists in database by URL:",
+        item.url
+      );
+      const checkResult = await supabase
         .from("images")
-        .update({
+        .select("id, url, cat_id, is_primary")
+        .eq("url", item.url);
+
+      console.log("Check result:", checkResult);
+
+      if (checkResult.error) {
+        console.error("Error checking image existence:", checkResult.error);
+        throw checkResult.error;
+      }
+
+      let updateResult;
+
+      if (checkResult.data && checkResult.data.length > 0) {
+        // Image exists in database, update it
+        console.log(
+          "Step 3a: Image found in database, updating existing record"
+        );
+        console.log("Existing record:", checkResult.data[0]);
+
+        updateResult = await supabase
+          .from("images")
+          .update({
+            cat_id: catId,
+            is_primary: makePrimary,
+          })
+          .eq("url", item.url);
+
+        console.log("Update result:", updateResult);
+
+        if (updateResult.error) {
+          console.error("Error updating image:", updateResult.error);
+          throw updateResult.error;
+        }
+
+        console.log("Successfully updated image in database");
+      } else {
+        // Image doesn't exist in database, create new record
+        console.log(
+          "Step 3b: Image not found in database, creating new record"
+        );
+
+        updateResult = await supabase.from("images").insert({
+          url: item.url,
+          title: item.name,
           cat_id: catId,
           is_primary: makePrimary,
-        })
-        .eq("id", item.id);
+          display_order: 1,
+        });
 
-      if (error) throw error;
+        console.log("Insert result:", updateResult);
+
+        if (updateResult.error) {
+          console.error("Error inserting image:", updateResult.error);
+          throw updateResult.error;
+        }
+
+        console.log("Successfully created new image record in database");
+      }
+
+      // Step 4: Verify the update/insert worked
+      console.log("Step 4: Verifying the operation");
+      const verifyResult = await supabase
+        .from("images")
+        .select("id, url, cat_id, is_primary")
+        .eq("url", item.url);
+
+      console.log("Verification result:", verifyResult);
+
+      if (verifyResult.error) {
+        console.error("Error verifying update:", verifyResult.error);
+      } else if (verifyResult.data && verifyResult.data.length > 0) {
+        console.log("Verified record:", verifyResult.data[0]);
+      }
+
+      console.log("=== handleAssignAndSetPrimary SUCCESS ===");
 
       notifications.show({
         title: "Úspěch",
@@ -982,9 +1086,11 @@ const GalleryManagementPage = () => {
       // Reset state
       setSelectedCatId(null);
       setSetAsPrimary(false);
+      closeAssignCat();
       fetchGalleryItems();
     } catch (error) {
-      console.error("Error assigning image:", error);
+      console.error("=== handleAssignAndSetPrimary ERROR ===");
+      console.error("Error details:", error);
       notifications.show({
         title: "Chyba",
         message: "Nepodařilo se přiřadit obrázek",
@@ -995,10 +1101,10 @@ const GalleryManagementPage = () => {
 
   // Set image as primary for a cat
   const handleSetPrimary = async (item: GalleryItem) => {
-    if (!item.id || !item.cat_id) {
+    if (!item.cat_id) {
       notifications.show({
         title: "Chyba",
-        message: "Tento obrázek nemá ID nebo není přiřazen ke kočce",
+        message: "Tento obrázek není přiřazen ke kočce",
         color: "red",
       });
       return;
@@ -1012,13 +1118,26 @@ const GalleryManagementPage = () => {
         .eq("cat_id", item.cat_id)
         .eq("is_primary", true);
 
-      // Then set this image as primary
-      const { error } = await supabase
-        .from("images")
-        .update({ is_primary: true })
-        .eq("id", item.id);
+      // Try to find the image by URL first, then by ID if that fails
+      let updateResult;
 
-      if (error) throw error;
+      if (item.id && item.id !== item.name) {
+        // Try to update by ID first (if it's a valid database ID)
+        updateResult = await supabase
+          .from("images")
+          .update({ is_primary: true })
+          .eq("id", item.id);
+      }
+
+      // If update by ID failed or we don't have a valid ID, try by URL
+      if (!updateResult || updateResult.error) {
+        updateResult = await supabase
+          .from("images")
+          .update({ is_primary: true })
+          .eq("url", item.url);
+      }
+
+      if (updateResult.error) throw updateResult.error;
 
       notifications.show({
         title: "Úspěch",
@@ -1039,18 +1158,35 @@ const GalleryManagementPage = () => {
 
   // Update image metadata
   const handleUpdateMetadata = async () => {
-    if (!selectedItem || !selectedItem.id) return;
+    if (!selectedItem) return;
 
     try {
-      const { error } = await supabase
-        .from("images")
-        .update({
-          title: imageTitle,
-          description: imageDescription,
-        })
-        .eq("id", selectedItem.id);
+      // Try to find the image by URL first, then by ID if that fails
+      let updateResult;
 
-      if (error) throw error;
+      if (selectedItem.id && selectedItem.id !== selectedItem.name) {
+        // Try to update by ID first (if it's a valid database ID)
+        updateResult = await supabase
+          .from("images")
+          .update({
+            title: imageTitle,
+            description: imageDescription,
+          })
+          .eq("id", selectedItem.id);
+      }
+
+      // If update by ID failed or we don't have a valid ID, try by URL
+      if (!updateResult || updateResult.error) {
+        updateResult = await supabase
+          .from("images")
+          .update({
+            title: imageTitle,
+            description: imageDescription,
+          })
+          .eq("url", selectedItem.url);
+      }
+
+      if (updateResult.error) throw updateResult.error;
 
       notifications.show({
         title: "Úspěch",
@@ -1155,10 +1291,16 @@ const GalleryManagementPage = () => {
                       <Menu.Item
                         leftSection={<IconLink size={14} />}
                         onClick={() => {
+                          console.log(
+                            "=== Assign to cat menu item clicked ==="
+                          );
+                          console.log("Item:", item);
                           setSelectedItem(item);
                           setSelectedCatId(item.cat_id || null);
                           setSetAsPrimary(false);
+                          console.log("Fetching cats...");
                           fetchCats();
+                          console.log("Opening assign cat modal...");
                           openAssignCat();
                         }}
                       >
@@ -1438,13 +1580,23 @@ const GalleryManagementPage = () => {
             </Button>
             <Button
               onClick={() => {
+                console.log("Assign button clicked");
+                console.log("selectedItem:", selectedItem);
+                console.log("selectedCatId:", selectedCatId);
+                console.log("setAsPrimary:", setAsPrimary);
+
                 if (selectedItem && selectedCatId) {
+                  console.log("Calling handleAssignAndSetPrimary...");
                   handleAssignAndSetPrimary(
                     selectedItem,
                     selectedCatId,
                     setAsPrimary
                   );
-                  closeAssignCat();
+                } else {
+                  console.log("Missing required data:", {
+                    selectedItem,
+                    selectedCatId,
+                  });
                 }
               }}
               disabled={!selectedCatId}

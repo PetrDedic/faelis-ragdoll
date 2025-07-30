@@ -30,6 +30,7 @@ const linkStructure = [
   { link: "/litters", key: "litters" },
   { link: "/ragdoll", key: "ragdoll" },
   { link: "/gallery", key: "gallery" },
+  { link: "/achievements", key: "achievements" },
   { link: "/about", key: "about" },
   { link: "/contact", key: "contact" },
 ];
