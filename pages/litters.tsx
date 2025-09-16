@@ -15,6 +15,8 @@ import {
   Title,
   Modal,
   Box,
+  Loader,
+  Center,
 } from "@mantine/core";
 import { createClient } from "@supabase/supabase-js";
 import { GetStaticProps } from "next";
@@ -118,8 +120,17 @@ interface CatImage {
 interface LittersPageProps {
   currentLitters: Litter[];
   upcomingLitters: Litter[];
-  pastLitters: Litter[];
+  initialPastLitters: Litter[];
   heroImage: string | null;
+}
+
+// Pagination interface
+interface PaginationInfo {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasMore: boolean;
 }
 
 // Supabase client initialization
@@ -129,7 +140,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 export default function LittersPage({
   currentLitters,
   upcomingLitters,
-  pastLitters,
+  initialPastLitters,
   heroImage,
 }: LittersPageProps) {
   const router = useRouter();
@@ -145,6 +156,17 @@ export default function LittersPage({
     MedicalTest[]
   >([]);
   const [selectedCatName, setSelectedCatName] = useState("");
+
+  // Past litters pagination state
+  const [pastLitters, setPastLitters] = useState<Litter[]>(initialPastLitters);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [pagination, setPagination] = useState<PaginationInfo>({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+    hasMore: true,
+  });
 
   // Create a translations object with all locales
   const translations = {
@@ -164,6 +186,23 @@ export default function LittersPage({
   const catsT =
     catsTranslations[locale as keyof typeof catsTranslations] ||
     catsTranslations.cs;
+
+  // Initialize pagination data on mount
+  useEffect(() => {
+    const initializePagination = async () => {
+      try {
+        const response = await fetch(`/api/litters/past?page=1&limit=10`);
+        if (response.ok) {
+          const data = await response.json();
+          setPagination(data.pagination);
+        }
+      } catch (error) {
+        console.error("Error initializing pagination:", error);
+      }
+    };
+
+    initializePagination();
+  }, []);
 
   // Helper function to get the localized cat property (color, variety)
   const getLocalizedCatProperty = (
@@ -233,6 +272,32 @@ export default function LittersPage({
       if (match) return match[1];
     }
     return null;
+  };
+
+  // Function to load more past litters
+  const loadMorePastLitters = async () => {
+    if (loadingMore || !pagination.hasMore) return;
+
+    setLoadingMore(true);
+    try {
+      const nextPage = pagination.page + 1;
+      const response = await fetch(
+        `/api/litters/past?page=${nextPage}&limit=${pagination.limit}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch more litters");
+      }
+
+      const data = await response.json();
+
+      setPastLitters((prev) => [...prev, ...data.litters]);
+      setPagination(data.pagination);
+    } catch (error) {
+      console.error("Error loading more past litters:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   // Helper function to render a litter card
@@ -769,6 +834,31 @@ export default function LittersPage({
             </Text>
 
             {pastLitters.map((litter) => renderLitterCard(litter, "past"))}
+
+            {/* Load More Button */}
+            {pagination.hasMore && (
+              <Center>
+                <Button
+                  onClick={loadMorePastLitters}
+                  loading={loadingMore}
+                  color="#47a3ee"
+                  size="lg"
+                  variant="outline"
+                >
+                  {loadingMore
+                    ? locale === "cs"
+                      ? "Načítám..."
+                      : locale === "de"
+                      ? "Lade..."
+                      : "Loading..."
+                    : locale === "cs"
+                    ? "Načíst více vrhů"
+                    : locale === "de"
+                    ? "Mehr Würfe laden"
+                    : "Load More Litters"}
+                </Button>
+              </Center>
+            )}
           </Stack>
         )}
 
@@ -965,12 +1055,13 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
       };
     }
 
-    // Fetch past litters
+    // Fetch only the first 10 past litters for initial load
     const { data: pastLittersData, error: pastError } = await supabase
       .from("litters")
       .select("*")
       .eq("status", "past")
-      .order("birth_date", { ascending: false });
+      .order("birth_date", { ascending: false })
+      .limit(10);
 
     if (pastError) {
       console.error("Error fetching past litters:", pastError);
@@ -978,7 +1069,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         props: {
           currentLitters: [],
           upcomingLitters: [],
-          pastLitters: [],
+          initialPastLitters: [],
           heroImage,
         },
       };
@@ -1016,7 +1107,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
     );
 
     // Process past litters
-    const pastLitters = await Promise.all(
+    const initialPastLitters = await Promise.all(
       (pastLittersData || []).map(async (litter) => {
         const mother = await fetchCatDetails(litter.mother_id);
         const father = await fetchCatDetails(litter.father_id);
@@ -1039,7 +1130,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         upcomingLitters: upcomingLitters.filter(
           (litter) => litter.mother && litter.father
         ),
-        pastLitters: pastLitters.filter(
+        initialPastLitters: initialPastLitters.filter(
           (litter) => litter.mother && litter.father
         ),
         heroImage,
@@ -1052,7 +1143,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
       props: {
         currentLitters: [],
         upcomingLitters: [],
-        pastLitters: [],
+        initialPastLitters: [],
         heroImage: null,
       },
       revalidate: 60,
