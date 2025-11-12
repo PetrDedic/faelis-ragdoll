@@ -8,7 +8,7 @@ import {
   generateBreadcrumbSchema,
 } from "../../utils/structuredData";
 
-const HomePageSEO = () => {
+const AboutPageSEO = () => {
   const router = useRouter();
   const { locale } = router;
 
@@ -20,23 +20,21 @@ const HomePageSEO = () => {
 
   const t =
     translations[locale as keyof typeof translations] || translations.cs;
-  const seo = t.home;
+  const seo = t.about;
 
   const breadcrumbNames = {
-    cs: "Domů",
-    en: "Home",
-    de: "Startseite",
+    cs: { home: "Domů", current: "O nás" },
+    en: { home: "Home", current: "About" },
+    de: { home: "Startseite", current: "Über uns" },
   };
+
+  const names = breadcrumbNames[locale as keyof typeof breadcrumbNames] || breadcrumbNames.cs;
 
   const structuredData = [
     generateOrganizationSchema(locale as string),
     generateBreadcrumbSchema([
-      {
-        name:
-          breadcrumbNames[locale as keyof typeof breadcrumbNames] ||
-          breadcrumbNames.cs,
-        url: "https://www.ragdolls.cz",
-      },
+      { name: names.home, url: "https://www.ragdolls.cz" },
+      { name: names.current, url: "https://www.ragdolls.cz/about" },
     ]),
   ];
 
@@ -46,13 +44,13 @@ const HomePageSEO = () => {
       description={seo.description}
       keywords={seo.keywords}
       ogImage="/og.png"
-      ogUrl="https://www.ragdolls.cz"
+      ogUrl="https://www.ragdolls.cz/about"
       ogType="website"
       twitterCard="summary_large_image"
-      canonicalUrl="https://www.ragdolls.cz"
+      canonicalUrl="https://www.ragdolls.cz/about"
       structuredData={structuredData}
     />
   );
 };
 
-export default HomePageSEO;
+export default AboutPageSEO;

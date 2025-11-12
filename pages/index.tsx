@@ -219,7 +219,13 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                             style={{ objectFit: "cover", borderRadius: 8 }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Juliet/Juliet.webp"
-                            alt="Julinka"
+                            alt={
+                              locale === "cs"
+                                ? "Chovná kočka Ragdoll Juliet v barvě blue bicolor, chovatelské stanice Faelis Praha"
+                                : locale === "de"
+                                ? "Zuchtkatze Ragdoll Juliet in Farbe blue bicolor, Faelis Katzenzucht Prag"
+                                : "Breeding female Ragdoll cat Juliet in color blue bicolor, Faelis cattery Prague"
+                            }
                           />
                         </AspectRatio>
                         <Title order={2} size="h2" c="dark" mt={16} ta="center">
@@ -260,7 +266,13 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                             style={{ objectFit: "cover", borderRadius: 8 }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/George/George3.webp"
-                            alt="George"
+                            alt={
+                              locale === "cs"
+                                ? "Chovný kocour Ragdoll George v barvě blue mitted, chovatelské stanice Faelis Praha"
+                                : locale === "de"
+                                ? "Zuchtkater Ragdoll George in Farbe blue mitted, Faelis Katzenzucht Prag"
+                                : "Breeding male Ragdoll cat George in color blue mitted, Faelis cattery Prague"
+                            }
                           />
                         </AspectRatio>
                         <Title order={2} size="h2" c="dark" mt={16} ta="center">
@@ -301,7 +313,13 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                             style={{ objectFit: "cover", borderRadius: 8 }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Ori.webp"
-                            alt="Ori"
+                            alt={
+                              locale === "cs"
+                                ? "Ragdoll koťátko Orianna v barvě blue bicolor, chovatelské stanice Faelis"
+                                : locale === "de"
+                                ? "Ragdoll Kätzchen Orianna in Farbe blue bicolor, Faelis Katzenzucht"
+                                : "Ragdoll kitten Orianna in color blue bicolor, Faelis cattery"
+                            }
                           />
                         </AspectRatio>
                         <Title order={2} size="h2" c="dark" mt={16} ta="center">

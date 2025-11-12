@@ -26,6 +26,7 @@ import RagdollVarietiesSection from "../components/RagdollVarietiesSection";
 import RagdollGeneticsSection from "../components/RagdollGeneticsSection";
 import RagdollBloodGroupsSection from "../components/RagdollBloodGroupsSection";
 import Link from "next/link";
+import RagdollPageSEO from "../components/SEO/RagdollPageSEO";
 
 // Import translations
 import csTranslations from "../locales/cs/ragdoll.json";
@@ -61,12 +62,14 @@ export default function RagdollPage({ heroImage }: RagdollPageProps) {
     translations[locale as keyof typeof translations] || translations.cs;
 
   return (
-    <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackgroundWithData
-        heading={t.hero.heading}
-        subtext={t.hero.subtext}
-        backgroundImage={heroImage || undefined}
-      />
+    <>
+      <RagdollPageSEO />
+      <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
+        <HeroImageBackgroundWithData
+          heading={t.hero.heading}
+          subtext={t.hero.subtext}
+          backgroundImage={heroImage || undefined}
+        />
       <Stack
         px={32}
         py={128}
@@ -247,6 +250,7 @@ export default function RagdollPage({ heroImage }: RagdollPageProps) {
         <Form />
       </Stack>
     </Stack>
+    </>
   );
 }
 

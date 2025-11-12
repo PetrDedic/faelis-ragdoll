@@ -44,6 +44,11 @@ import {
 import { CatGalleryModal } from "../components/CatGalleryModal";
 import { MedicalTestsModal } from "../components/MedicalTestsModal";
 import Image from "next/image";
+import CatsPageSEO from "../components/SEO/CatsPageSEO";
+import {
+  generateCatAltText,
+  getLocalizedColorVariety,
+} from "../utils/imageAltText";
 
 // Define types for our cat data
 interface Cat {
@@ -318,7 +323,18 @@ export default function CatsPage({
                                 cursor: "pointer",
                               }}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              alt={kitten.name}
+                              alt={generateCatAltText(
+                                {
+                                  name: kitten.name,
+                                  gender: kitten.gender,
+                                  ...getLocalizedColorVariety(
+                                    kitten,
+                                    locale as string
+                                  ),
+                                  role: "kitten",
+                                },
+                                locale as string
+                              )}
                               onClick={() => handleOpenGallery(kitten.images)}
                             />
                           </AspectRatio>
@@ -405,221 +421,50 @@ export default function CatsPage({
     );
   };
 
+  // Prepare data for SEO
+  const allCats = [...maleCats, ...femaleCats];
+  const catsForSEO = allCats.map((cat) => ({
+    name: cat.name,
+    image: cat.images && cat.images.length > 0 ? cat.images[0].url : undefined,
+    description: cat.description || cat.details,
+  }));
+
   return (
-    <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackgroundWithData
-        heading={t.hero.heading}
-        subtext={t.hero.subtext}
-        backgroundImage={heroImage || undefined}
-      />
-      <Stack
-        px={32}
-        py={128}
-        justify="center"
-        align="center"
-        gap={64}
-        maw={1280}
-        mx="auto"
-        w="100%"
-      >
+    <>
+      <CatsPageSEO cats={catsForSEO} />
+      <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
+        <HeroImageBackgroundWithData
+          heading={t.hero.heading}
+          subtext={t.hero.subtext}
+          backgroundImage={heroImage || undefined}
+        />
         <Stack
-          w="100%"
+          px={32}
+          py={128}
+          justify="center"
           align="center"
-          gap={32}
-          id="female-cats"
-          style={{ scrollMargin: "100px" }}
+          gap={64}
+          maw={1280}
+          mx="auto"
+          w="100%"
         >
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.cats.femaleCats}
-          </Title>
-
-          {femaleCats.map((cat) => (
-            <CatInfo
-              key={cat.id}
-              images={
-                cat.images.length > 0
-                  ? {
-                      top: cat.images[0]?.url,
-                      middle:
-                        cat.images.length > 1
-                          ? cat.images[1]?.url
-                          : cat.images[0]?.url,
-                      right:
-                        cat.images.length > 2
-                          ? cat.images[2]?.url
-                          : cat.images[0]?.url,
-                    }
-                  : {
-                      top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                      middle:
-                        "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                      right:
-                        "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    }
-              }
-              name={cat.name}
-              info={
-                <Stack gap={4}>
-                  <Text span>{cat.description}</Text>
-                  <Text span>
-                    {t.catInfo.gender}: {getGenderText(cat.gender, t)}
-                  </Text>
-                  <Text span>
-                    {t.catInfo.birthDate}:{" "}
-                    {formatDate(cat.birth_date, locale as string)}
-                  </Text>
-                  <Text span>
-                    {t.catInfo.color}:{" "}
-                    {getLocalizedCatProperty(cat, "color", locale as string)}
-                  </Text>
-                  <Text span>
-                    {t.catInfo.variety}:{" "}
-                    {getLocalizedCatProperty(cat, "variety", locale as string)}
-                  </Text>
-                  <Text span>
-                    {t.catInfo.bloodGroup}: {cat.blood_type?.type} /{" "}
-                    {cat.blood_type?.type}
-                  </Text>
-                  <Text span>
-                    {t.catInfo.geneticCode}: {cat.genetic_code}
-                  </Text>
-                  <Text mt="md" span>
-                    {cat.details}
-                  </Text>
-                  <Flex align="center" gap={8}>
-                    {cat.images.length > 0 && (
-                      <Button
-                        w="max-content"
-                        px={16}
-                        color="#47a3ee"
-                        variant="outline"
-                        size="xs"
-                        leftSection={<IconLibraryPhoto size={16} />}
-                        onClick={() => handleOpenGallery(cat.images)}
-                      >
-                        {t.gallery.heading}
-                      </Button>
-                    )}
-                    {cat.pedigree_link && (
-                      <Button
-                        component={Link}
-                        href={cat.pedigree_link}
-                        target="_blank"
-                        w="max-content"
-                        px={16}
-                        color="#47a3ee"
-                        variant="outline"
-                        size="xs"
-                        leftSection={<IconFileInfo size={16} />}
-                      >
-                        {t.pedigree.heading}
-                      </Button>
-                    )}
-                    {cat.medical_tests && cat.medical_tests.length > 0 && (
-                      <Button
-                        w="max-content"
-                        px={16}
-                        color="#47a3ee"
-                        variant="outline"
-                        size="xs"
-                        leftSection={<IconStethoscope size={16} />}
-                        onClick={() =>
-                          handleOpenMedicalTests(cat.medical_tests!, cat.name)
-                        }
-                      >
-                        {t.medicalTests?.heading || "Medical Tests"}
-                      </Button>
-                    )}
-                  </Flex>
-                </Stack>
-              }
-            />
-          ))}
-        </Stack>
-
-        <FullscreenBackroundSection image="https://images.unsplash.com/photo-1586417752912-b0389b445a20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-          <Stack align="center" w="100%" maw={960} gap={48} py={32}>
-            <Title order={2} size="h1">
-              {t.facts.heading}
+          <Stack
+            w="100%"
+            align="center"
+            gap={32}
+            id="female-cats"
+            style={{ scrollMargin: "100px" }}
+          >
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.cats.femaleCats}
             </Title>
-            <Grid w="100%" gutter={32}>
-              <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
-                <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
-                  <Text fw={700} fz={24} c="dark" ta="center">
-                    {t.facts.stat1.number}
-                  </Text>
-                  <Text c="dark" ta="center">
-                    {t.facts.stat1.text}
-                  </Text>
-                </Card>
-              </Grid.Col>
-              <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
-                <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
-                  <Text fw={700} fz={24} c="dark" ta="center">
-                    {t.facts.stat2.number}
-                  </Text>
-                  <Text c="dark" ta="center">
-                    {t.facts.stat2.text}
-                  </Text>
-                </Card>
-              </Grid.Col>
-              <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
-                <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
-                  <Text fw={700} fz={24} c="dark" ta="center">
-                    {t.facts.stat3.number}
-                  </Text>
-                  <Text c="dark" ta="center">
-                    {t.facts.stat3.text}
-                  </Text>
-                </Card>
-              </Grid.Col>
-              <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
-                <Card h="100%" style={{ justifyContent: "center" }} radius="lg">
-                  <Text fw={700} fz={24} c="dark" ta="center">
-                    {t.facts.stat4.number}
-                  </Text>
-                  <Text c="dark" ta="center">
-                    {t.facts.stat4.text}
-                  </Text>
-                </Card>
-              </Grid.Col>
-            </Grid>
-            <Link
-              href="/about"
-              style={{ textDecoration: "inherit", color: "inherit" }}
-            >
-              <Button
-                color="#47a3ee"
-                size="compact-lg"
-                fw={400}
-                px={24}
-                w={{ base: "100%", sm: "fit-content" }}
-              >
-                {t.facts.button}
-              </Button>
-            </Link>
-          </Stack>
-        </FullscreenBackroundSection>
 
-        <Stack
-          w="100%"
-          align="center"
-          gap={32}
-          id="male-cats"
-          style={{ scrollMargin: "100px" }}
-        >
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.cats.maleCats}
-          </Title>
-
-          {maleCats.map((cat) => {
-            return (
+            {femaleCats.map((cat) => (
               <CatInfo
                 key={cat.id}
                 images={
                   cat.images.length > 0
                     ? {
-                        // Use different images for each position when available
                         top: cat.images[0]?.url,
                         middle:
                           cat.images.length > 1
@@ -631,7 +476,6 @@ export default function CatsPage({
                             : cat.images[0]?.url,
                       }
                     : {
-                        // Fallback images
                         top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                         middle:
                           "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -720,107 +564,317 @@ export default function CatsPage({
                   </Stack>
                 }
               />
-            );
-          })}
-        </Stack>
-
-        <FullscreenBackroundSection>
-          <Stack align="center" w="100%" maw={720} py={32}>
-            <Title order={2} size="h1" c="dark" ta="center">
-              {t.contact.heading}
-            </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.contact.subtext}
-            </Text>
-            <Link
-              href="/litters"
-              style={{ textDecoration: "inherit", color: "inherit" }}
-            >
-              <Button
-                color="#47a3ee"
-                size="compact-lg"
-                fw={400}
-                px={24}
-                w={{ base: "100%", sm: "fit-content" }}
-              >
-                {t.contact.button}
-              </Button>
-            </Link>
+            ))}
           </Stack>
-        </FullscreenBackroundSection>
 
-        {/* Add this section after the kittens title */}
-        <Stack w="100%" align="center" gap={32}>
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.kittens.title}
-          </Title>
+          <FullscreenBackroundSection image="https://images.unsplash.com/photo-1586417752912-b0389b445a20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+            <Stack align="center" w="100%" maw={960} gap={48} py={32}>
+              <Title order={2} size="h1">
+                {t.facts.heading}
+              </Title>
+              <Grid w="100%" gutter={32}>
+                <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
+                  <Card
+                    h="100%"
+                    style={{ justifyContent: "center" }}
+                    radius="lg"
+                  >
+                    <Text fw={700} fz={24} c="dark" ta="center">
+                      {t.facts.stat1.number}
+                    </Text>
+                    <Text c="dark" ta="center">
+                      {t.facts.stat1.text}
+                    </Text>
+                  </Card>
+                </Grid.Col>
+                <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
+                  <Card
+                    h="100%"
+                    style={{ justifyContent: "center" }}
+                    radius="lg"
+                  >
+                    <Text fw={700} fz={24} c="dark" ta="center">
+                      {t.facts.stat2.number}
+                    </Text>
+                    <Text c="dark" ta="center">
+                      {t.facts.stat2.text}
+                    </Text>
+                  </Card>
+                </Grid.Col>
+                <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
+                  <Card
+                    h="100%"
+                    style={{ justifyContent: "center" }}
+                    radius="lg"
+                  >
+                    <Text fw={700} fz={24} c="dark" ta="center">
+                      {t.facts.stat3.number}
+                    </Text>
+                    <Text c="dark" ta="center">
+                      {t.facts.stat3.text}
+                    </Text>
+                  </Card>
+                </Grid.Col>
+                <Grid.Col span={{ base: 6, sm: 4, md: 3 }}>
+                  <Card
+                    h="100%"
+                    style={{ justifyContent: "center" }}
+                    radius="lg"
+                  >
+                    <Text fw={700} fz={24} c="dark" ta="center">
+                      {t.facts.stat4.number}
+                    </Text>
+                    <Text c="dark" ta="center">
+                      {t.facts.stat4.text}
+                    </Text>
+                  </Card>
+                </Grid.Col>
+              </Grid>
+              <Link
+                href="/about"
+                style={{ textDecoration: "inherit", color: "inherit" }}
+              >
+                <Button
+                  color="#47a3ee"
+                  size="compact-lg"
+                  fw={400}
+                  px={24}
+                  w={{ base: "100%", sm: "fit-content" }}
+                >
+                  {t.facts.button}
+                </Button>
+              </Link>
+            </Stack>
+          </FullscreenBackroundSection>
 
-          {upcomingLitters.length > 0 ? (
-            <Stack w="100%" align="center" gap={16}>
-              <Title order={2} c="#47a3ee" ta="center">
-                {t.upcomingLitters.title || "Upcoming Litters"}
+          <Stack
+            w="100%"
+            align="center"
+            gap={32}
+            id="male-cats"
+            style={{ scrollMargin: "100px" }}
+          >
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.cats.maleCats}
+            </Title>
+
+            {maleCats.map((cat) => {
+              return (
+                <CatInfo
+                  key={cat.id}
+                  images={
+                    cat.images.length > 0
+                      ? {
+                          // Use different images for each position when available
+                          top: cat.images[0]?.url,
+                          middle:
+                            cat.images.length > 1
+                              ? cat.images[1]?.url
+                              : cat.images[0]?.url,
+                          right:
+                            cat.images.length > 2
+                              ? cat.images[2]?.url
+                              : cat.images[0]?.url,
+                        }
+                      : {
+                          // Fallback images
+                          top: "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                          middle:
+                            "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                          right:
+                            "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        }
+                  }
+                  name={cat.name}
+                  info={
+                    <Stack gap={4}>
+                      <Text span>{cat.description}</Text>
+                      <Text span>
+                        {t.catInfo.gender}: {getGenderText(cat.gender, t)}
+                      </Text>
+                      <Text span>
+                        {t.catInfo.birthDate}:{" "}
+                        {formatDate(cat.birth_date, locale as string)}
+                      </Text>
+                      <Text span>
+                        {t.catInfo.color}:{" "}
+                        {getLocalizedCatProperty(
+                          cat,
+                          "color",
+                          locale as string
+                        )}
+                      </Text>
+                      <Text span>
+                        {t.catInfo.variety}:{" "}
+                        {getLocalizedCatProperty(
+                          cat,
+                          "variety",
+                          locale as string
+                        )}
+                      </Text>
+                      <Text span>
+                        {t.catInfo.bloodGroup}: {cat.blood_type?.type} /{" "}
+                        {cat.blood_type?.type}
+                      </Text>
+                      <Text span>
+                        {t.catInfo.geneticCode}: {cat.genetic_code}
+                      </Text>
+                      <Text mt="md" span>
+                        {cat.details}
+                      </Text>
+                      <Flex align="center" gap={8}>
+                        {cat.images.length > 0 && (
+                          <Button
+                            w="max-content"
+                            px={16}
+                            color="#47a3ee"
+                            variant="outline"
+                            size="xs"
+                            leftSection={<IconLibraryPhoto size={16} />}
+                            onClick={() => handleOpenGallery(cat.images)}
+                          >
+                            {t.gallery.heading}
+                          </Button>
+                        )}
+                        {cat.pedigree_link && (
+                          <Button
+                            component={Link}
+                            href={cat.pedigree_link}
+                            target="_blank"
+                            w="max-content"
+                            px={16}
+                            color="#47a3ee"
+                            variant="outline"
+                            size="xs"
+                            leftSection={<IconFileInfo size={16} />}
+                          >
+                            {t.pedigree.heading}
+                          </Button>
+                        )}
+                        {cat.medical_tests && cat.medical_tests.length > 0 && (
+                          <Button
+                            w="max-content"
+                            px={16}
+                            color="#47a3ee"
+                            variant="outline"
+                            size="xs"
+                            leftSection={<IconStethoscope size={16} />}
+                            onClick={() =>
+                              handleOpenMedicalTests(
+                                cat.medical_tests!,
+                                cat.name
+                              )
+                            }
+                          >
+                            {t.medicalTests?.heading || "Medical Tests"}
+                          </Button>
+                        )}
+                      </Flex>
+                    </Stack>
+                  }
+                />
+              );
+            })}
+          </Stack>
+
+          <FullscreenBackroundSection>
+            <Stack align="center" w="100%" maw={720} py={32}>
+              <Title order={2} size="h1" c="dark" ta="center">
+                {t.contact.heading}
               </Title>
               <Text size="lg" c="black" ta="center">
-                {t.upcomingLitters.description ||
-                  "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters."}
+                {t.contact.subtext}
               </Text>
-
-              {upcomingLitters.map((litter) =>
-                renderLitterCard(litter, "upcoming")
-              )}
+              <Link
+                href="/litters"
+                style={{ textDecoration: "inherit", color: "inherit" }}
+              >
+                <Button
+                  color="#47a3ee"
+                  size="compact-lg"
+                  fw={400}
+                  px={24}
+                  w={{ base: "100%", sm: "fit-content" }}
+                >
+                  {t.contact.button}
+                </Button>
+              </Link>
             </Stack>
-          ) : currentLitters.length > 0 ? (
-            <Stack w="100%" align="center" gap={16}>
-              <Title order={2} c="#47a3ee" ta="center">
-                {t.currentLitters.title || "Current Litters"}
-              </Title>
-              <Text size="lg" c="black" ta="center">
-                {t.currentLitters.description ||
-                  "Browse through our current litters to see our beautiful kittens."}
+          </FullscreenBackroundSection>
+
+          {/* Add this section after the kittens title */}
+          <Stack w="100%" align="center" gap={32}>
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.kittens.title}
+            </Title>
+
+            {upcomingLitters.length > 0 ? (
+              <Stack w="100%" align="center" gap={16}>
+                <Title order={2} c="#47a3ee" ta="center">
+                  {t.upcomingLitters.title || "Upcoming Litters"}
+                </Title>
+                <Text size="lg" c="black" ta="center">
+                  {t.upcomingLitters.description ||
+                    "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters."}
+                </Text>
+
+                {upcomingLitters.map((litter) =>
+                  renderLitterCard(litter, "upcoming")
+                )}
+              </Stack>
+            ) : currentLitters.length > 0 ? (
+              <Stack w="100%" align="center" gap={16}>
+                <Title order={2} c="#47a3ee" ta="center">
+                  {t.currentLitters.title || "Current Litters"}
+                </Title>
+                <Text size="lg" c="black" ta="center">
+                  {t.currentLitters.description ||
+                    "Browse through our current litters to see our beautiful kittens."}
+                </Text>
+
+                {currentLitters.map((litter) =>
+                  renderLitterCard(litter, "current")
+                )}
+              </Stack>
+            ) : pastLitters.length > 0 ? (
+              <Stack w="100%" align="center" gap={16}>
+                <Title order={2} c="#47a3ee" ta="center">
+                  {t.pastLitters.title || "Past Litters"}
+                </Title>
+                <Text size="lg" c="black" ta="center">
+                  {t.pastLitters.description ||
+                    "Browse through our previous litters to see the beautiful kittens we've produced."}
+                </Text>
+
+                {renderLitterCard(pastLitters[0], "past")}
+              </Stack>
+            ) : (
+              <Text c="dimmed" ta="center">
+                {t.litters?.noLitters || "We currently don't have any litters"}
               </Text>
+            )}
+          </Stack>
 
-              {currentLitters.map((litter) =>
-                renderLitterCard(litter, "current")
-              )}
-            </Stack>
-          ) : pastLitters.length > 0 ? (
-            <Stack w="100%" align="center" gap={16}>
-              <Title order={2} c="#47a3ee" ta="center">
-                {t.pastLitters.title || "Past Litters"}
-              </Title>
-              <Text size="lg" c="black" ta="center">
-                {t.pastLitters.description ||
-                  "Browse through our previous litters to see the beautiful kittens we've produced."}
-              </Text>
-
-              {renderLitterCard(pastLitters[0], "past")}
-            </Stack>
-          ) : (
-            <Text c="dimmed" ta="center">
-              {t.litters?.noLitters || "We currently don't have any litters"}
-            </Text>
-          )}
+          <Form />
         </Stack>
 
-        <Form />
+        <CatGalleryModal
+          images={selectedImages}
+          opened={galleryOpened}
+          onClose={() => setGalleryOpened(false)}
+          initialImageIndex={selectedImageIndex}
+        />
+
+        <MedicalTestsModal
+          opened={medicalTestsOpened}
+          onClose={() => setMedicalTestsOpened(false)}
+          tests={selectedMedicalTests}
+          catName={selectedCatName}
+          locale={locale as string}
+          translations={t}
+        />
       </Stack>
-
-      <CatGalleryModal
-        images={selectedImages}
-        opened={galleryOpened}
-        onClose={() => setGalleryOpened(false)}
-        initialImageIndex={selectedImageIndex}
-      />
-
-      <MedicalTestsModal
-        opened={medicalTestsOpened}
-        onClose={() => setMedicalTestsOpened(false)}
-        tests={selectedMedicalTests}
-        catName={selectedCatName}
-        locale={locale as string}
-        translations={t}
-      />
-    </Stack>
+    </>
   );
 }
 

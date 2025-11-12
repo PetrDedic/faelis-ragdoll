@@ -51,6 +51,11 @@ import {
   IconPaw,
   IconVideo,
 } from "@tabler/icons-react";
+import LittersPageSEO from "../components/SEO/LittersPageSEO";
+import {
+  generateCatAltText,
+  getLocalizedColorVariety,
+} from "../utils/imageAltText";
 
 // Define types for our litter data
 interface Litter {
@@ -441,7 +446,18 @@ export default function LittersPage({
                                 cursor: "pointer",
                               }}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              alt={kitten.name}
+                              alt={generateCatAltText(
+                                {
+                                  name: kitten.name,
+                                  gender: kitten.gender,
+                                  ...getLocalizedColorVariety(
+                                    kitten,
+                                    locale as string
+                                  ),
+                                  role: "kitten",
+                                },
+                                locale as string
+                              )}
                               onClick={() => handleOpenGallery(kitten.images)}
                             />
                           </AspectRatio>
@@ -649,7 +665,18 @@ export default function LittersPage({
                               cursor: "pointer",
                             }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            alt={litter.father.name}
+                            alt={generateCatAltText(
+                              {
+                                name: litter.father.name,
+                                gender: "male",
+                                ...getLocalizedColorVariety(
+                                  litter.father,
+                                  locale as string
+                                ),
+                                role: "breeding_male",
+                              },
+                              locale as string
+                            )}
                           />
                         </AspectRatio>
                         <Text fw={700} fz="lg">
@@ -699,7 +726,18 @@ export default function LittersPage({
                               cursor: "pointer",
                             }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            alt={litter.mother.name}
+                            alt={generateCatAltText(
+                              {
+                                name: litter.mother.name,
+                                gender: "female",
+                                ...getLocalizedColorVariety(
+                                  litter.mother,
+                                  locale as string
+                                ),
+                                role: "breeding_female",
+                              },
+                              locale as string
+                            )}
                           />
                         </AspectRatio>
                         <Text fw={700} fz="lg">
@@ -730,176 +768,193 @@ export default function LittersPage({
     );
   };
 
+  // Prepare kittens data for SEO (from current litters)
+  const kittensForSEO = currentLitters.flatMap((litter) =>
+    litter.kittens.map((kitten) => ({
+      name: kitten.name,
+      description: kitten.description || `${kitten.name} - Ragdoll kitten`,
+      images: kitten.images ? kitten.images.map((img) => img.url) : [],
+      color: kitten.color?.name_cs || kitten.color?.name_en,
+      variety: kitten.variety?.name_cs || kitten.variety?.name_en,
+      birthDate: kitten.birth_date,
+      gender: kitten.gender,
+      status: kitten.status,
+    }))
+  );
+
   return (
-    <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackgroundWithData
-        heading={t.hero.heading}
-        subtext={t.hero.subtext}
-        backgroundImage={heroImage || undefined}
-      />
-      <Flex
-        w="100%"
-        justify="center"
-        gap={16}
-        align="center"
-        my={32}
-        wrap="wrap"
-      >
-        {currentLitters.length > 0 && (
-          <Button color="#47a3ee" size="lg" component={Link} href="#current">
-            {t.currentLitters.title}
-          </Button>
-        )}
-        {upcomingLitters.length > 0 && (
-          <Button color="#47a3ee" size="lg" component={Link} href="#upcoming">
-            {t.upcomingLitters.title}
-          </Button>
-        )}
-        <Button color="#47a3ee" size="lg" component={Link} href="#past">
-          {t.pastLitters.title}
-        </Button>
-      </Flex>
-      <Stack
-        px={32}
-        pb={128}
-        justify="center"
-        align="center"
-        gap={64}
-        maw={1280}
-        mx="auto"
-        w="100%"
-      >
-        {/* Upcoming Litters Section */}
-        {upcomingLitters.length > 0 && (
-          <Stack w="100%" align="center" gap={32}>
-            <Title
-              order={2}
-              size="h1"
-              c="#47a3ee"
-              ta="center"
-              id="upcoming"
-              style={{ scrollMarginTop: 100 }}
-            >
+    <>
+      <LittersPageSEO kittens={kittensForSEO} />
+      <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
+        <HeroImageBackgroundWithData
+          heading={t.hero.heading}
+          subtext={t.hero.subtext}
+          backgroundImage={heroImage || undefined}
+        />
+        <Flex
+          w="100%"
+          justify="center"
+          gap={16}
+          align="center"
+          my={32}
+          wrap="wrap"
+        >
+          {currentLitters.length > 0 && (
+            <Button color="#47a3ee" size="lg" component={Link} href="#current">
+              {t.currentLitters.title}
+            </Button>
+          )}
+          {upcomingLitters.length > 0 && (
+            <Button color="#47a3ee" size="lg" component={Link} href="#upcoming">
               {t.upcomingLitters.title}
-            </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.upcomingLitters.description}
-            </Text>
+            </Button>
+          )}
+          <Button color="#47a3ee" size="lg" component={Link} href="#past">
+            {t.pastLitters.title}
+          </Button>
+        </Flex>
+        <Stack
+          px={32}
+          pb={128}
+          justify="center"
+          align="center"
+          gap={64}
+          maw={1280}
+          mx="auto"
+          w="100%"
+        >
+          {/* Upcoming Litters Section */}
+          {upcomingLitters.length > 0 && (
+            <Stack w="100%" align="center" gap={32}>
+              <Title
+                order={2}
+                size="h1"
+                c="#47a3ee"
+                ta="center"
+                id="upcoming"
+                style={{ scrollMarginTop: 100 }}
+              >
+                {t.upcomingLitters.title}
+              </Title>
+              <Text size="lg" c="black" ta="center">
+                {t.upcomingLitters.description}
+              </Text>
 
-            {upcomingLitters.map((litter) =>
-              renderLitterCard(litter, "upcoming")
-            )}
-          </Stack>
-        )}
+              {upcomingLitters.map((litter) =>
+                renderLitterCard(litter, "upcoming")
+              )}
+            </Stack>
+          )}
 
-        {/* Current Litters Section */}
-        {currentLitters.length > 0 && (
-          <Stack w="100%" align="center" gap={32}>
-            <Title
-              order={2}
-              size="h1"
-              c="#47a3ee"
-              ta="center"
-              id="current"
-              style={{ scrollMarginTop: 100 }}
-            >
-              {t.currentLitters?.title || "Current Litters"}
-            </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.currentLitters?.description ||
-                "Our latest litters with available kittens."}
-            </Text>
+          {/* Current Litters Section */}
+          {currentLitters.length > 0 && (
+            <Stack w="100%" align="center" gap={32}>
+              <Title
+                order={2}
+                size="h1"
+                c="#47a3ee"
+                ta="center"
+                id="current"
+                style={{ scrollMarginTop: 100 }}
+              >
+                {t.currentLitters?.title || "Current Litters"}
+              </Title>
+              <Text size="lg" c="black" ta="center">
+                {t.currentLitters?.description ||
+                  "Our latest litters with available kittens."}
+              </Text>
 
-            {currentLitters.map((litter) =>
-              renderLitterCard(litter, "current")
-            )}
-          </Stack>
-        )}
+              {currentLitters.map((litter) =>
+                renderLitterCard(litter, "current")
+              )}
+            </Stack>
+          )}
 
-        {/* Past Litters Section */}
-        {pastLitters.length > 0 && (
-          <Stack w="100%" align="center" gap={32}>
-            <Title
-              order={2}
-              size="h1"
-              c="#47a3ee"
-              ta="center"
-              id="past"
-              style={{ scrollMarginTop: 100 }}
-            >
-              {t.pastLitters.title}
-            </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.pastLitters.description}
-            </Text>
+          {/* Past Litters Section */}
+          {pastLitters.length > 0 && (
+            <Stack w="100%" align="center" gap={32}>
+              <Title
+                order={2}
+                size="h1"
+                c="#47a3ee"
+                ta="center"
+                id="past"
+                style={{ scrollMarginTop: 100 }}
+              >
+                {t.pastLitters.title}
+              </Title>
+              <Text size="lg" c="black" ta="center">
+                {t.pastLitters.description}
+              </Text>
 
-            {pastLitters.map((litter) => renderLitterCard(litter, "past"))}
+              {pastLitters.map((litter) => renderLitterCard(litter, "past"))}
 
-            {/* Load More Button */}
-            {pagination.hasMore && (
-              <Center>
-                <Button
-                  onClick={loadMorePastLitters}
-                  loading={loadingMore}
-                  color="#47a3ee"
-                  size="lg"
-                  variant="outline"
-                >
-                  {loadingMore
-                    ? locale === "cs"
-                      ? "Načítám..."
+              {/* Load More Button */}
+              {pagination.hasMore && (
+                <Center>
+                  <Button
+                    onClick={loadMorePastLitters}
+                    loading={loadingMore}
+                    color="#47a3ee"
+                    size="lg"
+                    variant="outline"
+                  >
+                    {loadingMore
+                      ? locale === "cs"
+                        ? "Načítám..."
+                        : locale === "de"
+                        ? "Lade..."
+                        : "Loading..."
+                      : locale === "cs"
+                      ? "Načíst více vrhů"
                       : locale === "de"
-                      ? "Lade..."
-                      : "Loading..."
-                    : locale === "cs"
-                    ? "Načíst více vrhů"
-                    : locale === "de"
-                    ? "Mehr Würfe laden"
-                    : "Load More Litters"}
-                </Button>
-              </Center>
-            )}
-          </Stack>
-        )}
+                      ? "Mehr Würfe laden"
+                      : "Load More Litters"}
+                  </Button>
+                </Center>
+              )}
+            </Stack>
+          )}
 
-        <Form />
+          <Form />
+        </Stack>
+
+        <CatGalleryModal
+          images={selectedImages}
+          opened={galleryOpened}
+          onClose={() => setGalleryOpened(false)}
+          initialImageIndex={selectedImageIndex}
+        />
+
+        <Modal
+          opened={videoModalOpened}
+          onClose={() => setVideoModalOpened(false)}
+          title="Video vrhu"
+          centered
+          size="lg"
+        >
+          {videoId && (
+            <Box style={{ aspectRatio: "16/9", width: "100%" }}>
+              <LiteYouTubeEmbed
+                id={videoId}
+                title="YouTube video preview"
+                wrapperClass="yt-lite"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </Box>
+          )}
+        </Modal>
+
+        <MedicalTestsModal
+          opened={medicalTestsOpened}
+          onClose={() => setMedicalTestsOpened(false)}
+          tests={selectedMedicalTests}
+          catName={selectedCatName}
+          locale={locale as string}
+          translations={catsT}
+        />
       </Stack>
-
-      <CatGalleryModal
-        images={selectedImages}
-        opened={galleryOpened}
-        onClose={() => setGalleryOpened(false)}
-        initialImageIndex={selectedImageIndex}
-      />
-
-      <Modal
-        opened={videoModalOpened}
-        onClose={() => setVideoModalOpened(false)}
-        title="Video vrhu"
-        centered
-        size="lg"
-      >
-        {videoId && (
-          <Box style={{ aspectRatio: "16/9", width: "100%" }}>
-            <LiteYouTubeEmbed
-              id={videoId}
-              title="YouTube video preview"
-              wrapperClass="yt-lite"
-              style={{ width: "100%", height: "100%" }}
-            />
-          </Box>
-        )}
-      </Modal>
-
-      <MedicalTestsModal
-        opened={medicalTestsOpened}
-        onClose={() => setMedicalTestsOpened(false)}
-        tests={selectedMedicalTests}
-        catName={selectedCatName}
-        locale={locale as string}
-        translations={catsT}
-      />
-    </Stack>
+    </>
   );
 }
 
@@ -1030,7 +1085,7 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         props: {
           currentLitters: [],
           upcomingLitters: [],
-          pastLitters: [],
+          initialPastLitters: [],
           heroImage,
         },
       };
@@ -1049,9 +1104,10 @@ export const getStaticProps: GetStaticProps<LittersPageProps> = async () => {
         props: {
           currentLitters: [],
           upcomingLitters: [],
-          pastLitters: [],
+          initialPastLitters: [],
           heroImage,
         },
+        revalidate: 60,
       };
     }
 

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { FC } from "react";
+import type { WithContext, Thing } from "schema-dts";
 
 interface SEOProps {
   title?: string;
@@ -12,13 +13,14 @@ interface SEOProps {
   canonicalUrl?: string;
   noIndex?: boolean;
   noFollow?: boolean;
+  structuredData?: WithContext<Thing> | Array<WithContext<Thing>>;
   children?: React.ReactNode;
 }
 
 const SEO: FC<SEOProps> = ({
-  title = "Faelis | Chovatelská stanice koček Ragdoll",
-  description = "Jsme nejlepší a jediná chovatelská stanice plemene Ragdoll v České Republice. Bezpečné a útulné místo pro kočky s dlouholetou praxí a zkušeností.",
-  keywords = "ragdoll, kočky, chovatelská stanice, Faelis, Praha, kocouři, koťata, chov koček, ragdoll česká republika",
+  title = "Faelis | Chovatelská stanice koček Ragdoll Praha",
+  description = "Chovatelská stanice Faelis z Prahy nabízí zdravá koťata Ragdoll se 100% originálním rodokmenem. Prohlédněte si naše kočky, kocoury a aktuální vrhy.",
+  keywords = "ragdoll koťata na prodej, koťata ragdoll, chovatelská stanice ragdoll, ragdoll praha, ragdoll s rodokmenem, ragdoll česká republika, zdravá koťata ragdoll, ragdoll chov",
   ogImage = "/og.png",
   ogUrl,
   ogType = "website",
@@ -26,6 +28,7 @@ const SEO: FC<SEOProps> = ({
   canonicalUrl,
   noIndex = false,
   noFollow = false,
+  structuredData,
   children,
 }) => {
   // Build robots value
@@ -69,6 +72,18 @@ const SEO: FC<SEOProps> = ({
 
       {/* Favicon */}
       <link rel="shortcut icon" href="/favicon.svg" />
+
+      {/* Structured Data (JSON-LD) */}
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              Array.isArray(structuredData) ? structuredData : [structuredData]
+            ),
+          }}
+        />
+      )}
 
       {/* Additional head elements passed as children */}
       {children}

@@ -38,6 +38,7 @@ import supabase from "../utils/supabase/client";
 import csTranslations from "../locales/cs/gallery.json";
 import enTranslations from "../locales/en/gallery.json";
 import deTranslations from "../locales/de/gallery.json";
+import GalleryPageSEO from "../components/SEO/GalleryPageSEO";
 
 // Define types
 interface GalleryItem {
@@ -323,13 +324,15 @@ const GalleryPage = () => {
   };
 
   return (
-    <Stack gap="lg" p={16} maw={1280} mx="auto">
-      <LoadingOverlay
-        visible={loading}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
+    <>
+      <GalleryPageSEO />
+      <Stack gap="lg" p={16} maw={1280} mx="auto">
+        <LoadingOverlay
+          visible={loading}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
 
-      <Title order={2}>{t.title}</Title>
+        <Title order={2}>{t.title}</Title>
 
       {/* Navigation breadcrumbs */}
       <Breadcrumbs>
@@ -439,6 +442,7 @@ const GalleryPage = () => {
         )}
       </Modal>
     </Stack>
+    </>
   );
 };
 

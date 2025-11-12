@@ -27,6 +27,7 @@ import {
   IconBrandFacebookFilled,
   IconBrandInstagramFilled,
 } from "@tabler/icons-react";
+import ContactPageSEO from "../components/SEO/ContactPageSEO";
 
 interface ContactPageProps {
   heroImage: string | null;
@@ -48,11 +49,13 @@ export default function ContactPage({ heroImage }: ContactPageProps) {
     translations[locale as keyof typeof translations] || translations.cs;
 
   return (
-    <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
-      <HeroImageBackgroundWithData
-        backgroundImage={heroImage || undefined}
-        heading={t.hero.heading}
-      />
+    <>
+      <ContactPageSEO />
+      <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
+        <HeroImageBackgroundWithData
+          backgroundImage={heroImage || undefined}
+          heading={t.hero.heading}
+        />
       <Stack
         px={32}
         py={128}
@@ -177,6 +180,7 @@ export default function ContactPage({ heroImage }: ContactPageProps) {
         </Stack>
       </Stack>
     </Stack>
+    </>
   );
 }
 
