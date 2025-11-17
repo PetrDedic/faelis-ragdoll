@@ -56,7 +56,6 @@ export function HeroImageBackground({
           property="og:description"
           content={`Faelis - ${heading} - ${subtext}`}
         />
-        <meta property="og:image" content={imageUrl} />
         <meta property="og:type" content="website" />
         <link rel="preload" href={imageUrl} as="image" />
       </Head>
