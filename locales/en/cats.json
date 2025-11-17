@@ -116,6 +116,8 @@
     "current": "Current litter",
     "planned": "Planned litter",
     "viewProfile": "View Profile",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "copyLink": "Copy link",
+    "copied": "Copied!"
   }
 }

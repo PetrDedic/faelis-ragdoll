@@ -116,6 +116,8 @@
     "current": "Aktueller Wurf",
     "planned": "Geplanter Wurf",
     "viewProfile": "Profil anzeigen",
-    "gallery": "Galerie"
+    "gallery": "Galerie",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!"
   }
 }

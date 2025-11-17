@@ -38,7 +38,9 @@
     "planned": "Planned litter",
     "viewProfile": "View Profile",
     "gallery": "Gallery",
-    "pedigree": "Pedigree"
+    "pedigree": "Pedigree",
+    "copyLink": "Copy link",
+    "copied": "Copied!"
   },
   "info": {
     "heading": "Interested in our kittens?",

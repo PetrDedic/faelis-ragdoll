@@ -1,9 +1,9 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Html, Head, Main, NextScript, DocumentProps } from "next/document";
 import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 
-export default function Document() {
+export default function Document(props: DocumentProps) {
   return (
-    <Html lang="en" {...mantineHtmlProps}>
+    <Html lang={props.locale || "cs"} {...mantineHtmlProps}>
       <Head>
         <ColorSchemeScript />
       </Head>

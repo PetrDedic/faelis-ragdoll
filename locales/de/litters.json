@@ -38,7 +38,9 @@
     "planned": "Geplanter Wurf",
     "viewProfile": "Profil anzeigen",
     "gallery": "Galerie",
-    "pedigree": "Stammbaum"
+    "pedigree": "Stammbaum",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!"
   },
   "info": {
     "heading": "Interesse an unseren Kätzchen?",

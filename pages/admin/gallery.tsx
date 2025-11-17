@@ -1674,7 +1674,11 @@ const GalleryManagementPage = () => {
             </Group>
             <Group justify="right">
               <CopyButton
-                value={selectedItem.url ? encodeURI(selectedItem.url) : ""}
+                value={
+                  typeof window !== "undefined" && window.location.href
+                    ? window.location.href
+                    : selectedItem.url || ""
+                }
                 timeout={2000}
               >
                 {({ copied, copy }) => (

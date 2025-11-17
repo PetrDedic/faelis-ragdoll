@@ -18,7 +18,7 @@ interface LeadGridProps {
     middle: string;
     right: string;
   };
-  name: string;
+  name: string | ReactNode;
   info: string | ReactNode;
 }
 
