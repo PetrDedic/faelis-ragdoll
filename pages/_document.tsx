@@ -6,6 +6,7 @@ export default function Document(props: DocumentProps) {
     <Html lang={props.locale || "cs"} {...mantineHtmlProps}>
       <Head>
         <ColorSchemeScript />
+        <title>Faelis | Chovatelská stanice koček Ragdoll Praha</title>
       </Head>
       <body>
         <Main />
