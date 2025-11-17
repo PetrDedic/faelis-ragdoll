@@ -10,6 +10,7 @@ import {
   Box,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import Image from "next/image";
 import { ReactNode } from "react";
 
 interface LeadGridProps {
@@ -20,44 +21,56 @@ interface LeadGridProps {
   };
   name: string | ReactNode;
   info: string | ReactNode;
+  catName: string;
 }
 
-export function CatInfo({ images, name, info }: LeadGridProps) {
+export function CatInfo({ images, name, info, catName }: LeadGridProps) {
   const smallWindow = useMediaQuery("(max-width: 1200px)");
 
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%" mih={320}>
       <Flex gap="md" align="stretch" w="100%">
         <Stack w="100%" h="100%" gap="md">
-          <BackgroundImage
-            src={new URL(images.top).toString()}
-            w="100%"
-            h="100%"
-            radius="lg"
-            style={{ objectFit: "cover", backgroundPosition: "center" }}
-          >
-            <Box w="100%" h="100%" />
-          </BackgroundImage>
-          <BackgroundImage
-            src={new URL(images.right).toString()}
-            w="100%"
-            h="100%"
-            radius="lg"
-            style={{ objectFit: "cover", backgroundPosition: "center" }}
-          >
-            <Box w="100%" h="100%" />
-          </BackgroundImage>
+          <Box w="100%" h="100%" pos="relative">
+            <Image
+              src={images.top}
+              alt={`${catName} top image`}
+              fill
+              sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+              style={{
+                objectFit: "cover",
+                backgroundPosition: "center",
+                borderRadius: "var(--mantine-radius-lg)",
+              }}
+            />
+          </Box>
+          <Box w="100%" h="100%" pos="relative">
+            <Image
+              src={images.right}
+              alt={`${catName} right image`}
+              fill
+              sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+              style={{
+                objectFit: "cover",
+                backgroundPosition: "center",
+                borderRadius: "var(--mantine-radius-lg)",
+              }}
+            />
+          </Box>
         </Stack>
-        <BackgroundImage
-          mih={360}
-          src={new URL(images.middle).toString()}
-          w="100%"
-          h="100%"
-          radius="lg"
-          style={{ objectFit: "cover", backgroundPosition: "center" }}
-        >
-          <Box w="100%" h="100%" />
-        </BackgroundImage>
+        <Box w="100%" h="100%" pos="relative">
+          <Image
+            src={images.middle}
+            alt={`${catName} middle image`}
+            fill
+            sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+            style={{
+              objectFit: "cover",
+              backgroundPosition: "center",
+              borderRadius: "var(--mantine-radius-lg)",
+            }}
+          />
+        </Box>
       </Flex>
 
       <Stack gap={smallWindow ? "md" : "xl"} justify="center">

@@ -101,6 +101,18 @@ export function HeaderMenu() {
     </Menu.Item>
   ));
 
+  // Burger menu aria-label based on state and locale
+  const getBurgerAriaLabel = () => {
+    const menuLabels = {
+      cs: { open: "Otevřít menu", close: "Zavřít menu" },
+      en: { open: "Open menu", close: "Close menu" },
+      de: { open: "Menü öffnen", close: "Menü schließen" },
+    };
+    const labels =
+      menuLabels[locale as keyof typeof menuLabels] || menuLabels.cs;
+    return opened ? labels.close : labels.open;
+  };
+
   const items = links.map((link) => {
     //@ts-expect-error
     const menuItems = link.links?.map((item) => (
@@ -152,7 +164,7 @@ export function HeaderMenu() {
     >
       <Container size="md">
         <Flex justify="space-between" align="center">
-          <Link href="/">
+          <Link href="/" aria-label={t.links.home}>
             <Image
               src="/images/Logo_v2.svg"
               height={28}
@@ -185,6 +197,7 @@ export function HeaderMenu() {
               onClick={toggle}
               size="sm"
               hiddenFrom="md"
+              aria-label={getBurgerAriaLabel()}
             />
           </Flex>
         </Flex>
@@ -198,7 +211,12 @@ export function HeaderMenu() {
         >
           <Flex direction="column" gap="sm">
             {links.map((link) => (
-              <Link href={link.link} key={link.label} locale={locale}>
+              <Link
+                href={link.link}
+                key={link.label}
+                locale={locale}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <Button variant="subtle" fullWidth onClick={() => toggle()}>
                   {link.label}
                 </Button>

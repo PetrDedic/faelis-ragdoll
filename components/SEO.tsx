@@ -67,7 +67,7 @@ const SEO: FC<SEOProps> = ({
       {/* Viewport (ensuring it's configurable per page if needed) */}
       <meta
         name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        content="minimum-scale=1, initial-scale=1, width=device-width"
       />
 
       {/* Favicon */}

@@ -587,6 +587,7 @@ export default function CatsPage({
                               "https://images.unsplash.com/photo-1682737398935-d7c036d5528a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                           }
                     }
+                    catName={cat.name}
                     name={
                       <Flex justify="space-between" align="center" w="100%">
                         <Text fw={700} fz="xl">
@@ -822,6 +823,7 @@ export default function CatsPage({
                   w="100%"
                 >
                   <CatInfo
+                    catName={cat.name}
                     images={
                       cat.images.length > 0
                         ? {

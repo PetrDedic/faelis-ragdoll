@@ -54,7 +54,9 @@ export default function App({ Component, pageProps }: any) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <HeaderMenu />
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
       <Footer />
     </MantineProvider>
   );

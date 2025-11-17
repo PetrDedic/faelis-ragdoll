@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import Image from "next/image";
 
 interface LeadGridProps {
   images: {
@@ -31,35 +32,47 @@ export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%">
       <Flex gap="md" align="stretch" w="100%">
         <Stack w="100%" h="100%" gap="md">
-          <BackgroundImage
-            src={images.top}
-            w="100%"
-            h="100%"
-            radius="lg"
-            style={{ objectFit: "cover", backgroundPosition: "center" }}
-          >
-            <Box w="100%" h="100%" />
-          </BackgroundImage>
-          <BackgroundImage
-            src={images.right}
-            w="100%"
-            h="100%"
-            radius="lg"
-            style={{ objectFit: "cover", backgroundPosition: "center" }}
-          >
-            <Box w="100%" h="100%" />
-          </BackgroundImage>
+          <Box w="100%" h="100%" pos="relative">
+            <Image
+              src={images.top}
+              alt={`${heading} top image`}
+              fill
+              sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+              style={{
+                objectFit: "cover",
+                backgroundPosition: "center",
+                borderRadius: "var(--mantine-radius-lg)",
+              }}
+            />
+          </Box>
+          <Box w="100%" h="100%" pos="relative">
+            {" "}
+            <Image
+              src={images.right}
+              alt={`${heading} right image`}
+              fill
+              sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+              style={{
+                objectFit: "cover",
+                backgroundPosition: "center",
+                borderRadius: "var(--mantine-radius-lg)",
+              }}
+            />
+          </Box>
         </Stack>
-        <BackgroundImage
-          mih={360}
-          src={images.middle}
-          w="100%"
-          h="100%"
-          radius="lg"
-          style={{ objectFit: "cover", backgroundPosition: "center" }}
-        >
-          <Box w="100%" h="100%" />
-        </BackgroundImage>
+        <Box w="100%" h="100%" pos="relative">
+          <Image
+            src={images.middle}
+            alt={`${heading} middle image`}
+            fill
+            sizes="(max-width: 1200px) 100vw, (max-width: 768px) 50vw, 33vw"
+            style={{
+              objectFit: "cover",
+              backgroundPosition: "center",
+              borderRadius: "var(--mantine-radius-lg)",
+            }}
+          />
+        </Box>
       </Flex>
 
       <Stack gap={smallWindow ? "md" : "xl"} justify="center">
