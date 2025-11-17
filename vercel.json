@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/gallery2/:path*",
+      "destination": "/gallery",
+      "permanent": true
+    },
+    {
+      "source": "/gallery2",
+      "destination": "/gallery",
+      "permanent": true
+    }
+  ]
+}
