@@ -9,6 +9,8 @@ import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import "../styles.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { CookieConsent } from "../components/CookieConsent";
+import { useEffect, useState } from "react";
 
 // Initialize both fonts
 const roboto = Roboto({
@@ -22,9 +24,18 @@ const paytone = Paytone_One({
 });
 
 export default function App({ Component, pageProps }: any) {
+  const [showGa, setShowGa] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem("cookie_consent");
+    if (consent === "true") {
+      setShowGa(true);
+    }
+  }, []);
+
   return (
     <>
-      <GoogleAnalytics gaId="G-H20VS0JX18" />
+      {showGa && <GoogleAnalytics gaId="G-H20VS0JX18" />}
       <MantineProvider
         theme={{
           ...theme,
@@ -61,6 +72,7 @@ export default function App({ Component, pageProps }: any) {
           <Component {...pageProps} />
         </main>
         <Footer />
+        <CookieConsent />
       </MantineProvider>
     </>
   );
