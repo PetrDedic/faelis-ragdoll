@@ -166,7 +166,10 @@ export function HeaderMenu() {
           <Flex align="center" gap={16}>
             <Menu width={200} position="bottom-end" withArrow>
               <Menu.Target>
-                <UnstyledButton>
+                <UnstyledButton
+                  title="Change language"
+                  aria-label="Change language"
+                >
                   <Flex align="center" gap={4}>
                     <span style={{ fontSize: rem(16) }}>
                       {currentLanguage.flag}

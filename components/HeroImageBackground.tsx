@@ -1,5 +1,4 @@
 import {
-  BackgroundImage,
   Box,
   Button,
   Container,
@@ -70,6 +69,7 @@ export function HeroImageBackground({
           sizes="100vw, (max-width: 1200px) 75vw, (max-width: 768px) 50vw"
           style={{ objectFit: "cover", backgroundPosition }}
           priority
+          fetchPriority="high"
         />
         <Overlay color="#000" opacity={1} zIndex={1} />
 

@@ -1,4 +1,4 @@
-import { Card, Container, Flex, SimpleGrid, Text } from "@mantine/core";
+import { Card, Flex, SimpleGrid, Text } from "@mantine/core";
 import Image from "next/image";
 
 interface FeaturesCardsProps {

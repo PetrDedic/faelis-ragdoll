@@ -1,5 +1,4 @@
 import {
-  Grid,
   SimpleGrid,
   Text,
   Title,

@@ -6,7 +6,6 @@ import {
   Flex,
   Grid,
   Group,
-  SimpleGrid,
   Stack,
   Text,
   Title,

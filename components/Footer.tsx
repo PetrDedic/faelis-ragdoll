@@ -71,6 +71,8 @@ const Footer = () => {
             </Text>
             <AspectRatio ratio={16 / 9}>
               <iframe
+                title="Faelis location"
+                loading="lazy"
                 width="100%"
                 height="100%"
                 style={{ borderRadius: 32 }}
@@ -81,7 +83,7 @@ const Footer = () => {
             </AspectRatio>
           </Stack>
           <Stack w="100%" align="start" justify="end">
-            <Title order={4} c="white" fz={32} style={{ letterSpacing: 1 }}>
+            <Title order={2} c="white" fz={32} style={{ letterSpacing: 1 }}>
               {t.cattery.title}
             </Title>
             <Stack gap={0} align="start" justify="start" c="white">
@@ -154,6 +156,8 @@ const Footer = () => {
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                    title="Facebook"
+                    aria-label="Facebook"
                   >
                     <IconBrandFacebookFilled size={42} color="#fff" />
                   </UnstyledButton>
@@ -167,6 +171,8 @@ const Footer = () => {
                     textDecoration: "none",
                     marginTop: 32,
                   }}
+                  title="Instagram"
+                  aria-label="Instagram"
                 >
                   <UnstyledButton
                     w={64}
