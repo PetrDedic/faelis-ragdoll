@@ -1,15 +1,4 @@
-import {
-  Grid,
-  SimpleGrid,
-  Text,
-  Title,
-  Button,
-  Stack,
-  BackgroundImage,
-  Flex,
-  Box,
-} from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { SimpleGrid, Title, Stack, Flex, Box } from "@mantine/core";
 import Image from "next/image";
 import { ReactNode } from "react";
 
@@ -25,8 +14,6 @@ interface LeadGridProps {
 }
 
 export function CatInfo({ images, name, info, catName }: LeadGridProps) {
-  const smallWindow = useMediaQuery("(max-width: 1200px)");
-
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%" mih={320}>
       <Flex gap="md" align="stretch" w="100%">
@@ -73,12 +60,12 @@ export function CatInfo({ images, name, info, catName }: LeadGridProps) {
         </Box>
       </Flex>
 
-      <Stack gap={smallWindow ? "md" : "xl"} justify="center">
+      <Flex direction="column" gap={{ base: "md", lg: "xl" }} justify="center">
         <Title order={2} size="h1" c="black">
           {name}
         </Title>
         {info}
-      </Stack>
+      </Flex>
     </SimpleGrid>
   );
 }

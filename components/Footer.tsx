@@ -6,12 +6,10 @@ import {
   Stack,
   Text,
   Title,
-  Box,
   Center,
   UnstyledButton,
   Group,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -26,7 +24,6 @@ import {
 } from "@tabler/icons-react";
 
 const Footer = () => {
-  const smallWindow = useMediaQuery("(max-width: 1200px)");
   const router = useRouter();
   const { locale } = router;
 
@@ -62,8 +59,8 @@ const Footer = () => {
           maw={1280}
           mx="auto"
           w="100%"
-          gap={smallWindow ? 16 : 64}
-          direction={smallWindow ? "column" : "row"}
+          gap={{ base: 16, lg: 64 }}
+          direction={{ base: "column", lg: "row" }}
         >
           <Stack w="100%">
             <Text c="white" fz={32} fw={700} ta="center">
@@ -97,6 +94,7 @@ const Footer = () => {
                 {t.contact.email}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
+                    prefetch={false}
                     href="mailto:marta@ragdolls.cz"
                     style={{
                       color: "inherit",
@@ -111,6 +109,7 @@ const Footer = () => {
                 {t.contact.phone}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
+                    prefetch={false}
                     href="tel:+420 602 278 682"
                     style={{
                       color: "inherit",
@@ -125,6 +124,7 @@ const Footer = () => {
                 {t.contact.moreContacts}{" "}
                 <Text span fw={700} td="underlline">
                   <Link
+                    prefetch={false}
                     href="/contact"
                     style={{
                       color: "inherit",
@@ -137,6 +137,7 @@ const Footer = () => {
               </Text>
               <Group>
                 <Link
+                  prefetch={false}
                   href="https://www.facebook.com/FaelisRagdolls/"
                   target="_blank"
                   style={{
@@ -163,6 +164,7 @@ const Footer = () => {
                   </UnstyledButton>
                 </Link>
                 <Link
+                  prefetch={false}
                   href="https://www.instagram.com/martafaelis/"
                   target="_blank"
                   style={{
@@ -198,7 +200,12 @@ const Footer = () => {
       <Center py={24} bg="#f5f5f5">
         <Stack align="center" gap={16}>
           <Flex gap={16} justify="center" align="center">
-            <Link href="http://www.fifeweb.org/" target="_blank" title="FIFE">
+            <Link
+              prefetch={false}
+              href="http://www.fifeweb.org/"
+              target="_blank"
+              title="FIFE"
+            >
               <Image
                 src="/images/fife_logo.jpg"
                 alt="FIFE"
@@ -206,7 +213,12 @@ const Footer = () => {
                 height={100}
               />
             </Link>
-            <Link href="http://www.schk.cz/" target="_blank" title="SCHK">
+            <Link
+              prefetch={false}
+              href="http://www.schk.cz/"
+              target="_blank"
+              title="SCHK"
+            >
               <Image
                 src="/images/schk_logo.gif"
                 alt="SCHK"

@@ -70,186 +70,189 @@ export default function RagdollPage({ heroImage }: RagdollPageProps) {
           subtext={t.hero.subtext}
           backgroundImage={heroImage || undefined}
         />
-      <Stack
-        px={32}
-        py={128}
-        justify="center"
-        align="center"
-        gap={64}
-        maw={1280}
-        mx="auto"
-        w="100%"
-      >
-        <Stack w="100%" align="center" gap={32}>
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.about.title}
-          </Title>
-          <Text size="lg" c="black">
-            {t.about.paragraph1}
-          </Text>
-          <Grid w="100%" gutter={32}>
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-              <AspectRatio ratio={4 / 3}>
-                <Image
-                  radius="md"
-                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/bartholomew.jpg"
-                  style={{ objectFit: "contain" }}
-                />
-              </AspectRatio>
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-              <AspectRatio ratio={4 / 3}>
-                <Image
-                  radius="md"
-                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/w_4.jpg"
-                  style={{ objectFit: "contain" }}
-                />
-              </AspectRatio>
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-              <AspectRatio ratio={4 / 3}>
-                <Image
-                  radius="md"
-                  src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/wt_5.jpg"
-                  style={{ objectFit: "contain" }}
-                />
-              </AspectRatio>
-            </Grid.Col>
-          </Grid>
-          <Text size="lg" c="black">
-            {t.about.paragraph2}
-          </Text>
-          <Text size="lg" c="black">
-            {t.about.paragraph3}
-          </Text>
-        </Stack>
-        <FullscreenBackroundSection>
-          <Stack align="center" w="100%" maw={720} py={32}>
-            <Title order={2} size="h1" c="dark" ta="center">
-              {t.contact.heading}
+        <Stack
+          px={32}
+          py={128}
+          justify="center"
+          align="center"
+          gap={64}
+          maw={1280}
+          mx="auto"
+          w="100%"
+        >
+          <Stack w="100%" align="center" gap={32}>
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.about.title}
             </Title>
-            <Text size="lg" c="black" ta="center">
-              {t.contact.subtext}
+            <Text size="lg" c="black">
+              {t.about.paragraph1}
             </Text>
-            <Link
-              href="/litters"
-              style={{ textDecoration: "inherit", color: "inherit" }}
-            >
-              <Button
-                color="#47a3ee"
-                size="compact-lg"
-                fw={400}
-                px={24}
-                w={{ base: "100%", sm: "fit-content" }}
-              >
-                {t.contact.button}
-              </Button>
-            </Link>
+            <Grid w="100%" gutter={32}>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <AspectRatio ratio={4 / 3}>
+                  <Image
+                    radius="md"
+                    src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/bartholomew.jpg"
+                    style={{ objectFit: "contain" }}
+                  />
+                </AspectRatio>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <AspectRatio ratio={4 / 3}>
+                  <Image
+                    radius="md"
+                    src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/w_4.jpg"
+                    style={{ objectFit: "contain" }}
+                  />
+                </AspectRatio>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+                <AspectRatio ratio={4 / 3}>
+                  <Image
+                    radius="md"
+                    src="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Historie%20RAG/wt_5.jpg"
+                    style={{ objectFit: "contain" }}
+                  />
+                </AspectRatio>
+              </Grid.Col>
+            </Grid>
+            <Text size="lg" c="black">
+              {t.about.paragraph2}
+            </Text>
+            <Text size="lg" c="black">
+              {t.about.paragraph3}
+            </Text>
           </Stack>
-        </FullscreenBackroundSection>
-        <Stack w="100%" align="center" gap={32}>
-          <Text size="lg" c="black">
-            {t.about.paragraph4}
-          </Text>
-          <LeftImageSection
-            image="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/075_n.jpg"
-            ratio={4 / 3}
-            heading={t.standard.heading}
-            subtext={t.standard.subtext}
-            button={{
-              label: t.standard.button,
-              onClick: () =>
-                window.open("https://fifeweb.org/app/uploads/2023/10/RAG.pdf"),
-            }}
-          />
-        </Stack>
-
-        <Divider w="100%" />
-
-        <RagdollHistorySection />
-
-        <Divider w="100%" />
-
-        <Stack w="100%" align="center" gap={32}>
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.colors.title}
-          </Title>
-          <Text size="lg" c="black">
-            {t.colors.paragraph1}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {t.colors.copyright}
-          </Text>
-          <RagdollColorsCarousel />
-          <Text size="lg" c="black">
-            {t.colors.paragraph2}
-          </Text>
-          <Text size="lg" c="black">
-            {t.colors.paragraph3}
-          </Text>
-          <Text size="lg" c="black" fw={900} ta="center">
-            {t.colors.hcm_pkd}
-          </Text>
-          <Text size="lg" c="black">
-            {t.colors.paragraph4}
-          </Text>
-          <Text size="lg" c="black">
-            {t.colors.paragraph5}
-          </Text>
-        </Stack>
-
-        <Divider w="100%" />
-
-        <RagdollVarietiesSection />
-
-        <Divider w="100%" />
-
-        <RagdollGeneticsSection />
-
-        <Divider w="100%" />
-
-        <RagdollBloodGroupsSection />
-
-        <Divider w="100%" />
-
-        <Stack w="100%" align="center" gap={32}>
-          <Title order={2} size="h1" c="#47a3ee" ta="center">
-            {t.health.title}
-          </Title>
-          <Text size="lg" c="black">
-            {t.health.paragraph1}
-          </Text>
-          <Text size="lg" c="black">
-            {t.health.paragraph2}{" "}
-            <Text
-              component="a"
-              href="https://www.metropolevet.cz/nemoci-kocek/"
-              target="_blank"
-              c="blue"
-            >
-              {t.health.cat_diseases_link}
+          <FullscreenBackroundSection>
+            <Stack align="center" w="100%" maw={720} py={32}>
+              <Title order={2} size="h1" c="dark" ta="center">
+                {t.contact.heading}
+              </Title>
+              <Text size="lg" c="black" ta="center">
+                {t.contact.subtext}
+              </Text>
+              <Link
+                prefetch={false}
+                href="/litters"
+                style={{ textDecoration: "inherit", color: "inherit" }}
+              >
+                <Button
+                  color="#47a3ee"
+                  size="compact-lg"
+                  fw={400}
+                  px={24}
+                  w={{ base: "100%", sm: "fit-content" }}
+                >
+                  {t.contact.button}
+                </Button>
+              </Link>
+            </Stack>
+          </FullscreenBackroundSection>
+          <Stack w="100%" align="center" gap={32}>
+            <Text size="lg" c="black">
+              {t.about.paragraph4}
             </Text>
-          </Text>
-          <Text size="lg" c="black">
-            {t.health.paragraph3}
-          </Text>
-          <Text size="lg" c="black">
-            {t.health.paragraph4}
-            <br />
-            <Text
-              component="a"
-              href="https://cz.mypet.com/zdravi/navstevy-veterinare/veterinarni-lekar/?imgtcs=true"
-              target="_blank"
-              c="blue"
-            >
-              {t.health.cat_care_link}
-            </Text>
-          </Text>
-        </Stack>
+            <LeftImageSection
+              image="https://tcdwmbbmqgeuzzubnjmg.supabase.co/storage/v1/object/public/gallery/Web%20obrazky/075_n.jpg"
+              ratio={4 / 3}
+              heading={t.standard.heading}
+              subtext={t.standard.subtext}
+              button={{
+                label: t.standard.button,
+                onClick: () =>
+                  window.open(
+                    "https://fifeweb.org/app/uploads/2023/10/RAG.pdf"
+                  ),
+              }}
+            />
+          </Stack>
 
-        <Form />
+          <Divider w="100%" />
+
+          <RagdollHistorySection />
+
+          <Divider w="100%" />
+
+          <Stack w="100%" align="center" gap={32}>
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.colors.title}
+            </Title>
+            <Text size="lg" c="black">
+              {t.colors.paragraph1}
+            </Text>
+            <Text size="xs" c="dimmed">
+              {t.colors.copyright}
+            </Text>
+            <RagdollColorsCarousel />
+            <Text size="lg" c="black">
+              {t.colors.paragraph2}
+            </Text>
+            <Text size="lg" c="black">
+              {t.colors.paragraph3}
+            </Text>
+            <Text size="lg" c="black" fw={900} ta="center">
+              {t.colors.hcm_pkd}
+            </Text>
+            <Text size="lg" c="black">
+              {t.colors.paragraph4}
+            </Text>
+            <Text size="lg" c="black">
+              {t.colors.paragraph5}
+            </Text>
+          </Stack>
+
+          <Divider w="100%" />
+
+          <RagdollVarietiesSection />
+
+          <Divider w="100%" />
+
+          <RagdollGeneticsSection />
+
+          <Divider w="100%" />
+
+          <RagdollBloodGroupsSection />
+
+          <Divider w="100%" />
+
+          <Stack w="100%" align="center" gap={32}>
+            <Title order={2} size="h1" c="#47a3ee" ta="center">
+              {t.health.title}
+            </Title>
+            <Text size="lg" c="black">
+              {t.health.paragraph1}
+            </Text>
+            <Text size="lg" c="black">
+              {t.health.paragraph2}{" "}
+              <Text
+                component="a"
+                href="https://www.metropolevet.cz/nemoci-kocek/"
+                target="_blank"
+                c="blue"
+              >
+                {t.health.cat_diseases_link}
+              </Text>
+            </Text>
+            <Text size="lg" c="black">
+              {t.health.paragraph3}
+            </Text>
+            <Text size="lg" c="black">
+              {t.health.paragraph4}
+              <br />
+              <Text
+                component="a"
+                href="https://cz.mypet.com/zdravi/navstevy-veterinare/veterinarni-lekar/?imgtcs=true"
+                target="_blank"
+                c="blue"
+              >
+                {t.health.cat_care_link}
+              </Text>
+            </Text>
+          </Stack>
+
+          <Form />
+        </Stack>
       </Stack>
-    </Stack>
     </>
   );
 }

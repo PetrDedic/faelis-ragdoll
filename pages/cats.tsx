@@ -501,6 +501,7 @@ export default function CatsPage({
           )}
 
           <Link
+            prefetch={false}
             href="/litters"
             style={{ textDecoration: "inherit", color: "inherit" }}
           >
@@ -787,6 +788,7 @@ export default function CatsPage({
                 </Grid.Col>
               </Grid>
               <Link
+                prefetch={false}
                 href="/about"
                 style={{ textDecoration: "inherit", color: "inherit" }}
               >
@@ -991,6 +993,7 @@ export default function CatsPage({
                 {t.contact.subtext}
               </Text>
               <Link
+                prefetch={false}
                 href="/litters"
                 style={{ textDecoration: "inherit", color: "inherit" }}
               >

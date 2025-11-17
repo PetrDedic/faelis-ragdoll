@@ -191,6 +191,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                 <Grid w="100%" gutter={32}>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
+                      prefetch={false}
                       href="/cats#female-cats"
                       style={{
                         textDecoration: "inherit",
@@ -238,6 +239,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
+                      prefetch={false}
                       href="/cats#male-cats"
                       style={{
                         textDecoration: "inherit",
@@ -285,6 +287,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                   </Grid.Col>
                   <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
                     <Link
+                      prefetch={false}
                       href="/litters"
                       style={{
                         textDecoration: "inherit",
@@ -397,6 +400,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                   </Grid.Col>
                 </Grid>
                 <Link
+                  prefetch={false}
                   href="/about"
                   style={{ textDecoration: "inherit", color: "inherit" }}
                 >
@@ -474,6 +478,7 @@ export default function IndexPage({ heroImage }: IndexPageProps) {
                 {t.contact.subtext}
               </Text>
               <Link
+                prefetch={false}
                 href="/litters"
                 style={{ textDecoration: "inherit", color: "inherit" }}
               >

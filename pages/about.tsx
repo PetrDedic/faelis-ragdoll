@@ -231,7 +231,7 @@ export default function AboutPage({ heroImage }: AboutPageProps) {
               <Text size="lg" c="black" ta="center">
                 {t.contact.subtext}
               </Text>
-              <Link href="/contact" locale={locale}>
+              <Link href="/contact" locale={locale} prefetch={false}>
                 <Button
                   color="#47a3ee"
                   size="compact-lg"

@@ -9,7 +9,6 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import Head from "next/head";
 import NextImage from "next/image";
 
@@ -39,8 +38,6 @@ export function HeroImageBackground({
   backgroundPosition = "center",
   pageName,
 }: HeroImageBackgroundProps) {
-  const smallWindow = useMediaQuery("(max-width: 1200px)");
-
   // Use provided backgroundImage or fallback to default
   const imageUrl =
     backgroundImage ||
@@ -83,7 +80,7 @@ export function HeroImageBackground({
           <Title
             px={16}
             order={1}
-            size={smallWindow ? 32 : 48}
+            fz={{ base: 32, lg: 48 }}
             fw={800}
             ta={{ base: "left", sm: "center" }}
             c="white"

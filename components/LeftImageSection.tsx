@@ -1,16 +1,13 @@
 import {
-  Grid,
   SimpleGrid,
   Text,
   Title,
   Button,
-  Stack,
   BackgroundImage,
   Flex,
   Box,
   AspectRatio,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 
 interface LeadGridProps {
@@ -31,8 +28,6 @@ export function LeftImageSection({
   button,
   ratio = 4 / 2,
 }: LeadGridProps) {
-  const smallWindow = useMediaQuery("(max-width: 1200px)");
-
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%">
       <AspectRatio ratio={ratio}>
@@ -49,7 +44,7 @@ export function LeftImageSection({
         </Flex>
       </AspectRatio>
 
-      <Stack gap={smallWindow ? "md" : "xl"} justify="center">
+      <Flex direction="column" gap={{ base: "md", lg: "xl" }} justify="center">
         <Title order={2} size="h1" c="#47a3ee">
           {heading}
         </Title>
@@ -66,7 +61,7 @@ export function LeftImageSection({
             {button.label}
           </Button>
         )}
-      </Stack>
+      </Flex>
     </SimpleGrid>
   );
 }

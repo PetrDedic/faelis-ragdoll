@@ -4,11 +4,9 @@ import {
   Title,
   Button,
   Stack,
-  BackgroundImage,
   Flex,
   Box,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 
 interface LeadGridProps {
@@ -26,8 +24,6 @@ interface LeadGridProps {
 }
 
 export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
-  const smallWindow = useMediaQuery("(max-width: 1200px)");
-
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%">
       <Flex gap="md" align="stretch" w="100%">
@@ -46,7 +42,6 @@ export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
             />
           </Box>
           <Box w="100%" h="100%" pos="relative">
-            {" "}
             <Image
               src={images.right}
               alt={`${heading} right image`}
@@ -75,7 +70,7 @@ export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
         </Box>
       </Flex>
 
-      <Stack gap={smallWindow ? "md" : "xl"} justify="center">
+      <Flex direction="column" gap={{ base: "md", lg: "xl" }} justify="center">
         <Title order={2} size="h1" c="#47a3ee">
           {heading}
         </Title>
@@ -90,7 +85,7 @@ export function LeadGrid({ images, heading, subtext, button }: LeadGridProps) {
         >
           {button.label}
         </Button>
-      </Stack>
+      </Flex>
     </SimpleGrid>
   );
 }

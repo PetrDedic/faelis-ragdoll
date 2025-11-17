@@ -128,7 +128,14 @@ export function HeaderMenu() {
           withinPortal
         >
           <Menu.Target>
-            <Button variant="subtle" size="sm" px="xs" radius="sm">
+            <Button
+              variant="subtle"
+              size="sm"
+              px="xs"
+              radius="sm"
+              title={link.label}
+              aria-label={link.label}
+            >
               <Center>
                 <span style={{ marginRight: 5 }}>{link.label}</span>
                 <IconChevronDown size={14} stroke={1.5} />
@@ -141,8 +148,15 @@ export function HeaderMenu() {
     }
 
     return (
-      <Link href={link.link} key={link.label} locale={locale}>
-        <Button variant="subtle" size="sm" px="xs" radius="sm">
+      <Link href={link.link} key={link.label} locale={locale} prefetch={false}>
+        <Button
+          variant="subtle"
+          size="sm"
+          px="xs"
+          radius="sm"
+          title={link.label}
+          aria-label={link.label}
+        >
           {link.label}
         </Button>
       </Link>
@@ -164,7 +178,7 @@ export function HeaderMenu() {
     >
       <Container size="md">
         <Flex justify="space-between" align="center">
-          <Link href="/" aria-label={t.links.home}>
+          <Link href="/" aria-label={t.links.home} prefetch={false}>
             <Image
               src="/images/Logo_v2.svg"
               height={28}
@@ -212,12 +226,21 @@ export function HeaderMenu() {
           <Flex direction="column" gap="sm">
             {links.map((link) => (
               <Link
+                prefetch={false}
                 href={link.link}
                 key={link.label}
                 locale={locale}
                 style={{ textDecoration: "none", color: "inherit" }}
+                title={link.label}
+                aria-label={link.label}
               >
-                <Button variant="subtle" fullWidth onClick={() => toggle()}>
+                <Button
+                  variant="subtle"
+                  fullWidth
+                  onClick={() => toggle()}
+                  title={link.label}
+                  aria-label={link.label}
+                >
                   {link.label}
                 </Button>
               </Link>
