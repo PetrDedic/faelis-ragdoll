@@ -33,6 +33,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import supabase from "../../utils/supabase/client";
 import Image from "next/image";
 
@@ -103,6 +104,14 @@ const GalleryPage = ({
   //       -> "former%20cats/Jipsiglenn%20Orion%20Azragbey%2C%20RAG%20b"
   const encodePathSegments = (segments: string[]) => {
     return segments.map((segment) => encodeURIComponent(segment)).join("/");
+  };
+
+  // Helper function to generate gallery href from path
+  const getGalleryHref = (path: string) => {
+    if (!path) return "/gallery";
+    const pathSegments = path.split("/");
+    const encodedPath = encodePathSegments(pathSegments);
+    return `/gallery/${encodedPath}`;
   };
 
   // Get current path from URL (Next.js automatically decodes path segments)
@@ -304,34 +313,21 @@ const GalleryPage = ({
     }
   };
 
-  // Handle folder navigation - now updates the URL
-  const navigateToFolder = (folderPath: string) => {
-    setSearchTerm(""); // Clear search term when navigating to a folder
-
-    // Build the new URL path with proper encoding
-    if (folderPath) {
-      const pathSegments = folderPath.split("/");
-      const encodedPath = encodePathSegments(pathSegments);
-      router.push(`/gallery/${encodedPath}`, undefined, { shallow: false });
-    } else {
-      router.push("/gallery", undefined, { shallow: false });
-    }
-  };
-
-  // Handle breadcrumb navigation - now updates the URL
-  const handleBreadcrumbClick = (index: number) => {
-    setSearchTerm(""); // Clear search term when using breadcrumb navigation
-
+  // Get breadcrumb href for a given index
+  const getBreadcrumbHref = (index: number) => {
     if (index === 0) {
-      // Home - navigate to root gallery
-      router.push("/gallery", undefined, { shallow: false });
+      return "/gallery";
     } else {
-      // Navigate to specific path with proper encoding
       const pathSegments = urlPath || [];
       const targetSegments = pathSegments.slice(0, index);
       const encodedPath = encodePathSegments(targetSegments);
-      router.push(`/gallery/${encodedPath}`, undefined, { shallow: false });
+      return `/gallery/${encodedPath}`;
     }
+  };
+
+  // Handle breadcrumb navigation - clear search on navigation
+  const handleBreadcrumbClick = () => {
+    setSearchTerm(""); // Clear search term when using breadcrumb navigation
   };
 
   // Handle image click - now updates the URL
@@ -490,24 +486,43 @@ const GalleryPage = ({
           <Card key={item.id || item.name} padding="xs" radius="md" withBorder>
             <Card.Section pos="relative">
               {item.type === "folder" ? (
-                <Box
-                  onClick={() => navigateToFolder(item.path || "")}
-                  py="xl"
-                  style={{ cursor: "pointer", textAlign: "center" }}
+                <Link
+                  prefetch={false}
+                  href={getGalleryHref(item.path || "")}
+                  onClick={() => setSearchTerm("")}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "block",
+                  }}
                 >
-                  <IconFolder size={64} opacity={0.7} />
-                </Box>
+                  <Box
+                    py="xl"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                    <IconFolder size={64} opacity={0.7} />
+                  </Box>
+                </Link>
               ) : (
-                <Box pos="relative" h={150} style={{ width: "100%" }}>
-                  <Image
-                    src={item.url || ""}
-                    alt={item.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: "cover", cursor: "pointer" }}
-                    onClick={() => handleImageClick(item)}
-                  />
-                </Box>
+                <Link
+                  prefetch={false}
+                  href={getGalleryHref(item.path || item.name)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleImageClick(item);
+                  }}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Box pos="relative" h={150} style={{ width: "100%" }}>
+                    <Image
+                      src={item.url || ""}
+                      alt={item.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{ objectFit: "cover", cursor: "pointer" }}
+                    />
+                  </Box>
+                </Link>
               )}
             </Card.Section>
             <Text size="sm" fw={500} lineClamp={1} title={item.name} mt={5}>
@@ -535,7 +550,13 @@ const GalleryPage = ({
         {/* Navigation breadcrumbs */}
         <Breadcrumbs>
           {breadcrumbs.map((crumb, index) => (
-            <Anchor key={index} onClick={() => handleBreadcrumbClick(index)}>
+            <Anchor
+              key={index}
+              component={Link}
+              prefetch={false}
+              href={getBreadcrumbHref(index)}
+              onClick={handleBreadcrumbClick}
+            >
               {crumb}
             </Anchor>
           ))}

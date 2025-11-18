@@ -33,6 +33,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import supabase from "../../utils/supabase/client";
 
 // Import translations
@@ -102,6 +103,14 @@ const GalleryPage = ({
   //       -> "former%20cats/Jipsiglenn%20Orion%20Azragbey%2C%20RAG%20b"
   const encodePathSegments = (segments: string[]) => {
     return segments.map((segment) => encodeURIComponent(segment)).join("/");
+  };
+
+  // Helper function to generate gallery href from path
+  const getGalleryHref = (path: string) => {
+    if (!path) return "/gallery";
+    const pathSegments = path.split("/");
+    const encodedPath = encodePathSegments(pathSegments);
+    return `/gallery/${encodedPath}`;
   };
 
   // Root gallery - no path
@@ -238,16 +247,6 @@ const GalleryPage = ({
     } finally {
       setLoading(false);
     }
-  };
-
-  // Handle folder navigation - now updates the URL
-  const navigateToFolder = (folderPath: string) => {
-    setSearchTerm(""); // Clear search term when navigating to a folder
-
-    // Build the new URL path with proper encoding
-    const pathSegments = folderPath.split("/");
-    const encodedPath = encodePathSegments(pathSegments);
-    router.push(`/gallery/${encodedPath}`, undefined, { shallow: false });
   };
 
   // Handle image click - now updates the URL
@@ -400,22 +399,41 @@ const GalleryPage = ({
           <Card key={item.id || item.name} padding="xs" radius="md" withBorder>
             <Card.Section pos="relative">
               {item.type === "folder" ? (
-                <Box
-                  onClick={() => navigateToFolder(item.path || "")}
-                  py="xl"
-                  style={{ cursor: "pointer", textAlign: "center" }}
+                <Link
+                  prefetch={false}
+                  href={getGalleryHref(item.path || "")}
+                  onClick={() => setSearchTerm("")}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "block",
+                  }}
                 >
-                  <IconFolder size={64} opacity={0.7} />
-                </Box>
+                  <Box
+                    py="xl"
+                    style={{ cursor: "pointer", textAlign: "center" }}
+                  >
+                    <IconFolder size={64} opacity={0.7} />
+                  </Box>
+                </Link>
               ) : (
-                <Image
-                  src={item.url}
-                  height={150}
-                  alt={item.name}
-                  fit="cover"
-                  onClick={() => handleImageClick(item)}
-                  style={{ cursor: "pointer" }}
-                />
+                <Link
+                  prefetch={false}
+                  href={getGalleryHref(item.path || item.name)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleImageClick(item);
+                  }}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Image
+                    src={item.url}
+                    height={150}
+                    alt={item.name}
+                    fit="cover"
+                    style={{ cursor: "pointer" }}
+                  />
+                </Link>
               )}
             </Card.Section>
             <Text size="sm" fw={500} lineClamp={1} title={item.name} mt={5}>
