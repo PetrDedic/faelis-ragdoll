@@ -16,7 +16,7 @@ interface LeadGridProps {
 export function CatInfo({ images, name, info, catName }: LeadGridProps) {
   return (
     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" w="100%" mih={320}>
-      <Flex gap="md" align="stretch" w="100%">
+      <Flex gap="md" align="stretch" w="100%" mih={320}>
         <Stack w="100%" h="100%" gap="md">
           <Box w="100%" h="100%" pos="relative">
             <Image

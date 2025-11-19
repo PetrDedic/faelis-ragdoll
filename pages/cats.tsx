@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import {
-  Accordion,
-  AspectRatio,
-  Badge,
   Box,
   Button,
   Card,
   CopyButton,
   Flex,
   Grid,
-  SimpleGrid,
   Stack,
   Text,
   Title,
@@ -25,6 +21,7 @@ import { LeadGrid } from "../components/LeadGrid";
 import { FullscreenBackroundSection } from "../components/FullscreenBackroundSection";
 import { Form } from "../components/Form";
 import { CatInfo } from "../components/CatInfo";
+import { LitterCard } from "../components/LitterCard";
 import {
   formatDate,
   getGenderText,
@@ -37,10 +34,7 @@ import enTranslations from "../locales/en/cats.json";
 import deTranslations from "../locales/de/cats.json";
 import Link from "next/link";
 import {
-  IconCat,
   IconFileInfo,
-  IconGenderFemale,
-  IconGenderMale,
   IconLibraryPhoto,
   IconStethoscope,
   IconCopy,
@@ -111,6 +105,7 @@ interface CatImage {
 
 interface Litter {
   id: string;
+  name?: string;
   mother_id: string;
   father_id: string;
   birth_date: string;
@@ -119,8 +114,12 @@ interface Litter {
   number_of_females: number;
   description: string;
   details: string;
+  pedigree_link?: string;
+  youtube_video_link?: string;
+  mother: Cat;
+  father: Cat;
   kittens: Cat[];
-  expected_date?: string; // For upcoming litters
+  expected_date?: string;
   status: "planned" | "current" | "past";
 }
 
@@ -181,356 +180,9 @@ export default function CatsPage({
   const t =
     translations[locale as keyof typeof translations] || translations.cs;
 
-  const renderLitterCard = (
-    litter: Litter,
-    type: "current" | "upcoming" | "past"
-  ) => {
-    const isPlanned = litter.status === "planned";
-    const isCurrent = litter.status === "current";
-
-    // Helper function to safely get cat images
-    const getCatImage = (cat: Cat) => {
-      if (cat.images && cat.images.length > 0) {
-        return cat.images[0].url;
-      }
-      return "/images/placeholder.svg";
-    };
-
-    const getSeasonFromDate = (dateString: string, locale: string): string => {
-      const date = new Date(dateString);
-      const month = date.getMonth() + 1; // getMonth() returns 0-11
-
-      let season: string;
-      if (month >= 3 && month <= 5) {
-        season =
-          locale === "cs" ? "Jaro" : locale === "de" ? "Frühling" : "Spring";
-      } else if (month >= 6 && month <= 8) {
-        season =
-          locale === "cs" ? "Léto" : locale === "de" ? "Sommer" : "Summer";
-      } else if (month >= 9 && month <= 11) {
-        season =
-          locale === "cs" ? "Podzim" : locale === "de" ? "Herbst" : "Autumn";
-      } else {
-        season =
-          locale === "cs" ? "Zima" : locale === "de" ? "Winter" : "Winter";
-      }
-
-      const year = date.getFullYear();
-      return `${season} ${year}`;
-    };
-
-    return (
-      <Card
-        key={litter.id}
-        p="lg"
-        mb="xl"
-        w="100%"
-        id={litter.id}
-        style={{ scrollMarginTop: 100 }}
-      >
-        <Stack align="center">
-          <Stack w="100%">
-            <Flex justify="space-between" align="center" w="100%">
-              <Title order={3} size="h1" ta="center" style={{ flex: 1 }}>
-                {litter.description}
-              </Title>
-
-              <CopyButton
-                value={
-                  typeof window !== "undefined"
-                    ? `${window.location.origin}${
-                        router.asPath.split("#")[0]
-                      }#${litter.id}`
-                    : ""
-                }
-                timeout={2000}
-              >
-                {({ copied, copy }) => (
-                  <Tooltip
-                    label={
-                      copied
-                        ? t.commonLabels?.copied || "Copied!"
-                        : t.commonLabels?.copyLink || "Copy link"
-                    }
-                    events={{
-                      hover: true,
-                      focus: true,
-                      touch: true,
-                    }}
-                  >
-                    <Button
-                      size="xs"
-                      variant="subtle"
-                      color={copied ? "blue" : "gray"}
-                      onClick={copy}
-                      px={6}
-                    >
-                      <IconCopy size={16} />
-                    </Button>
-                  </Tooltip>
-                )}
-              </CopyButton>
-            </Flex>
-            <Flex wrap="wrap" gap={16}>
-              <Badge size="lg">
-                {type === "upcoming"
-                  ? t.upcomingLitters?.expectedDate || "Expected date"
-                  : t.pastLitters?.birthDate || "Birth date"}
-                :{" "}
-                {type === "upcoming"
-                  ? getSeasonFromDate(litter.expected_date!, locale as string)
-                  : formatDate(litter.birth_date, locale as string)}
-              </Badge>
-              {isPlanned && (
-                <Badge color="orange" size="lg">
-                  {t.commonLabels?.planned || "Planned litter"}
-                </Badge>
-              )}
-              {isCurrent && (
-                <Badge color="green" size="lg">
-                  {t.commonLabels?.current || "Current litter"}
-                </Badge>
-              )}
-            </Flex>
-
-            {type !== "upcoming" && (
-              <Flex w="100%" gap={8}>
-                <Badge leftSection={<IconCat size={16} />} color="black">
-                  {t.pastLitters?.kittens || "Kittens"}:{" "}
-                  {litter.number_of_kittens}
-                </Badge>
-                <Badge
-                  leftSection={<IconGenderMale size={16} />}
-                  variant="light"
-                  color="black"
-                >
-                  {t.pastLitters?.males || "Males"}: {litter.number_of_males}
-                </Badge>
-                <Badge
-                  leftSection={<IconGenderFemale size={16} />}
-                  variant="light"
-                  color="black"
-                >
-                  {t.pastLitters?.females || "Females"}:{" "}
-                  {litter.number_of_females}
-                </Badge>
-              </Flex>
-            )}
-          </Stack>
-
-          {type !== "upcoming" &&
-            litter.kittens &&
-            litter.kittens.length > 0 && (
-              <Stack w="100%">
-                <Grid>
-                  {litter.kittens.map((kitten) => {
-                    return (
-                      <Grid.Col
-                        key={kitten.id}
-                        span={{ base: 12, sm: 6, md: 4, lg: 3 }}
-                      >
-                        <Card
-                          pb={24}
-                          style={{ position: "relative", scrollMarginTop: 100 }}
-                          padding="lg"
-                          radius="lg"
-                          bg="#d6e6f3"
-                          id={kitten.id}
-                        >
-                          <Stack gap="xs">
-                            <AspectRatio
-                              ratio={4 / 3}
-                              style={{
-                                position: "relative",
-                                alignItems: "center",
-                                aspectRatio: "4/3",
-                              }}
-                              w="100%"
-                              h="100%"
-                            >
-                              {kitten.gender && (
-                                <Badge
-                                  w={32}
-                                  h={32}
-                                  px={0}
-                                  pt={4}
-                                  style={{
-                                    position: "absolute",
-                                    top: 4,
-                                    right: 4,
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={() =>
-                                    handleOpenGallery(kitten.images)
-                                  }
-                                >
-                                  {kitten.gender === "male" ? (
-                                    <IconGenderMale size={20} />
-                                  ) : (
-                                    <IconGenderFemale size={20} />
-                                  )}
-                                </Badge>
-                              )}
-                              <Image
-                                src={getCatImage(kitten)}
-                                fill
-                                style={{
-                                  objectFit: "cover",
-                                  borderRadius: 16,
-                                  cursor: "pointer",
-                                }}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                alt={generateCatAltText(
-                                  {
-                                    name: kitten.name,
-                                    gender: kitten.gender,
-                                    ...getLocalizedColorVariety(
-                                      kitten,
-                                      locale as string
-                                    ),
-                                    role: "kitten",
-                                  },
-                                  locale as string
-                                )}
-                                onClick={() => handleOpenGallery(kitten.images)}
-                              />
-                            </AspectRatio>
-                            <Badge color="blue">
-                              {getLocalizedCatProperty(
-                                kitten,
-                                "color",
-                                locale as string
-                              )}{" "}
-                              {getLocalizedCatProperty(
-                                kitten,
-                                "variety",
-                                locale as string
-                              )}
-                            </Badge>
-                            <Flex justify="space-between" align="center">
-                              <Text fw={500} size="sm">
-                                {kitten.name}
-                              </Text>
-
-                              <CopyButton
-                                value={
-                                  typeof window !== "undefined"
-                                    ? `${window.location.origin}${
-                                        router.asPath.split("#")[0]
-                                      }#${kitten.id}`
-                                    : ""
-                                }
-                                timeout={2000}
-                              >
-                                {({ copied, copy }) => (
-                                  <Tooltip
-                                    label={
-                                      copied
-                                        ? t.commonLabels?.copied || "Copied!"
-                                        : t.commonLabels?.copyLink ||
-                                          "Copy link"
-                                    }
-                                    events={{
-                                      hover: true,
-                                      focus: true,
-                                      touch: true,
-                                    }}
-                                  >
-                                    <Button
-                                      size="xs"
-                                      variant="subtle"
-                                      color={copied ? "green" : "blue"}
-                                      onClick={copy}
-                                      px={6}
-                                    >
-                                      <IconCopy size={16} />
-                                    </Button>
-                                  </Tooltip>
-                                )}
-                              </CopyButton>
-                            </Flex>
-                            <Text size="xs">
-                              {kitten.gender === "male"
-                                ? t.commonLabels?.male || "Male"
-                                : t.commonLabels?.female || "Female"}
-                            </Text>
-                            {kitten.images.length > 0 && (
-                              <Button
-                                color="#47a3ee"
-                                variant="outline"
-                                size="xs"
-                                fullWidth
-                                leftSection={<IconLibraryPhoto size={16} />}
-                                onClick={() => handleOpenGallery(kitten.images)}
-                              >
-                                {t.commonLabels?.gallery || "Gallery"}
-                              </Button>
-                            )}
-                            {kitten.status !== "sold" && (
-                              <Button
-                                color="#47a3ee"
-                                variant="light"
-                                size="xs"
-                                fullWidth
-                              >
-                                {kitten.status === "reserved"
-                                  ? t.commonLabels?.reserved || "Reserved"
-                                  : kitten.status ===
-                                    "under_breeding_evaluation"
-                                  ? t.commonLabels?.underBreedingEvaluation ||
-                                    "Under breeding evaluation"
-                                  : kitten.status === "preliminarily_reserved"
-                                  ? t.commonLabels?.preliminarilyReserved ||
-                                    "Preliminarily reserved"
-                                  : t.commonLabels?.available || "Available"}
-                              </Button>
-                            )}
-                          </Stack>
-                        </Card>
-                      </Grid.Col>
-                    );
-                  })}
-                </Grid>
-              </Stack>
-            )}
-
-          {litter.details && (
-            <Stack w="100%" gap={8}>
-              <Text>{litter.details}</Text>
-            </Stack>
-          )}
-
-          <Link
-            prefetch={false}
-            href="/litters"
-            style={{ textDecoration: "inherit", color: "inherit" }}
-          >
-            <Button
-              color="#47a3ee"
-              size="compact-lg"
-              fw={400}
-              px={24}
-              w={{ base: "100%", sm: "fit-content" }}
-            >
-              {t.contact.button}
-            </Button>
-          </Link>
-        </Stack>
-      </Card>
-    );
-  };
-
-  // Prepare data for SEO
-  const allCats = [...maleCats, ...femaleCats];
-  const catsForSEO = allCats.map((cat) => ({
-    name: cat.name,
-    image: cat.images && cat.images.length > 0 ? cat.images[0].url : undefined,
-    description: cat.description || cat.details,
-  }));
-
   return (
     <>
-      <CatsPageSEO cats={catsForSEO} />
+      <CatsPageSEO />
       <Stack w="100%" gap={0} align="center" justify="center" maw="100%">
         <HeroImageBackgroundWithData
           heading={t.hero.heading}
@@ -1026,9 +678,20 @@ export default function CatsPage({
                     "We're excited to share our planned litters. Contact us to reserve a kitten from these upcoming litters."}
                 </Text>
 
-                {upcomingLitters.map((litter) =>
-                  renderLitterCard(litter, "upcoming")
-                )}
+                {upcomingLitters.map((litter) => (
+                  <LitterCard
+                    key={litter.id}
+                    litter={litter}
+                    type="upcoming"
+                    translations={t}
+                    onOpenGallery={handleOpenGallery}
+                    showKittens={false}
+                    showPedigreeButton={false}
+                    showParentsAccordion={true}
+                    defaultParentsOpen={true}
+                    showLittersPageButton={true}
+                  />
+                ))}
               </Stack>
             ) : currentLitters.length > 0 ? (
               <Stack w="100%" align="center" gap={16}>
@@ -1040,9 +703,19 @@ export default function CatsPage({
                     "Browse through our current litters to see our beautiful kittens."}
                 </Text>
 
-                {currentLitters.map((litter) =>
-                  renderLitterCard(litter, "current")
-                )}
+                {currentLitters.map((litter) => (
+                  <LitterCard
+                    key={litter.id}
+                    litter={litter}
+                    type="current"
+                    translations={t}
+                    onOpenGallery={handleOpenGallery}
+                    showKittens={false}
+                    showPedigreeButton={false}
+                    showParentsAccordion={true}
+                    showLittersPageButton={true}
+                  />
+                ))}
               </Stack>
             ) : pastLitters.length > 0 ? (
               <Stack w="100%" align="center" gap={16}>
@@ -1054,7 +727,17 @@ export default function CatsPage({
                     "Browse through our previous litters to see the beautiful kittens we've produced."}
                 </Text>
 
-                {renderLitterCard(pastLitters[0], "past")}
+                <LitterCard
+                  key={pastLitters[0].id}
+                  litter={pastLitters[0]}
+                  type="past"
+                  translations={t}
+                  onOpenGallery={handleOpenGallery}
+                  showKittens={false}
+                  showPedigreeButton={false}
+                  showParentsAccordion={true}
+                  showLittersPageButton={true}
+                />
               </Stack>
             ) : (
               <Text c="dimmed" ta="center">

@@ -28,6 +28,10 @@ const HomePageSEO = () => {
     de: "Startseite",
   };
 
+  const baseUrl = "https://www.ragdolls.cz";
+  const localePrefix = locale !== "cs" ? `/${locale}` : "";
+  const canonicalUrl = `${baseUrl}${localePrefix}`;
+
   const structuredData = [
     generateOrganizationSchema(locale as string),
     generateBreadcrumbSchema([
@@ -35,7 +39,7 @@ const HomePageSEO = () => {
         name:
           breadcrumbNames[locale as keyof typeof breadcrumbNames] ||
           breadcrumbNames.cs,
-        url: "https://www.ragdolls.cz",
+        url: canonicalUrl,
       },
     ]),
   ];
@@ -46,10 +50,10 @@ const HomePageSEO = () => {
       description={seo.description}
       keywords={seo.keywords}
       ogImage="/og.png"
-      ogUrl="https://www.ragdolls.cz"
+      ogUrl={canonicalUrl}
       ogType="website"
       twitterCard="summary_large_image"
-      canonicalUrl="https://www.ragdolls.cz"
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   );

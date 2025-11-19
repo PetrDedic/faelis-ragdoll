@@ -30,11 +30,16 @@ const ContactPageSEO = () => {
 
   const names = breadcrumbNames[locale as keyof typeof breadcrumbNames] || breadcrumbNames.cs;
 
+  const baseUrl = "https://www.ragdolls.cz";
+  const localePrefix = locale !== "cs" ? `/${locale}` : "";
+  const canonicalUrl = `${baseUrl}${localePrefix}/contact`;
+  const homeUrl = `${baseUrl}${localePrefix}`;
+
   const structuredData = [
     generateOrganizationSchema(locale as string),
     generateBreadcrumbSchema([
-      { name: names.home, url: "https://www.ragdolls.cz" },
-      { name: names.current, url: "https://www.ragdolls.cz/contact" },
+      { name: names.home, url: homeUrl },
+      { name: names.current, url: canonicalUrl },
     ]),
   ];
 
@@ -44,10 +49,10 @@ const ContactPageSEO = () => {
       description={seo.description}
       keywords={seo.keywords}
       ogImage="/og.png"
-      ogUrl="https://www.ragdolls.cz/contact"
+      ogUrl={canonicalUrl}
       ogType="website"
       twitterCard="summary_large_image"
-      canonicalUrl="https://www.ragdolls.cz/contact"
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   );

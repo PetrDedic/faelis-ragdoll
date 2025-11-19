@@ -6,7 +6,6 @@ import deSEO from "../../locales/de/seo.json";
 import {
   generateOrganizationSchema,
   generateBreadcrumbSchema,
-  generateCatItemListSchema,
 } from "../../utils/structuredData";
 import type { WithContext, Thing } from "schema-dts";
 
@@ -42,18 +41,20 @@ const CatsPageSEO = ({ cats }: CatsPageSEOProps) => {
     breadcrumbNames[locale as keyof typeof breadcrumbNames] ||
     breadcrumbNames.cs;
 
+  const baseUrl = "https://www.ragdolls.cz";
+  const localePrefix = locale !== "cs" ? `/${locale}` : "";
+  const canonicalUrl = `${baseUrl}${localePrefix}/cats`;
+  const homeUrl = `${baseUrl}${localePrefix}`;
+
+  // Only include Organization and Breadcrumb schemas
+  // Cats on this page are breeding cats (not for sale), so we don't use Product schema
   const structuredData: Array<WithContext<Thing>> = [
     generateOrganizationSchema(locale as string),
     generateBreadcrumbSchema([
-      { name: names.home, url: "https://www.ragdolls.cz" },
-      { name: names.current, url: "https://www.ragdolls.cz/cats" },
+      { name: names.home, url: homeUrl },
+      { name: names.current, url: canonicalUrl },
     ]),
   ];
-
-  // Add ItemList if cats data is provided
-  if (cats && cats.length > 0) {
-    structuredData.push(generateCatItemListSchema(cats));
-  }
 
   return (
     <SEO
@@ -61,10 +62,10 @@ const CatsPageSEO = ({ cats }: CatsPageSEOProps) => {
       description={seo.description}
       keywords={seo.keywords}
       ogImage="/og.png"
-      ogUrl="https://www.ragdolls.cz/cats"
+      ogUrl={canonicalUrl}
       ogType="website"
       twitterCard="summary_large_image"
-      canonicalUrl="https://www.ragdolls.cz/cats"
+      canonicalUrl={canonicalUrl}
       structuredData={structuredData}
     />
   );
