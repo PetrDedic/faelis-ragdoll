@@ -78,8 +78,8 @@ export const generateBreadcrumbSchema = (
 /**
  * Generate ItemList structured data for cats
  * Note: Not using Product type to avoid Google's requirement for offers/reviews/rating
- * Note: Not using Product type to avoid Google's requirement for offers/reviews/rating
- * Note: Not using Product type to avoid Google's requirement for offers/reviews/rating
+ */
+export const generateCatListSchema = (
   cats: Array<{
     name: string;
     image?: string;
@@ -95,8 +95,8 @@ export const generateBreadcrumbSchema = (
       position: index + 1,
       item: {
         "@type": "Thing",
-        "@type": "Thing",
-        "@type": "Thing",
+        name: cat.name,
+        image: cat.image,
         description: cat.description,
         url: cat.url,
       },
@@ -175,7 +175,7 @@ export const generateKittenProductSchema = (kitten: {
   };
 
   // Add offers if price is provided, otherwise add a contact-based offer
-  // Add offers if price is provided, otherwise add a contact-based offer
+  if (kitten.price) {
     schema.offers = {
       "@type": "Offer",
       price: kitten.price.toString(),
@@ -198,17 +198,6 @@ export const generateKittenProductSchema = (kitten: {
       },
     } as Offer;
   }
-  } else {
-    // Add a minimal offer to satisfy Google's Product schema requirements
-    // Price of 0 with priceSpecification means "contact for price"
-    schema.offers = {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: kitten.priceCurrency || "CZK",
-      availability: `https://schema.org/${kitten.availability || "InStock"}`,
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "0",
-        priceCurrency: kitten.priceCurrency || "CZK",
-      },
-    } as Offer;
+
+  return schema;
+};
