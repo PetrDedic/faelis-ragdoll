@@ -1,13 +1,82 @@
 import { MetadataRoute } from "next";
+import supabase from "../utils/supabase/client";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Helper to encode paths (matches your existing logic)
+const encodeGalleryPath = (path: string) => {
+  return path
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+};
+
+// Global counter for logging progress during build
+let totalProcessed = 0;
+
+async function getGalleryRoutes(prefix = ""): Promise<string[]> {
+  try {
+    // Fetch items in the current folder
+    const { data, error } = await supabase.storage
+      .from("gallery")
+      .list(prefix, { limit: 1000 });
+
+    if (error || !data) {
+      console.error(`[Sitemap] Error fetching ${prefix}:`, error);
+      return [];
+    }
+
+    // Filter out system files and the excluded folder immediately
+    const validItems = data.filter(
+      (item) =>
+        item.name !== ".emptyFolderPlaceholder" &&
+        item.name !== "downloaded_gallery" // <--- EXCLUSION HERE
+    );
+
+    // Process items in PARALLEL to avoid timeouts
+    const results = await Promise.all(
+      validItems.map(async (item) => {
+        const itemRawPath = prefix ? `${prefix}/${item.name}` : item.name;
+
+        // Basic check: if it has metadata.size, it's likely a file. Otherwise treat as folder.
+        // (Adjust this logic if your Supabase setup differs)
+        const isImage =
+          /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i.test(item.name) &&
+          item.metadata;
+
+        // Logging progress every 50 items
+        totalProcessed++;
+        if (totalProcessed % 50 === 0) {
+          console.log(`[Sitemap] Crawled ${totalProcessed} gallery items...`);
+        }
+
+        if (isImage) {
+          // Return the image path
+          return [itemRawPath];
+        } else {
+          // If it's a folder, recurse deeper
+          // We return the folder path itself AND its children
+          const childrenPaths = await getGalleryRoutes(itemRawPath);
+          return [itemRawPath, ...childrenPaths];
+        }
+      })
+    );
+
+    // Flatten the array of arrays
+    return results.flat();
+  } catch (e) {
+    console.error("[Sitemap] Recursive crawl error:", e);
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  console.log("[Sitemap] Starting generation...");
+
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.ragdolls.cz";
   const locales = ["cs", "en", "de"];
   const defaultLocale = "cs";
 
-  // Define all public pages
-  const publicPages = [
-    "", // home page
+  const staticPages = [
+    "",
     "about",
     "achievements",
     "cats",
@@ -17,10 +86,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "ragdoll",
   ];
 
+  // Fetch dynamic gallery routes
+  // This will now run faster and skip 'downloaded_gallery'
+  const galleryRawPaths = await getGalleryRoutes();
+  console.log(
+    `[Sitemap] Finished crawling. Found ${galleryRawPaths.length} gallery items.`
+  );
+
+  const galleryPages = galleryRawPaths.map(
+    (path) => `gallery/${encodeGalleryPath(path)}`
+  );
+  const allPages = [...staticPages, ...galleryPages];
+
   const sitemap: MetadataRoute.Sitemap = [];
 
-  // Generate entries for each page in each language
-  publicPages.forEach((page) => {
+  allPages.forEach((page) => {
     locales.forEach((locale) => {
       const route = page === "" ? "" : `/${page}`;
       const url =
@@ -31,73 +111,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sitemap.push({
         url,
         lastModified: new Date(),
-        changeFrequency: getChangeFrequency(page),
-        priority: getPriority(page),
+        changeFrequency: page.startsWith("gallery/") ? "monthly" : "weekly",
+        priority: page === "" ? 1.0 : 0.7,
         alternates: {
-          languages: generateAlternates(page, locales, baseUrl, defaultLocale),
+          languages: locales.reduce(
+            (acc, loc) => {
+              const altUrl =
+                loc === defaultLocale
+                  ? `${baseUrl}${route}`
+                  : `${baseUrl}/${loc}${route}`;
+              return { ...acc, [loc]: altUrl };
+            },
+            { "x-default": `${baseUrl}${route}` }
+          ),
         },
       });
     });
   });
 
   return sitemap;
-}
-
-function getChangeFrequency(
-  page: string
-): "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never" {
-  // Home page and dynamic content pages change more frequently
-  if (page === "" || page === "litters" || page === "cats") {
-    return "weekly";
-  }
-  // Gallery and achievements update occasionally
-  if (page === "gallery" || page === "achievements") {
-    return "monthly";
-  }
-  // Static content pages
-  return "yearly";
-}
-
-function getPriority(page: string): number {
-  // Home page has highest priority
-  if (page === "") return 1.0;
-
-  // Main pages
-  if (page === "cats" || page === "litters" || page === "ragdoll") {
-    return 0.8;
-  }
-
-  // Secondary pages
-  if (page === "about" || page === "achievements" || page === "gallery") {
-    return 0.6;
-  }
-
-  // Contact page
-  if (page === "contact") return 0.5;
-
-  return 0.5;
-}
-
-function generateAlternates(
-  page: string,
-  locales: string[],
-  baseUrl: string,
-  defaultLocale: string
-): Record<string, string> {
-  const alternates: Record<string, string> = {};
-  const route = page === "" ? "" : `/${page}`;
-
-  locales.forEach((locale) => {
-    const url =
-      locale === defaultLocale
-        ? `${baseUrl}${route}`
-        : `${baseUrl}/${locale}${route}`;
-
-    alternates[locale] = url;
-  });
-
-  // Add x-default for the default locale
-  alternates["x-default"] = `${baseUrl}${route}`;
-
-  return alternates;
 }
