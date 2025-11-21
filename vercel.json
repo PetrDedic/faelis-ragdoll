@@ -1,13 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/gallery2/:path*",
-      "destination": "/gallery",
-      "permanent": true
-    },
-    {
-      "source": "/gallery2",
-      "destination": "/gallery",
+      "source": "/:path*/gallery2/main.php",
+      "destination": "/",
       "permanent": true
     }
   ]
